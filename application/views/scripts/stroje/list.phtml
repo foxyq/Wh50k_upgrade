@@ -1,0 +1,38 @@
+<?php
+$this->headTitle($this->title);
+?>
+
+<p>
+    <a href="<?php echo $this->url(array('controller'=>'Stroje',
+        'action'=>'add'));?>">
+        <button type="button" class="btn btn-success">Pridať stroj</button>
+    </a>
+</p>
+
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <!--
+        <th>ID</th>
+        -->
+        <th>Stroj</th>
+        <th>Typ</th>
+        <th>Úpravy</th>
+    </tr>
+
+
+    <?php foreach($this->stroje as $stroj) : ?>
+        <tr>
+            <!--
+            <td><?php echo $this->escape($stroj->stroje_id);?></td>
+            -->
+            <td><?php echo $this->escape($stroj->nazov_stroja);?></td>
+            <td><?php echo $this->escape($this->strojeTypy->getNazov($stroj->typ_stroja));?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller'=>'Stroje',
+                    'action'=>'edit', 'id'=>$stroj->stroje_id));?>">Upraviť</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>

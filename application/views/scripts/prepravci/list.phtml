@@ -1,0 +1,38 @@
+<?php
+$this->headTitle($this->title);
+?>
+<p>
+    <a href="<?php echo $this->url(array('controller'=>'Prepravci',
+        'action'=>'add'));?>">
+        <button type="button" class="btn btn-success">Pridať prepravcu</button>
+    </a>
+</p>
+
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <!--
+        <th>ID</th>
+        -->
+        <th>Kód</th>
+        <th>Meno</th>
+        <th>Úpravy</th>
+    </tr>
+
+
+    <?php foreach($this->prepravci as $prepravci) : ?>
+        <tr>
+            <!--
+            <td><?php echo $this->escape($prepravci->prepravci_id);?></td>
+            -->
+            <td><?php echo $this->escape($prepravci->kod);?></td>
+            <td><?php echo $this->escape($prepravci->meno);?></td>
+            <td>
+
+                <a href="<?php echo $this->url(array('controller'=>'prepravci',
+                    'action'=>'edit', 'id'=>$prepravci->prepravci_id));?>">Upraviť</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>

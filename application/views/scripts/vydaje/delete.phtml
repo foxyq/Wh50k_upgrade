@@ -1,0 +1,165 @@
+<div class="col-lg-5">
+    <div class="panel panel-red">
+        <div class="panel-heading">
+            <h3 class="panel-title">Detail transakcie  <?php echo $this->vydaj['doklad_cislo'];?></h3>
+        </div>
+        <div class="panel-body">
+
+
+            <div class="row">
+                <fieldset>
+                    <legend>Dátum výdaju</legend>
+
+                    <div class="col-lg-6">
+                        Dátum:
+                        <?php echo date("d.m.Y", strtotime($this->vydaj['datum_vydaju_d'])); // render the user name field here ?>
+                    </div>
+                </fieldset>
+            </div>
+            <!---->
+            <div class="row">
+                <fieldset>
+                    <legend>Sklady</legend>
+                    <div class="col-lg-6">
+                        Lokalita:
+
+                        <?php echo $this->ciselniky['skladyModel']->getNazov($this->vydaj['sklad_enum']); // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        Sklad:
+                        <?php echo $this->ciselniky['podskladyModel']->getNazov($this->vydaj['podsklad_enum']); // render the user name field here ?>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!--        -->
+            <div class="row">
+                <fieldset>
+                    <legend>Dodanie</legend>
+                    <div class="col-lg-6">
+                        Zákazník:
+                        <?php echo $this->ciselniky['zakazniciModel']->getNazov($this->vydaj['zakaznik_enum']); // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        Prepravca:
+                        <?php echo $this->ciselniky['prepravciModel']->getNazov($this->vydaj['prepravca_enum']); // render the user name field here ?>
+                    </div>
+            </div>
+            <!--        -->
+            <div class="row">
+                <div class="col-lg-6">
+                    ŠPZ:
+                    <?php echo $this->vydaj['prepravca_spz']; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+            <!---->
+
+            <div class="row">
+                <fieldset>
+                    <legend>Množstvo</legend>
+                    <div class="col-lg-6">
+                        Váha:
+                        <?php echo number_format($this->vydaj['q_tony_merane'],2,","," ").' t'; // render the user name field here ?>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        Objem:
+                        <?php echo number_format($this->vydaj['q_m3_merane'],2,","," ").' m<sup>3</sup>'; // render the user name field here ?>
+                    </div>
+
+            </div>
+            <div class="row">
+
+
+                <div class="col-lg-6">
+                    Priestor:
+                    <?php echo number_format($this->vydaj['q_prm_merane'],2,","," ").' PRM'; // render the user name field here ?>
+                </div>
+                <div class="col-lg-6">
+                    Vlhkosť:
+                    <?php echo number_format($this->vydaj['q_vlhkost'],2,","," ").' %'; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+
+            <div class="row">
+                <fieldset>
+                    <legend>Materiál</legend>
+                    <div class="col-lg-6">
+                        Typ:
+                        <?php echo $this->ciselniky['materialyTypyModel']->getNazov($this->vydaj['material_typ_enum']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+                        Druh:
+                        <?php echo $this->ciselniky['materialyDruhyModel']->getNazov($this->vydaj['material_druh_enum']); // render the user name field here ?>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    Využitý stroj:
+                    <?php echo $this->ciselniky['strojeModel']->getNazov($this->vydaj['stroj_enum']); // render the user name field here ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend>Doplňujúce informácie</legend>
+                    <div class="col-lg-6">
+                        Stav:
+                        <?php echo $this->ciselniky['transakcieStavyModel']->getNazov($this->vydaj['stav_transakcie']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+                        Chyba:
+                        <?php if ($this->vydaj['chyba'] == 1 ) echo 'áno';
+                        else echo 'nie'; // render the user name field here ?>
+                    </div>
+            </div>
+            <br >
+            <div class="row">
+
+                <div class="col-lg-12">
+                    Poznámka:
+                    <?php if ($this->vydaj['poznamka'] == '' || $this->vydaj['poznamka'] == '0' ) echo 'žiadna poznámka';
+                    else echo $this->vydaj['poznamka']; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+
+
+            <br>
+
+            <div class="row">
+                <form action="<?php echo $this->url(array('action'=>'delete', 'fromAction' => $this->fromAction)); ?>"
+                      method="post">
+                    <div>
+                        <input type="hidden" name="ts_vydaje_id" value="<?php echo $this->vydaj['ts_vydaje_id']; ?>" />
+
+
+                        <div class="col-lg-6 tright">
+
+                            <input type="submit" name="del" value="Áno" class="btn btn-danger" />
+
+                        </div>
+
+
+                        <div class="col-lg-6">
+
+                            <input type="submit" name="del" value="Nie" class="btn btn-warning form-control"/>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+

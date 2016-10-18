@@ -1,0 +1,17 @@
+<?php
+$this->title = "Výmaz Zákazníka";
+$this->headTitle($this->title);
+
+?>
+<p>Naozaj chcete vymazať zákazníka:
+    '<?php echo $this->escape($this->zakaznik['meno']); ?>',
+    '<?php echo $this->escape($this->zakaznik['nazov_spolocnosti']); ?>'?
+</p>
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>"
+      method="post">
+    <div>
+        <input type="hidden" name="zakaznici_id" value="<?php echo $this->zakaznik['zakaznici_id']; ?>" />
+        <input type="submit" name="del" value="Yes" />
+        <input type="submit" name="del" value="No" />
+    </div>
+</form>

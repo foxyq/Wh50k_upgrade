@@ -1,0 +1,191 @@
+<?php
+$this->headTitle($this->title);
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+?>
+
+<link href='<?php echo $this->baseUrl()."/css/jquery.dataTables.yadcf.css"?>' rel="stylesheet" type="text/css" />
+<script src="<?php echo $this->baseUrl().'/js/jquery.dataTables.yadcf.js'?>"></script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
+
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $('#fancy_table').DataTable( {
+            "order": [[ 1, "desc" ]],
+            columnDefs: [
+                { "sType": "title-string", "aTargets": [ 3 ],
+                            "targets": 3 },
+                    // columns.render property
+                  
+                    { "render": function ( data, type, row, meta ) {
+                        var jsDate = new Date(row[3] * 1000);
+                        return $.datepicker.formatDate("dd.mm.yy", jsDate);
+                        }
+                    }
+                
+//                    { "sType": "alt-string", "aTargets" : 11 }
+            ],
+            initComplete: function () {
+                var api = this.api();
+                var abc = 0;
+                api.columns().indexes().flatten().each( function ( i ) {
+                    var column = api.column( i );
+                    if (i != abc) {
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo( $(column.footer()).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.DataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    }
+                } );
+            }
+        } );
+
+    } );
+</script>
+
+
+<!-- range filtering pre datumy a dodavatelov atd. -->
+<script>
+$(document).ready(function(){
+  $('#fancy_table').dataTable().yadcf([
+        // {column_number : 1},
+        {column_number : 1, filter_type: "multi_select", select_type:'chosen'},
+        {column_number: 3,  filter_type: "range_date", date_format: "dd.mm.yyyy" },
+        {column_number : 5,  filter_type: "range_number_slider", filter_container_id: "external_filter_container"}
+        ]);
+});
+</script>
+<!-- koniec range filteringu  -->
+   
+
+
+
+<p>
+    <a href="<?php echo $this->url(array('controller'=>'Mikroobjednavky',
+        'action'=>'add'));?>">
+        <button type="button" class="btn btn-success">Pridať mikro objednávku</button>
+    </a>
+</p>
+
+<?php if ($this->mikroObjednavkyModel->getCountNekompatibilneMikroObjednavky() > 0) {?>
+        <div class="alert alert-danger alert-dismissable">
+             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+             <i class="fa fa-warning"></i> Definujte správnu <strong>MERNÚ JEDNOTKU</strong> mikro objednávky! Žlté objednávky nemajú MJ zhodnú s MJ zákazníka.
+        </div>
+    <?php ;}?>
+
+<div id=".col-lg-12"  class="table-responsive">
+    <div id="external_filter_container" > </div>
+     
+<table id="fancy_table"  class="table table-striped table-hover">
+
+
+    <thead>
+    <tr class="tableizer-firsrow">
+        <th>Detail</th>
+        <th>Zákazník</th>
+        <th>Od</th>
+        <th>Do</th>
+        <th>Objednávka</th>
+        <th>Množstvo</th>
+        <th>Výdaje</th>
+        <th>xVýroba</th>
+        <th>xDodávka</th>
+        <th>Zostáva</th>
+        <th>MJ</th>
+        <th>Úpravy</th>
+    </tr>
+    </thead>
+ 
+    <tfoot>
+    <tr>
+        <th></th>
+        <th>zákazník</th>
+        <th>od</th>
+        <th>do</th>
+        <th>objednávka</th>
+        <th>množstvo</th>
+        <th>výdaje</th>
+        <th>xvýroba</th>
+        <th>xdodávka</th>
+        <th>zostáva</th>
+        <th>MJ</th>
+
+    </tr>
+    </tfoot>
+ 
+    <tbody>
+    <?php foreach($this->mikroObjednavky as $mikroObjednavka) : ?>
+    <?php
+            $nekompatibilneTypyMJ = false;
+            if ($this->zakazniciModel->getMernaJednotka($mikroObjednavka->zakaznik_enum) <> $mikroObjednavka->merna_jednotka_enum){
+                $nekompatibilneTypyMJ = true;
+            }
+        ?>
+        <tr <?php if ($nekompatibilneTypyMJ){ echo "style=\"background-color:#FFFF99;\"";}?> >
+            <td>
+                <a href="<?php echo $this->url(array('controller'=>'mikroobjednavky',
+                    'action'=>'preview', 'id'=>$mikroObjednavka->objednavky_mikro_id, 'fromController'=>'mikroobjednavky', 'fromAction'=>'list'));?>"> <i class="fa fa-eye"></i></a>
+            </td>
+            <td><?php echo $this->escape($this->zakazniciModel->getNazov($mikroObjednavka->zakaznik_enum));?></td>
+            <td><?php echo date("d.m.Y", strtotime($this->escape($mikroObjednavka->datum_od_d)));   ?></td>
+            <td><?php echo date("d.m.Y", strtotime($this->escape($mikroObjednavka->datum_do_d)));   ?></td>
+            <td>
+                <?php if ($mikroObjednavka->nadobjednavka_enum == 0){
+                    echo "-";
+                }else{?>
+                    <a href="<?php echo $this->url(array('controller'=>'Objednavky',
+                    'action'=>'preview', 'id'=>$mikroObjednavka->nadobjednavka_enum,
+                        'fromController'=>'Mikroobjednavky', 'fromAction'=>'list'));?>">
+                        <?php
+                            echo $this->objednavkyModel->getKratkyPopis($mikroObjednavka->nadobjednavka_enum);
+                        ?>
+
+                    </a>
+
+                <?php
+                    //echo $this->escape($mikroObjednavka->nadobjednavka_enum);
+                }?>
+            </td>
+            <td><?php echo number_format($this->escape($mikroObjednavka->mnozstvo), 2, ",", " ");?></td>
+
+
+            <?php
+
+                $vydaje = $this->vydajeModel->getSubmittedQuantityByCustomerDateFromDateTo($mikroObjednavka->merna_jednotka_enum,$mikroObjednavka->zakaznik_enum,$mikroObjednavka->datum_od_d,$mikroObjednavka->datum_do_d);
+                $xvyroby = $this->xvyrobyModel->getSubmittedQuantityByCustomerDateFromDateTo($mikroObjednavka->merna_jednotka_enum,$mikroObjednavka->zakaznik_enum,$mikroObjednavka->datum_od_d,$mikroObjednavka->datum_do_d);
+                $xdodavky = $this->xdodavkyModel->getSubmittedQuantityByCustomerDateFromDateTo($mikroObjednavka->merna_jednotka_enum,$mikroObjednavka->zakaznik_enum,$mikroObjednavka->datum_od_d,$mikroObjednavka->datum_do_d);
+
+            ?>
+
+            <td><?php echo number_format($vydaje, 2, ",", " ");?></td>
+            <td><?php echo number_format($xvyroby, 2, ",", " ");?></td>
+            <td><?php echo number_format($xdodavky, 2, ",", " ");?></td>
+            <td><?php echo number_format($mikroObjednavka->mnozstvo - $vydaje - $xvyroby - $xdodavky, 2, ",", " ")?></td>
+
+            <td><?php echo $this->escape($this->merneJednotkyModel->getSkratka($mikroObjednavka->merna_jednotka_enum));?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller'=>'Mikroobjednavky',
+                    'action'=>'edit', 'id'=>$mikroObjednavka->objednavky_mikro_id));?>"> <i class="fa fa-pencil-square-o"></i></a>
+                <a href="<?php echo $this->url(array('controller'=>'Mikroobjednavky',
+                    'action'=>'delete', 'id'=>$mikroObjednavka->objednavky_mikro_id));?>"> <i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+</div>

@@ -1,0 +1,126 @@
+
+<?php //cast pre generaciu PDF
+
+//povinne volanie loaderu
+Zend_Loader::loadClass('Zend_Pdf');
+
+try {
+    //    1. bud vytvorim clear cisty ... 2.alebo otvaram existujuci layout
+    //    $pdf = new Zend_Pdf();
+    $filename = '../docs/pdf/prijmovy_listok_prijem.pdf';
+
+    //    nasleduje load
+    $pdf = Zend_Pdf::load( $filename);
+
+
+    // 1. vytvorim new page / 2. do premennej page, si dam prvu page v otvorenom pdf
+    //   premenna $page je standard pre pdf loader a vie s nou robit velke veci
+    //1. $page = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
+    $page = $pdf->pages[0];
+
+    // musis definovat font, tak nejaky drahy idealne z macu :D
+//    $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+    $font = Zend_Pdf_Font::fontWithPath('../public/fonts/arial.ttf');
+
+    //get parametre na tlac z URL
+
+    $id = $this->escape($this->prijem['ts_prijmy_id']);
+    $cislo_listku = $this->escape($this->prijem['doklad_cislo']);
+    $spz = $this->escape($this->prijem['prepravca_spz']);
+
+
+    $druh =  $this->escape($this->materialyDruhy->getSkratka($this->prijem['material_druh_enum'])); //skratka
+    $typ =  $this->escape($this->materialyTypy->getNazov($this->prijem['material_typ_enum']));
+
+
+    $sklad = $this->escape($this->sklady->getSkratka($this->prijem['sklad_enum']));
+    $podsklad = $this->escape($this->podsklady->getSkratka($this->prijem['podsklad_enum']));
+
+
+//    $dodavatel = $this->escape($this->zakaznici->getNazov($this->prijem['zakaznik_enum']));
+    $zakaznik = $this->dodavatelia->getDodavatel($this->prijem['dodavatel_enum']);
+    $adresa = $zakaznik['adresa'];
+    $ico = $zakaznik['ico'];
+    $dph = $zakaznik['ic_dph'];
+    $dodavatel = $zakaznik['nazov_spolocnosti'];
+
+
+    $timestamp = $this->escape($this->prijem['vznik_zaznamu_dtm']);
+    $datum = date('d.m.Y', strtotime($timestamp));
+    $cas = date('H:i:s', strtotime($timestamp));
+
+    $m3 = $this->prijem['q_m3_merane'];
+    $prm = $this->prijem['q_prm_merane'];
+
+    $meno = $this->escape($this->uzivatelia->getMeno($this->escape($this->prijem['vytvoril_u'])));
+    $poznamka = $this->prijem['material_poznamka'];
+
+    $page->setFont($font, 9)
+        ->drawText( strval($cislo_listku) , 440, 774)
+        ->drawText($spz, 380, 660)
+        ->drawText($dodavatel, 380, 720, 'UTF-8')
+        ->drawText($adresa, 380, 699, 'UTF-8')
+        ->drawText($ico, 380, 687, 'UTF-8')
+        ->drawText($dph, 380, 676, 'UTF-8')
+        ->drawText($datum, 200, 598)
+        ->drawText($cas, 200, 583)
+        ->drawText($typ . ' '. $druh, 390, 599, 'UTF-8')
+        ->drawText($meno, 390,584, 'UTF-8')
+        ->drawText($sklad . ' ' . $podsklad, 200, 569, 'UTF-8' );
+
+    if ( !empty($poznamka) ) {
+        $page->setFont($font, 8)
+            ->drawText("Poznámka: " . $poznamka, 207, 520, 'UTF-8');
+    }
+    $page->setFont($font, 12)
+        ->drawText( number_format($m3, 2, ",", " ") , 237, 538)
+        ->drawText( number_format($prm, 2, ",", " ") , 428, 538);
+
+//spodny listok
+    $page->setFont($font, 9)
+        ->drawText( strval($cislo_listku) , 440, 386)
+        ->drawText($spz, 380, 270)
+        ->drawText($dodavatel, 380, 331, 'UTF-8')
+        ->drawText($adresa, 380, 309, 'UTF-8')
+        ->drawText($ico, 380, 297, 'UTF-8')
+        ->drawText($dph, 380, 286, 'UTF-8')
+        ->drawText($datum, 200, 210)
+        ->drawText($cas, 200, 195)
+        ->drawText($typ . ' '. $druh, 390, 210, 'UTF-8')
+        ->drawText($meno, 390,195, 'UTF-8')
+        ->drawText($sklad . ' ' . $podsklad, 200, 181, 'UTF-8' );
+
+    $page->setFont($font, 12)
+        ->drawText( number_format($m3, 2, ",", " "), 237, 149)
+        ->drawText( number_format($prm, 2, ",", " ") , 428, 149);
+    if ( !empty($poznamka) ) {
+        $page->setFont($font, 8)
+            ->drawText("Poznámka: " . $poznamka, 207, 131, 'UTF-8');
+    }
+    // viem tu premennu $pdf pridat ako novu stranu (append) ale to teraz nie
+    // $pdf->pages[] = $page;
+
+    // ulozim si to ako file ... cesta a save
+
+    $output = '../public/pdf/'.$cislo_listku.'.pdf';
+    $odkaz = substr($output, 9);
+    $pdf->save( $output);
+
+
+
+}
+    // odchytavam zlyhavky cisto len pre kontrolu
+
+catch (Zend_Pdf_Exception $e) {
+    die ('PDF error: ' . $e->getMessage());
+} catch (Exception $e) {
+    die ('Application error: ' . $e->getMessage());
+}
+
+// hotovo , mozem linkovat na existujuci dokument .. cisto pre istotu keby cosi zlyhalo
+echo '<a id=”pdfDownloadLink” href="'.$this->baseUrl().$odkaz.'>Odkaz na PDF</a>';
+
+// ak je vsetko ok, automaticky redirect na pdf, takze link vyssie ani nevidno ... ak sa nic nepokazilo
+header('Location: '.$this->baseUrl().$odkaz);
+
+?>

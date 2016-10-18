@@ -1,0 +1,223 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl().'/js/jquery.chained.js';?>"></script>
+
+<script>
+
+    $(document).ready(function() {
+
+//        document.getElementById('datum_vydaju_d').readOnly = true;
+        $("#podsklad_enum").chained("#sklad_enum");
+
+    });
+
+</script>
+
+<?php
+$podsklady = new Application_Model_DbTable_Podsklady();
+$arr = $podsklady->getIdsSoSkladIds();
+$moznosti = $podsklady->getMoznosti();
+?>
+
+<h2 >Výdaje - vytvoriť nový</h2>
+
+<div class="col-lg-5">
+    <div class="panel panel-green">
+        <div class="panel-heading">
+            <h3 class="panel-title">Detail transakcie </h3>
+        </div>
+        <div class="panel-body">
+            <form action="<?php echo $this->escape($this->form->getAction()) ?>"
+                  method="<?php echo $this->escape($this->form->getMethod()) ?>"
+                  enctype="multipart/form-data" class="normal">
+
+                <?php echo $this->form->ts_vydaje_id; ?>
+
+                <div class="row">
+                    <fieldset>
+                        <!--                    <legend>Dátum príjmu</legend>-->
+
+                        <div class="col-lg-6"> 
+                            <!--                hide         Dátum:-->
+                            <?php echo $this->form->datum_vydaju_d; // render the user name field here ?>
+                        </div>
+                        <!-- <div class="col-lg-6"> -->
+                            <!--   fake field, readonly pre usera -->
+                            <!-- <dt id="datum_prijmu_d-label2"><label for="datum_prijmu_d2" class="required">Dátum príjmu</label></dt> -->
+                            <!-- <dd> -->
+                                <!-- <input type="text" name="datum_prijmu_d2" id="datum_prijmu_d2" value="<?php echo date('Y-m-d');?>" class="form-control" readonly></dd> -->
+                        <!-- </div> -->
+                    </fieldset>
+                </div>
+                <!---->
+                <div class="row">
+                    <fieldset>
+                        <legend>Sklady</legend>
+                        <div class="col-lg-6">
+                            <!--                        Sklad:-->
+                            <?php echo $this->form->sklad_enum; // render the user name field here ?>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!--                        Podsklad:-->
+
+
+                            <dt id="podsklad-label"><label for="podsklad" class="optional">Podsklad</label></dt>
+                            <dd id="podsklad-element">
+                                <select name="podsklad_enum" id="podsklad_enum" class="form-control">
+                                    <?php
+
+                                    $podsklady = new Application_Model_DbTable_Podsklady();
+                                    $podskladyIDs = $podsklady->getIdsSoSkladIds();
+
+
+                                    foreach ($moznosti as $key=>$podsklad ) :
+
+                                        foreach ($podskladyIDs as $podsklads ) :
+
+                                            if ($key == $podsklads['podsklad_id'])
+
+                                                echo '<option value="'.$key.'" class="'.$podsklads[sklad_id].'">'.$podsklad.'</option>';
+
+                                        endforeach;
+                                    endforeach ?>
+                                </select></dd>
+                            <!--                            --><?php //echo $this->form->podsklad_enum; // render the user name field here ?>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!--        -->
+                <div class="row">
+                    <fieldset>
+                        <legend>Dodanie</legend>
+                        <div class="col-lg-6">
+                            <!--                        Dodávateľ:-->
+                            <?php echo $this->form->zakaznik_enum; // render the user name field here ?>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!--                        Prepravca:-->
+                            <?php echo $this->form->prepravca_enum; // render the user name field here ?>
+                        </div>
+                </div>
+                <!--        -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!--                    ŠPZ:-->
+                        <?php echo $this->form->prepravca_spz; // render the user name field here ?>
+                    </div>
+                    </fieldset>
+                </div>
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Množstvo</legend>
+                        <div class="col-lg-6">
+                            <!--                        Netto:-->
+                            <?php echo $this->form->q_tony_merane->setAttribs(array('readonly' => 'true', 'value'=>0));
+;
+                                //$this->form->q_tony_merane; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <?php echo $this->form->q_m3_merane->setAttribs(array('readonly' => 'true', 'value'=>0));
+;
+                            //$this->form->q_m3_merane; // render the user name field here ?>
+                        </div>
+
+
+                    </fieldset>
+                </div>
+                <div class="row">
+
+
+                    <div class="col-lg-6">
+                        <?php
+                        echo $this->form->q_prm_merane->setAttribs(array('readonly' => 'true', 'value'=>0));
+                        //$this->form->q_prm_merane; // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <?php
+                        echo
+                        $this->form->q_vlhkost->setAttribs(array('readonly' => 'true', 'value'=>0));
+                        //$this->form->q_vlhkost; // render the user name field here ?>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Spracovanie</legend>
+
+                        <div class="col-lg-12">
+                            <!--                        Netto:-->
+                            <?php echo $this->form->stroj_enum; // render the user name field here ?>
+                        </div>
+
+
+                    </fieldset>
+                    </div>
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Materiál</legend>
+                        <div class="col-lg-6">
+                            <!--                        Typ:-->
+                            <?php echo $this->form->material_typ_enum; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                        Druh:-->
+                            <?php echo $this->form->material_druh_enum; // render the user name field here ?>
+                        </div>
+
+                </div>
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Doplňujúce informácie</legend>
+                        <div class="col-lg-6">
+                            <!--                        Stav:-->
+                            <?php echo $this->form->stav_transakcie->setAttribs(array('disabled' => 'disabled')); // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                        Chyba:-->
+                            <?php echo $this->form->chyba->setAttribs(array('disabled' => 'disabled')); // render the user name field here ?>
+                        </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <!--                    Poznámka:-->
+                        <?php echo $this->form->poznamka; // render the user name field here ?>
+                    </div>
+                    </fieldset>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->potvrdzujuceTlacidlo; // render the user name field here ?>
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <dt>&nbsp;</dt>
+                        <a href="<?php
+                        //pageManager
+                        echo $this->url(array(
+                            'controller' => 'vydaje',
+                            'action' => $this->fromAction,
+                            'module' => 'skladnik'
+                        ), null, true) ?>"  type="button" class="btn btn-warning">Späť</a>
+
+                    </div>
+                </div>
+                <!--                --><?php //echo $this->form->doklad_typ_enum; // render the user name field here ?>
+            </form>
+

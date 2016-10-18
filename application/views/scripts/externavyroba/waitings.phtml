@@ -1,0 +1,115 @@
+<?php
+$this->headTitle($this->title);
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table_ext.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
+
+
+$notifikacie     = new Application_Model_Notifikacie();
+$notif_info = $notifikacie->getStatusArray();
+$count_notif = $notif_info['total'];
+$externe_vyroby_w = $notif_info['externe_vyroby_waitings'];
+$externe_vyroby_e = $notif_info['externe_vyroby_errors'];
+
+$controller = 'externavyroba';
+$this->prijmybuttons($this,$externe_vyroby_w,$externe_vyroby_e,$controller);
+?>
+
+
+
+<div class="table-responsive">
+    <table id="fancy_table" class="table table-hover table-striped" >
+
+        <thead>
+        <tr class="tableizer-firstrow">
+
+            <th class="no-print">Detail</th>
+            <th>Dátum</th>
+            <th>Zákazník</th>
+            <th>Dodávateľ</th>
+            <th>Stroj</th>
+            <th>Miesto štp.</th>
+            <th>Prepravca</th>
+            <th>Tony</th>
+            <th>m<sup>3</sup></th>
+            <th>PRM </th>
+            <th>Vlhkosť</th>
+            <th>Doklad</th>
+            <th>Materiál</th>
+            <th class="col-stav">Stav</th>
+            <th class="col-upravy no-print">Úpravy</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th></th>
+            <th>dátum</th>
+            <th>zákazník</th>
+            <th>dodávateľ</th>
+            <th>stroj</th>
+            <th>miesto štp.</th>
+            <th></th>
+            <th>tony</th>
+            <th>m3</th>
+            <th>prm</th>
+            <th>vlhkost</th>
+            <th>assss</th>
+            <th>materiál</th>
+        </tr>
+        </tfoot>
+
+        <tbody>
+
+        <?php foreach($this->externeVyroby as $externa_vyroba) : ?>
+            <?php if ($externa_vyroba->chyba == 1 ) echo "<tr class='danger'> ";
+            else echo   "<tr>";
+            ?>
+            <td class="center no-print"> <a href="<?php echo $this->url(array('controller'=>'externavyroba',
+                'action'=>'preview', 'id'=>$externa_vyroba->tx_vyroba_id, 'fromAction' => 'list'));?>">
+                     <i class="fa fa-eye"></i>
+                </a></td>
+            <td>
+            <?php
+            $date = date('Y.m.d', strtotime($this->escape($externa_vyroba->datum_xvyroby_d)));
+            echo $date ;?>
+            </td>
+            <td><?php echo $this->escape($this->zakaznici->getNazov($externa_vyroba->zakaznik_enum));?></td>
+            <td><?php echo $this->escape($this->dodavatelia->getNazov($externa_vyroba->dodavatel_enum));?></td>
+            <td><?php echo $this->escape($this->stroje->getNazov($externa_vyroba->stroj_enum));?></td>
+            <td><?php echo $this->escape($this->miestaStiepenia->getNazov($externa_vyroba->miesto_stiepenia_enum));?></td>
+            <td><?php echo $this->escape($this->prepravci->getNazov($externa_vyroba->prepravca_enum));?></td>
+                <td class="tonaz"><?php echo number_format($this->escape($externa_vyroba->q_tony_merane), 2, ",", " ");?></td>
+
+            <td class="m3"><?php echo number_format($this->escape($externa_vyroba->q_m3_merane), 2, ",", " ");?></td>
+            <td class="prm"><?php echo number_format($this->escape($externa_vyroba->q_prm_merane), 2, ",", " ");?></td>
+            <td class="vlhkost">
+                <?php
+            if ($externa_vyroba->q_vlhkost == 0.00){
+                echo "-";
+            }else {
+                echo number_format($this->escape($externa_vyroba->q_vlhkost), 2, ",", " ") . "%";
+            }
+            ?>
+            </td>
+            <td><?php echo $this->escape($externa_vyroba->doklad_cislo);?></td>
+            <td><?php echo $this->escape($this->materialyTypy->getNazov($externa_vyroba->material_typ_enum));?></td>
+            <td class="center">
+                <?php $this->stavy($externa_vyroba); ?>
+            </td>
+            <td>
+                <?php   $merna_jednotka = '666';
+            $this->tlacbuttons($this,$merna_jednotka,$externa_vyroba->tx_vyroba_id,$controller);
+            ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <div id="tonaz">   </div>
+    <div id="m3">   </div>
+    <div id="prm">   </div>
+    <div id="priemer"> </div>
+</div>

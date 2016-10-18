@@ -1,0 +1,478 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl().'/js/vlhkost_auto.js';?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl().'/js/jquery.chained.js';?>"></script>
+
+<script>
+
+
+    function isEmpty(str){
+
+        if(document.getElementById(str).value == "")
+        {
+            return true;
+        }
+        return false;
+
+    }
+
+
+    function getComboA(sel) {
+        var value = sel.value;
+
+        var tonym = +$("#q_tony_merane").val();
+        var tonyb = +$("#q_tony_brutto").val();
+
+        var tonyt = +$("#q_tony_tara").val();
+        var m3 = +$("#q_m3_merane").val();
+        var prm = +$("#q_prm_merane").val();
+
+        var nula = "";
+
+        $("#q_m3_merane").val( nula );
+        $("#q_tony_brutto").val( nula );
+        $("#q_tony_merane").val( nula );
+        $("#q_tony_tara").val( nula );
+        $("#q_tony_nadrozmer").val( nula );
+        $("#q_prm_merane").val( nula );
+
+
+
+    }
+
+    $(document).ready(function(){
+
+        document.getElementById('q_tony_merane').readOnly = true;
+        document.getElementById('q_m3_merane').readOnly = true;
+        document.getElementById('q_prm_merane').readOnly = true;
+
+        window.setInterval(function(){
+//deklaracie ....
+            var tonym = +$("#q_tony_merane").val();
+            var tonyb = +$("#q_tony_brutto").val();
+            var tonyn =  +$("#q_tony_nadrozmer").val();
+            var tonyt = +$("#q_tony_tara").val();
+            var m3 = +$("#q_m3_merane").val();
+            var prm = +$("#q_prm_merane").val();
+
+//            ifiky ... tieto sa kontroluju kazdu sekundu
+
+//            ked zmazem m3
+
+            if ( //ak sa nieeco posere a vsetky fieldy sa locknu ... zmaz ich a unlockni
+            //checkujem kazdu sekundu
+                document.getElementById('q_tony_nadrozmer').getAttribute('disabled') == false
+                && document.getElementById('q_tony_tara').getAttribute('disabled') == false
+                && document.getElementById('q_tony_brutto').getAttribute('disabled') == false
+                && document.getElementById('q_tony_merane').getAttribute('disabled') == false
+                && document.getElementById('q_prm_merane').getAttribute('disabled') == false
+                && document.getElementById('q_m3_merane').getAttribute('disabled') == false
+
+            ) {
+                tonym = nula; tonyb = nula; tonyt = nula; tonyn = nula;
+                prm = nula; m3 = nula;
+
+                document.getElementById('q_tony_nadrozmer').readOnly = false;
+                document.getElementById('q_tony_tara').readOnly = false;
+                document.getElementById('q_tony_brutto').readOnly = false;
+                document.getElementById('q_tony_merane').readOnly = false;
+                document.getElementById('q_prm_merane').readOnly = true;
+                document.getElementById('q_m3_merane').readOnly = true;
+
+            }
+
+            if ( m3 == "" ) {
+                document.getElementById('q_tony_nadrozmer').readOnly = false;
+                document.getElementById('q_tony_tara').readOnly = false;
+                document.getElementById('q_tony_brutto').readOnly = false;
+                document.getElementById('q_prm_merane').readOnly = true;
+            }
+
+            if ( prm == "" ) {
+                document.getElementById('q_tony_nadrozmer').readOnly = false;
+                document.getElementById('q_tony_tara').readOnly = false;
+                document.getElementById('q_tony_brutto').readOnly = false;
+                document.getElementById('q_m3_merane').readOnly = true;
+            }
+
+//            kde je vsade nula ... otvor polia, a nuly vymaz
+            if ( prm == "0" && tonym == "0" && m3 == "0" )
+            {
+                tonyn = "";
+                tonyt = "";
+                tonyb = "";
+
+                document.getElementById('q_m3_merane').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+
+
+//                document.getElementById('q_tony_merane').readOnly = false;
+            }
+
+
+        }, 1000);
+
+        <?php
+            $materialyDruhyModel = new Application_Model_DbTable_MaterialyDruhy();
+            $konverznaTabulka = $materialyDruhyModel->getKonverzieAll();
+        ?>
+
+
+
+        $(".in").keyup(function(){
+            var konverznaTabulka = <?php echo json_encode($konverznaTabulka); ?>;
+
+            var tonym = +$("#q_tony_merane").val().replace(",",".");
+            var tonyb = +$("#q_tony_brutto").val().replace(",",".");
+
+            var tonyt = +$("#q_tony_tara").val().replace(",",".");
+            //var m3 = +$("#q_m3_merane").val().replace(",",".");
+            //var prm = +$("#q_prm_merane").val().replace(",",".");
+
+            var materialDruh =  +$("#material_druh_enum").val();
+
+            var tony2m3 = konverznaTabulka[materialDruh]["ton_m3"];
+            var tony2prm = konverznaTabulka[materialDruh]["ton_prm"];
+
+            var m32tony = konverznaTabulka[materialDruh]["m3_ton"];
+            var m32prm = konverznaTabulka[materialDruh]["m3_prm"];
+
+            var prm2tony = konverznaTabulka[materialDruh]["prm_ton"];
+            var prm2m3 = konverznaTabulka[materialDruh]["prm_m3"];
+
+            var nula = "";
+
+            //blokacia kvoli integrite - moze pridavat len tony
+            document.getElementById('q_m3_merane').readOnly = true;
+            document.getElementById('q_prm_merane').readOnly = true;
+
+//
+            if($('#q_tony_brutto').is(':focus')) {
+
+                document.getElementById('q_m3_merane').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+
+                $("#q_tony_merane").val(tonyb - tonyt);
+                $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+                $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+            }
+
+            if($('#q_tony_tara').is(':focus')) {
+
+                document.getElementById('q_m3_merane').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+
+                $("#q_tony_merane").val(tonyb - tonyt);
+                $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+                $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+
+            }
+
+            if($('#q_tony_nadrozmer').is(':focus')) {
+
+                document.getElementById('q_m3_merane').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+
+                $("#q_tony_merane").val(tonyb - tonyt);
+                $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+                $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+
+
+            }
+
+
+            if($('#q_m3_merane').is(':focus')) {
+
+                document.getElementById('q_tony_merane').readOnly = true;
+                document.getElementById('q_tony_brutto').readOnly = true;
+                document.getElementById('q_tony_tara').readOnly = true;
+                document.getElementById('q_tony_nadrozmer').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+
+                $("#q_tony_brutto").val( nula );
+                $("#q_tony_tara").val( nula );
+                $("#q_tony_nadrozmer").val( nula );
+
+                $("#q_tony_merane").val( m3 * m32tony);
+                $("#q_prm_merane").val( m3 * m32prm);
+
+            }
+
+            if($('#q_prm_merane').is(':focus')) {
+
+
+                document.getElementById('q_tony_merane').readOnly = true;
+                document.getElementById('q_tony_brutto').readOnly = true;
+                document.getElementById('q_tony_tara').readOnly = true;
+                document.getElementById('q_tony_nadrozmer').readOnly = true;
+                document.getElementById('q_m3_merane').readOnly = true;
+
+                $("#q_tony_brutto").val( nula );
+                $("#q_tony_tara").val( nula );
+                $("#q_tony_nadrozmer").val( nula );
+
+                $("#q_tony_merane").val( prm * prm2tony);
+                $("#q_m3_merane").val( prm * prm2m3);
+
+            }
+
+
+        });
+
+        $("#podsklad_enum").chained("#sklad_enum");
+
+    });
+
+</script>
+
+<?php
+$podsklady = new Application_Model_DbTable_Podsklady();
+$arr = $podsklady->getIdsSoSkladIds();
+$moznosti = $podsklady->getMoznosti();
+?>
+
+<h2 >Príjmy - vytvoriť nový</h2>
+
+<div class="col-lg-5">
+    <div class="panel panel-green">
+        <div class="panel-heading">
+            <h3 class="panel-title">Detail transakcie </h3>
+        </div>
+        <div class="panel-body">
+
+
+            <form action="<?php echo $this->escape($this->form->getAction()) ?>"
+                  method="<?php echo $this->escape($this->form->getMethod()) ?>"
+                  enctype="multipart/form-data" class="normal">
+
+
+                    <?php echo $this->form->ts_prijmy_id; ?>
+
+
+
+
+            <div class="row">
+                <fieldset>
+<!--                    <legend>Dátum príjmu</legend>-->
+
+                    <div class="col-lg-6 ">
+<!--  hide                        Original datum, ktory je faded ze ho nevidno -->
+                        <?php echo $this->form->datum_prijmu_d; // render the user name field here ?>
+                    </div>
+
+                    <!-- <div class="col-lg-6"> -->
+                        <!--   fake field, readonly pre usera -->
+                        <!-- <dt id="datum_prijmu_d-label2"><label for="datum_prijmu_d2" class="required">Dátum príjmu</label></dt> -->
+                        <!-- <dd> -->
+                            <!-- <input type="text" name="datum_prijmu_d2" id="datum_prijmu_d2" value="<?php echo date('Y-m-d');?>" class="form-control" readonly></dd> -->
+                    <!-- </div> -->
+                </fieldset>
+            </div>
+            <!---->
+            <div class="row">
+                <fieldset>
+                    <legend>Sklady</legend>
+                    <div class="col-lg-6">
+<!--                        Sklad:-->
+                        <?php echo $this->form->sklad_enum; // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <!--                        Podsklad:-->
+
+
+                        <dt id="podsklad-label"><label for="podsklad" class="optional">Podsklad</label></dt>
+                        <dd id="podsklad-element">
+                            <select name="podsklad_enum" id="podsklad_enum" class="form-control">
+                                <?php
+
+                                $podsklady = new Application_Model_DbTable_Podsklady();
+                                $podskladyIDs = $podsklady->getIdsSoSkladIds();
+
+
+                                foreach ($moznosti as $key=>$podsklad ) :
+
+                                    foreach ($podskladyIDs as $podsklads ) :
+
+                                        if ($key == $podsklads['podsklad_id'])
+
+                                            echo '<option value="'.$key.'" class="'.$podsklads[sklad_id].'">'.$podsklad.'</option>';
+
+                                    endforeach;
+                                endforeach ?>
+                            </select></dd>
+                        <!--                            --><?php //echo $this->form->podsklad_enum; // render the user name field here ?>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!--        -->
+            <div class="row">
+                <fieldset>
+                    <legend>Dodanie</legend>
+                    <div class="col-lg-6">
+<!--                        Dodávateľ:-->
+                        <?php echo $this->form->dodavatel_enum; // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+<!--                        Prepravca:-->
+                        <?php echo $this->form->prepravca_enum; // render the user name field here ?>
+                    </div>
+            </div>
+            <!--        -->
+            <div class="row">
+                <div class="col-lg-6">
+<!--                    ŠPZ:-->
+                    <?php echo $this->form->prepravca_spz; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+            <!---->
+
+<!--                cast pre prepocty -->
+            <?php
+
+                $merneJednotky = new Application_Model_DbTable_MerneJednotky();
+
+            $moznosti = $merneJednotky->getPrepoctyArray(5,1,2);
+
+//            var_dump($moznosti);
+            ?>
+<!--                koniec prepoctov .. rozparsovane -->
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Materiál</legend>
+                        <div class="col-lg-6">
+                            <!--                        Typ:-->
+                            <?php echo $this->form->material_typ_enum; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                        Druh:-->
+                            <?php echo $this->form->material_druh_enum; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-12">
+<!--                        Poznámka:-->
+                            <?php echo $this->form->material_poznamka; // render the user name field here ?>
+                        </div>
+
+                </div>
+
+
+                <div class="row">
+                <fieldset>
+                    <legend>Množstvo</legend>
+                    <div class="col-lg-6">
+<!--                        Netto:-->
+                        <?php echo $this->form->q_tony_merane->setAttribs(array('readonly' => 'readonly')); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6 hide">
+                        <!--                        Brutto:-->
+                        <?php echo $this->form->q_tony_nadrozmer; // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <dt id="q_vlhkost-label"><label for="q_vlhkost" class="optional">Nadrozmer</label></dt>
+                        <dd id="q_vlhkost-element">
+                            <div class="form-group input-group">
+                                <input type="text" id="help" class="form-control" placeholder="0">
+                                <span class="input-group-addon">%</span>
+                            </div>
+
+                        </dd>
+
+                    </div>
+                </fieldset>
+            </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_tony_brutto; // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_tony_tara; // render the user name field here ?>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_m3_merane->setAttribs(array('readonly' => 'readonly', 'value' => 0)); // render the user name field here ?>
+                    </div>
+
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_prm_merane->setAttribs(array('readonly' => 'readonly', 'value' => 0)); // render the user name field here ?>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <?php echo $this->form->q_vlhkost; // render the user name field here ?>
+                    </div>
+
+                </div>
+
+
+
+
+            <div class="row">
+                <fieldset>
+                    <legend>Doplňujúce informácie</legend>
+                    <div class="col-lg-6">
+<!--                        Stav:-->
+                        <?php
+                            echo $this->form->stav_transakcie->setAttribs(array('disabled' => 'disabled', 'value' => 1));
+                        ?>
+                    </div>
+                    <div class="col-lg-6">
+<!--                        Chyba:-->
+                        <?php
+                            echo $this->form->chyba->setAttribs(array('disabled' => 'disabled', 'value' => 0));
+                        ?>
+                    </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12">
+<!--                    Poznámka:-->
+                    <?php echo $this->form->poznamka; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->potvrdzujuceTlacidlo; // render the user name field here ?>
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+                            <dt>&nbsp;</dt>
+                        <a href="<?php
+                        //pageManager
+                        echo $this->url(array(
+                            'controller' => 'prijmy',
+                            'action' => $this->fromAction,
+                            'module' => 'skladnik'
+                        ), null, true) ?>"  type="button" class="btn btn-warning">Späť</a>
+
+                    </div>
+                </div>
+<!--                --><?php //echo $this->form->doklad_typ_enum; // render the user name field here ?>
+        </form>
+
+
+

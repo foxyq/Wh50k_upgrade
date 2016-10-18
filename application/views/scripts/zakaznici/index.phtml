@@ -1,0 +1,140 @@
+<?php
+$this->headTitle($this->title);
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+$zakazniciModel = $this->zakazniciModel;
+
+?>
+
+
+<script src="<?php echo $this->baseUrl().'/js/morris.min.js';?>"></script>
+<script src="<?php echo $this->baseUrl().'/js/raphael.min.js';?>"></script>
+
+
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $('.fancy_table').DataTable( {
+            "order": [[ 1, "desc" ]],
+            columnDefs: [
+                { "sType": "title-string", "aTargets": [ 2 ]  }
+//                    { "sType": "alt-string", "aTargets" : 1 }
+            ],
+            initComplete: function () {
+                var api = this.api();
+                var abc = 0;
+                api.columns().indexes().flatten().each( function ( i ) {
+                    var column = api.column( i );
+                    if (i != abc) {
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo( $(column.footer()).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.DataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    }
+                } );
+            }
+        } );
+    } );
+</script>
+<!--
+<div class="row table-responsive">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Prehľad dodaných objednávok zákazníkom (uvádzané v počte kusov)</h3>
+            </div>
+            <div class="panel-body overflow">
+                <div id="morris-bar-chart"></div>
+                <div class="text-right">
+                    <a href="#fancy_table">Prejsť na tabuľku <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+
+<!--Taby-->
+<ul class="nav nav-tabs">
+    <?php
+    foreach($this->rokyModel->getIds() as $rokId):?>
+        <li <?php if ($rokId == 1){echo "class=\"active\"";}?>><a data-toggle="tab" href="#menu<?php echo $rokId;?>"><?php echo $this->rokyModel->getNazov($rokId);?></a></li>
+    <?php endforeach; ?>
+</ul>
+
+<div class="tab-content">
+    <?php
+    foreach($this->rokyModel->getIds() as $rokId):?>
+        <div id="<?php echo "menu".$rokId;?>" <?php if ($rokId == 1){echo "class=\"tab-pane fade in active\"";} else { echo "class=\"tab-pane fade\"";}?>>
+            <div class="table-responsive" style="padding-top: 10px">
+                <table  class=" fancy_table table table-striped table-hover">
+                    <thead>
+                    <tr class="tableizer-firstrow">
+                        <th>Zákazník</th>
+                        <th>Dodané množstvo</th>
+                        <th>MJ</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <?php foreach($this->zakazniciModel->getIds() as $zakaznikId) : ?>
+                        <tr>
+                            <td><?php echo $this->escape($this->zakazniciModel->getNazov($zakaznikId));?></td>
+
+                            <td><?php echo number_format($this->escape($this->zakazniciModel->getQuantityByYearIdQuantityTypeIdZakaznikId($rokId, $zakaznikId)), 2, ",", " ");?></td>
+
+                            <td><?php echo $this->escape($this->merneJednotkyModel->getSkratka($this->zakazniciModel->getMernaJednotka($zakaznikId)));?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+
+                    <tfoot>
+                    <tr >
+                        <th>Zákazník</th>
+                        <th>Dodané množstvo</th>
+                        <th>MJ</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+    <?php endforeach; ?>
+
+</div>
+
+<script>
+
+    Morris.Bar({
+        element: 'morris-bar-chart',
+        data: [
+
+            <?php $counter = 0;
+foreach($this->zakazniciModel->getIds() as $zakaznikId) : ?>
+            { device: <?php echo "'".$this->zakazniciModel->getNazov($zakaznikId)."' ,";?>
+                geekbench: <?php echo $this->zakazniciModel->getCountTransactionsByStrojId($zakaznikId); ?> }
+    <?php $counter++; if ($counter < count($this->zakazniciModel->getIds()) ) echo ','; ?>
+    <?php endforeach; ?>
+
+    ],
+    xkey: 'device',
+        ykeys: ['geekbench'],
+        labels: ['Dodané objednávky'],
+        barRatio: 15,
+        xLabelAngle: 35,
+        hideHover: 'auto',
+        resize: false
+    });
+
+</script>
+
+

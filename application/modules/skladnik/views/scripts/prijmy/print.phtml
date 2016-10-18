@@ -1,0 +1,66 @@
+
+<?php //cast pre generaciu PDF
+
+//povinne volanie loaderu
+Zend_Loader::loadClass('Zend_Pdf');
+
+try {
+    //    1. bud vytvorim clear cisty ... 2.alebo otvaram existujuci layout
+    //    $pdf = new Zend_Pdf();
+    $filename = '../docs/pdf/layout_pl.pdf';
+
+    //    nasleduje load
+    $pdf = Zend_Pdf::load( $filename);
+
+
+    // 1. vytvorim new page / 2. do premennej page, si dam prvu page v otvorenom pdf
+    //   premenna $page je standard pre pdf loader a vie s nou robit velke veci
+    //1. $page = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
+    $page = $pdf->pages[0];
+
+    // musis definovat font, tak nejaky drahy idealne z macu :D
+    $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+
+    //get parametre na tlac z URL
+
+    $id = $this->escape($this->prijem['ts_prijmy_id']);
+    $cislo_listku = $this->escape($this->prijem['doklad_cislo']);
+    $spz = $this->escape($this->prijem['prepravca_spz']);
+    $dodavatel = "Lokomat";
+
+        echo '<br> VIEW getnute ID '.$id.', cislo '.$cislo_listku.', spz '.$spz;
+
+
+    //  do tej page, ktoru som si vyssie vybral, vpisujem moje stringy na x,y, poziciu
+    $page->setFont($font, 9)
+        ->drawText( strval($cislo_listku) , 455, 747)
+        ->drawText($spz, 400, 707)
+        ->drawText($dodavatel, 400, 685);
+
+    // viem tu premennu $pdf pridat ako novu stranu (append) ale to teraz nie
+    // $pdf->pages[] = $page;
+
+    // ulozim si to ako file ... cesta a save
+
+    $output = '../public/pdf/prijmovy_listok-'.$cislo_listku.'.pdf';
+    $odkaz = substr($output, 9);
+    $pdf->save( $output);
+
+
+
+}
+    // odchytavam zlyhavky cisto len pre kontrolu
+
+catch (Zend_Pdf_Exception $e) {
+    die ('PDF error: ' . $e->getMessage());
+} catch (Exception $e) {
+    die ('Application error: ' . $e->getMessage());
+}
+
+// hotovo , mozem linkovat na existujuci dokument .. cisto pre istotu keby cosi zlyhalo
+echo '<a id=”pdfDownloadLink” href="'.$this->baseUrl().$odkaz.'>Odkaz na PDF</a>';
+
+// ak je vsetko ok, automaticky redirect na pdf, takze link vyssie ani nevidno ... ak sa nic nepokazilo
+header('Location: '.$this->baseUrl().$odkaz);
+
+?>

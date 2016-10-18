@@ -1,0 +1,304 @@
+<?php
+//$this->headTitle($this->title);
+
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+//definicia farieb skladov - farby sa opakuju v slucke ale ak chces viac roznych treba definovat v css a potom sem nahodit string do pola - automaticky sa to strieba v poradi
+$colors = array('1' => 'red', '2' => 'primary', '3' => 'green', '4' => 'yellow', '5' => 'purple', '6' => 'aqua');
+//print_r($this->vyvojStavuSkladov);
+?>
+
+<!--SKLADY SCRIPTS-->
+<script src="<?php echo $this->baseUrl().'/js/morris.min.js';?>"></script>
+<script src="<?php echo $this->baseUrl().'/js/raphael.min.js';?>"></script>
+
+<!--OBJEDNAVKY SCRIPTS-->
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $('#fancy_table').DataTable( {
+            "order": [[ 2, "desc" ]],
+            columnDefs: [
+                { "sType": "title-string", "aTargets": [ 3 ]  }
+            ],
+            initComplete: function () {
+                var api = this.api();
+                var abc = 0;
+                api.columns().indexes().flatten().each( function ( i ) {
+                    var column = api.column( i );
+                    if (i != abc) {
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo( $(column.footer()).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.DataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    }
+                } );
+            }
+        } );
+    } );
+</script>
+
+<!--SKLADY-->
+<h2><i class="fa fa-bank"></i> Stav skladov</h2><br>
+
+
+<div class="row">
+
+                    <?php
+                    $skladyIds = $this->skladyModel->getIds();
+                    $counter = 1;
+
+                    $pocitadlo = 1;
+                    ?>
+
+                    <?php foreach ($skladyIds AS $skladId) :
+                        if ($counter>count($colors)) {$counter = 1;}
+                        ?>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-<?php echo $colors[$counter]?>">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-3x
+                                            <?php
+                                                switch ($this->skladyModel->getMernaJednotkaSkratka($skladId)){
+                                                    case 't':
+                                                        echo 'fa-database';
+                                                        break;
+                                                    case 'm3':
+                                                        echo 'fa-cubes';
+                                                        break;
+                                                    case 'PRM':
+                                                        echo 'fa-cube';
+                                                        break;
+                                                }
+
+
+                                            ?>">
+                                                <?php
+                                                    //ECHO $this->skladyModel->getSkratka($skladId)
+
+                                            ?></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">
+                                            <span style="font-size:26pt;">
+                                            <?php
+                                                $aktualnyStavSkladu = $this->ubytky->getLastStavSkladu($skladId);
+                                                $aktualnyStavSkladu = number_format($aktualnyStavSkladu['t'], 0, ',', ' ');
+                                                echo $aktualnyStavSkladu;
+                                            ?>
+                                            <span style="font-size:10pt;">
+                                                <?php
+                                                    //print_r($this->skladyModel->getMernaJednotkaSkratka($skladId));
+                                                    $mernaJednotka = $this->skladyModel->getMernaJednotkaSkratka($skladId);
+                                                    if ($mernaJednotka == 'm3'){
+                                                        echo "m<sup>3</sup>";
+                                                    }else{
+                                                        echo $mernaJednotka;
+                                                    }
+                                                ?>
+                                            </span>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <?php
+                                                echo $this->skladyModel->getNazov($skladId);
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="margin-left: 15px; margin-right: 15px;">
+
+                                <div class="row">
+
+                                </div>
+
+                                    <div class="row " >
+                                        <table class="center table-hover" style="border-style: none; width: 100%">
+                                            <tr class="tleft" style="font-weight: bold;">
+                                                <td>Pohyb</td>
+                                                <td>Príjmy</td>
+                                                <td>Výdaje</td>
+                                                <td>Celkovo</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tleft">Deň</td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['den']['prijmy'], 0, ',', ' ');?></td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['den']['vydaje'], 0, ',', ' ');?></td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['den']['total'], 0, ',', ' ');?></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tleft">Týždeň</td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['tyzden']['prijmy'], 0, ',', ' ');?></td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['tyzden']['vydaje'], 0, ',', ' ');?></td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['tyzden']['total'], 0, ',', ' ');?></td>
+                                            </tr>
+                                             <tr>
+                                                <td class="tleft">Mesiac</td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['mesiac']['prijmy'], 0, ',', ' ');?></td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['mesiac']['vydaje'], 0, ',', ' ');?></td>
+                                                <td><?php echo number_format($this->pohyby[$skladId]['mesiac']['total'], 0, ',', ' ');?></td>
+                                            </tr>
+                                        </table>
+
+                                  </div>
+
+                            </div>
+                            <div class="panel-heading center">
+                                <div class="row">
+                                    <div class="col-xs-12 text-right">
+                                            <span class="white">
+                                                <a href="<?php echo $this->url(array('controller'=>'sklady',
+                                                    'action'=>'index', "fromAction"=>"index", "fromController"=>"index", "skladID"=>$skladId));?>" class="right" >Detail <i class="fa fa-arrow-circle-right"></i></a>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <?php
+                    $counter++;
+                    endforeach; ?>
+
+    <!-- GRAFY DATA LOAD ... -->
+    <?php foreach ($skladyIds AS $skladId) : ?>
+
+        <?php
+        $dataSkladu = new Application_Model_DbTable_UbytkyHmotnosti();
+        $dataSkladu = $dataSkladu->getLastXValues( $skladId, 5);
+        ?>
+
+        <script>
+        // Area Chart
+        Morris.Bar({
+            element: 'morris-area-chart-<?php echo $skladId ?>',
+
+            data: <?php echo json_encode($dataSkladu);?>,
+
+            xkey: 'datum',
+            ykeys: ['stav'],
+            labels: ['Stav'],
+            pointSize: 2,
+            hideHover: 'auto',
+            smooth: true,
+            resize: true,
+            <?php if ($skladId == 1) {
+             echo "barColors: ['#d9534f']";
+             }
+             else if ($skladId ==3){
+             echo "barColors: ['#5cb85c']";
+             }
+             ?>
+
+        });
+
+
+        var d = document.getElementById("hidden_field<?php echo $skladId?>");
+        d.className = d.className + " hidden";
+
+    </script>
+
+<?php endforeach ?>
+
+
+    </div>
+
+<!--<hr>-->
+
+<h2><i class="fa fa-money"></i> Objednávky</h2><br>
+<!--OBJEDNAVKY-->
+<div id=".col-lg-12"  class="table-responsive">
+<table id="fancy_table"  class="table table-striped table-hover">
+
+
+    <thead>
+    <tr class="tableizer-firsrow">
+
+        <th>Detail</th>
+        <th>Zákazník</th>
+        <th>Rok</th>
+        <th>Mesiac</th>
+        <th>Plnenie</th>
+        <th>Objednané</th>
+        <th>Dodané</th>
+        <th>Zostáva</th>
+        <th>MJ</th>
+    </tr>
+    </thead>
+
+    <tfoot>
+    <tr>
+    <!--<th></th>-->
+        <th></th>
+        <th>Zákazník</th>
+        <th>Rok</th>
+        <th>Mesiac</th>
+        <th>Plnenie</th>
+        <th>Objednané</th>
+        <th>Dodané</th>
+        <th>Zostáva</th>
+        <th>MJ</th>
+    </tr>
+    </tfoot>
+
+    <tbody>
+    <?php foreach($this->objednavky as $objednavka) : ?>
+    <?php
+            $nekompatibilneTypyMJ = false;
+            if ($this->zakazniciModel->getMernaJednotka($objednavka->zakaznik_enum) <> $objednavka->merna_jednotka_enum){
+                $nekompatibilneTypyMJ = true;
+            }
+        ?>
+        <tr <?php if ($nekompatibilneTypyMJ){ echo "style=\"background-color:#FFFF99;\"";}?> >
+<!--            <td>--><?php //echo $this->escape($objednavka->objednavky_id);?><!--</td>-->
+            <td>
+                <a href="<?php echo $this->url(array('controller'=>'Objednavky',
+                    'action'=>'preview', 'id'=>$objednavka->objednavky_id, "fromAction"=>"index", "fromController"=>"index"));?>"> <i class="fa fa-eye"></i></a>
+            </td>
+            <?php
+                $vydaje = $this->vydajeModel->getSubmittedQuantityByStockYearMonth($objednavka->merna_jednotka_enum,$objednavka->zakaznik_enum,$objednavka->rok_enum,$objednavka->mesiac_enum);
+                $xvyroby = $this->xvyrobyModel->getSubmittedQuantityByStockYearMonth($objednavka->merna_jednotka_enum,$objednavka->zakaznik_enum,$objednavka->rok_enum,$objednavka->mesiac_enum);
+                $xdodavky = $this->xdodavkyModel->getSubmittedQuantityByStockYearMonth($objednavka->merna_jednotka_enum,$objednavka->zakaznik_enum,$objednavka->rok_enum,$objednavka->mesiac_enum);
+                $dodane = $vydaje + $xvyroby + $xdodavky;
+                $plnenie = ($dodane/$objednavka->mnozstvo)*100;
+                if ($plnenie >= 25){
+                    if ($plnenie >= 75){
+                        $farbaClass = 'success';
+                    }else
+                        $farbaClass = 'warning';
+                }else{
+                    $farbaClass = 'danger';
+                }
+            ?>
+
+            <td><?php echo $this->escape($this->zakazniciModel->getNazov($objednavka->zakaznik_enum));?></td>
+            <td><?php echo $this->escape($this->rokyModel->getNazov($objednavka->rok_enum)); ?> </td>
+            <td><?php echo $this->mesiaceModel->getNazov($objednavka->mesiac_enum);?></td>
+            <td class="<?php echo $farbaClass?>"
+                ><?php echo number_format(($dodane/$objednavka->mnozstvo)*100, 2, ",", " ")." %" ;?></td>
+            <td><?php echo number_format($this->escape($objednavka->mnozstvo), 2, ",", " ");?></td>
+            <td><?php echo number_format($vydaje + $xvyroby + $xdodavky, 2, ",", " ");?></td>
+            <td><b><?php echo number_format($this->escape($objednavka->mnozstvo) - ($vydaje + $xvyroby + $xdodavky), 2, ",", " ");?></b></td>
+
+
+            <td><?php echo $this->escape($this->merneJednotkyModel->getSkratka($objednavka->merna_jednotka_enum));?></td>
+
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+</div>
+
+
+

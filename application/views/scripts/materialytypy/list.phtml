@@ -1,0 +1,36 @@
+<?php
+$this->headTitle($this->title);
+?>
+<p>
+    <a href="<?php echo $this->url(array('controller'=>'Materialytypy',
+        'action'=>'add'));?>">
+        <button type="button" class="btn btn-success">Pridať typ materiálu</button>
+    </a>
+</p>
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <!--
+        <th>ID</th>
+        -->
+        <th>Typ</th>
+        <th>Skratka</th>
+        <th>úpravy</th>
+    </tr>
+
+
+    <?php foreach($this->materialyTypy as $materialyTyp) : ?>
+        <tr>
+            <!--
+            <td><?php echo $this->escape($materialyTyp->materialy_typy_id);?></td>
+            -->
+            <td><?php echo $this->escape($materialyTyp->nazov);?></td>
+            <td><?php echo $this->escape($materialyTyp->skratka);?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller'=>'Materialytypy',
+                    'action'=>'edit', 'id'=>$materialyTyp->materialy_typy_id));?>">Upraviť</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>

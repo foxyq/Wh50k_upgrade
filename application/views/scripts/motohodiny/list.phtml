@@ -1,0 +1,87 @@
+
+<?php
+$this->headTitle($this->title);
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+//$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
+//$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
+
+$this->headTitle($this->title);
+?>
+<p>
+    <a href="<?php echo $this->url(array('controller'=>'Motohodiny',
+        'action'=>'add'));?>">
+        <button type="button" class="btn btn-success">Pridať motohodiny</button>
+    </a>
+</p>
+<script type="text/javascript" language="javascript" class="init">
+$(document).ready(function() {
+    $('#fancy_table').DataTable( {
+        "order": [[ 1, "desc" ]],
+        columnDefs: [{ "sType": "string", "aTargets": [ 2 ]  }],
+        initComplete: function () {
+            var api = this.api();
+            var abc = 0;
+            api.columns().indexes().flatten().each( function ( i ) {
+                var column = api.column( i );
+                if (i != abc) {
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.DataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                }
+            } );
+        }
+    } );
+} );
+</script>
+<div id=".col-lg-12"  class="table-responsive">
+    <table id="fancy_table"  class="table table-striped table-hover">
+        <thead>
+        <tr class="tableizer-firsrow">
+            <th>Stroj</th>
+            <th>Rok</th>
+            <th>Mesiac</th>
+            <th>Počet hodín</th>
+            <th class="col-upravy no-print">Úpravy</th>
+
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>stroj</th>
+            <th>rok</th>
+            <th>mesiac</th>
+            <th>počet hodín</th>
+        </tr>
+        </tfoot>
+
+        <tbody>
+        <?php foreach($this->motohodinyModel->fetchAll() as $motohodina) : ?>
+            <tr>
+                <td><?php echo $this->strojeModel->getNazov($motohodina->stroj_enum); ?></td>
+                <td><?php echo $this->rokyModel->getNazov($motohodina->rok_enum); ?></td>
+                <td><?php echo $this->mesiaceModel->getNazov($motohodina->mesiac_enum); ?></td>
+                <td><?php echo number_format($motohodina->pocet_hodin, 2, ",", " "); ?></td>
+                <td>
+                    <a href="<?php echo $this->url(array('controller'=>'Motohodiny',
+                    'action'=>'edit', 'id'=>$motohodina->motohodiny_id));?>"> <i class="fa fa-pencil-square-o"></i></a>
+                    <a href="<?php echo $this->url(array('controller'=>'Motohodiny',
+                    'action'=>'delete', 'id'=>$motohodina->motohodiny_id));?>"> <i class="fa fa-trash-o"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+</div>

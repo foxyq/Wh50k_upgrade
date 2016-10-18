@@ -1,0 +1,54 @@
+<?php
+$this->headTitle($this->title);
+?>
+<p>
+<a href="<?php echo $this->url(array('controller'=>'Dodavatelia',
+    'action'=>'add', 'fromAction' => 'list'));?>" type="button" class="btn btn-success">Pridať dodávateľa</a>
+</p>
+
+
+    <!---->
+<!--<div class="alert alert-dismissable alert-warning">-->
+<!--    kontrolny vypis</br>-->
+<!---->
+<!--</div>-->
+
+
+
+<div id=".col-lg-12" class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <!--
+            <th>ID</th>
+            -->
+            <th>Int. kód</th>
+            <th>Meno</th>
+            <th>Názov spoločnosti</th>
+            <th>IČO</th>
+            <th>IČ DPH</th>
+            <th>Adresa</th>
+            <th>Upraviť</th>
+        </tr>
+
+        <?php foreach($this->dodavatelia as $dodavatel) : ?>
+            <tr>
+                <!--
+                <td> <?php echo $this->escape($dodavatel->dodavatelia_id); ?></td>
+                -->
+
+                <td> <?php echo $this->escape($dodavatel->interny_kod ); ?></td>
+                <td> <?php echo $this->escape($dodavatel->meno ); ?></td>
+                <td> <?php echo $this->escape($dodavatel->nazov_spolocnosti ); ?></td>
+                <td> <?php echo $this->escape($dodavatel->ico ); ?></td>
+                <td> <?php echo $this->escape($dodavatel->ic_dph ); ?></td>
+                <td> <?php echo $this->escape($dodavatel->adresa ); ?></td>
+                <td>  <a href="<?php echo $this->url(array('controller'=>'Dodavatelia',
+                        'action'=>'edit', 'dodavatelia_id'=>$dodavatel->dodavatelia_id));?>">Upraviť</a></td>
+            </tr>
+        <?php endforeach; ?>
+
+    </table>
+
+
+
+</div>

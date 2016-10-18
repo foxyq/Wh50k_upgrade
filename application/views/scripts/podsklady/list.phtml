@@ -1,0 +1,45 @@
+<?php
+$this->headTitle($this->title);
+?>
+
+<p>
+    <a href="<?php echo $this->url(array('controller'=>'Podsklady',
+        'action'=>'add'));?>">
+        <button type="button" class="btn btn-success">Pridať sklad</button>
+    </a>
+</p>
+
+
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <!--
+        <th>ID</th>
+        -->
+        <th>Podsklad</th>
+        <th>Kód</th>
+        <th>Patrí skladu</th>
+        <th>Mesto</th>
+        <th>Adresa</th>
+        <th>Úpravy</th>
+    </tr>
+
+
+    <?php foreach($this->podsklady as $podsklad) : ?>
+        <tr>
+            <!--
+            <td><?php echo $this->escape($podsklad->podsklady_id);?></td>
+            -->
+            <td><?php echo $this->escape($podsklad->nazov_podskladu);?></td>
+            <td><?php echo $this->escape($podsklad->kod_podskladu);?></td>
+            <td><?php echo $this->escape($this->skladyModel->getNazov($podsklad->sklad_enum));?></td>
+            <td><?php echo $this->escape($this->mesta->getNazov($podsklad->mesto_enum));?></td>
+            <td><?php echo $this->escape($podsklad->adresa);?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller'=>'Podsklady',
+                    'action'=>'edit', 'id'=>$podsklad->podsklady_id));?>">Upraviť</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>

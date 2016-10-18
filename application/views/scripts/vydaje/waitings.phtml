@@ -1,0 +1,143 @@
+<?php
+$this->headTitle($this->title);
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
+
+$notifikacie     = new Application_Model_Notifikacie();
+$notif_info = $notifikacie->getStatusArray();
+$count_notif = $notif_info['total'];
+$vydaje_w = $notif_info['vydaje_waitings'];
+$vydaje_e = $notif_info['vydaje_errors'];
+
+$controller = 'vydaje';
+$this->prijmybuttons($this,$vydaje_w,$vydaje_e,$controller);?>
+
+
+<div class="table-responsive">
+    <table id="fancy_table" class="table table-hover table-striped" >
+
+        <thead>
+        <tr class="tableizer-firstrow">
+            <!--        <th>ID</th>-->
+            <th class="no-print">Detail</th>
+            <th>Dátum</th>
+            <!--              <th>doklad číslo</th>-->
+            <th>Lokalita</th>
+            <th class="col-podsklad">Sklad</th>
+            <th>Zákazník</th>
+            <th>Prepravca</th>
+            <!--              <th> SPZ</th>-->
+            <th>Tony</th>
+            <!--        <th>tony v</th>-->
+                    <th>m<sup>3</sup></th>
+            <!--        <th>m3 v</th>-->
+                    <th>PRM </th>
+
+            <th>Vlhkosť</th>
+            <!--        <th>prm v</th>-->
+            <th>Doklad</th>
+            <th>Materiál</th>
+            <!--              <th>material druh</th>-->
+            <th class="col-stav">Stav</th>
+            <!--              <th >chyba</th>-->
+            <th class="col-upravy no-print">Úpravy</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <!--        <th>ID</th>-->
+            <th></th>
+            <th>Dátum výdaju</th>
+            <!--        <th>doklad číslo</th>-->
+            <th>sklad</th>
+            <th>podsklad</th>
+            <th>zákazník</th>
+            <th></th>
+            <!--        <th> SPZ</th>-->
+            <th>tony m</th>
+            <th>vlhkost</th>
+            <!--        <th>tony v</th>-->
+                    <th>m3 m</th>
+            <!--        <th>m3 v</th>-->
+                    <th>prm m</th>
+            <!--        <th>prm v</th>-->
+
+            <th>assss</th>
+                    <th>material typ</th>
+
+
+<!--                    <th>úpravy</th>-->
+        </tr>
+        </tfoot>
+
+        <tbody>
+
+        <?php foreach($this->vydaje as $vydaj) : ?>
+            <?php if ($vydaj->chyba == 1 ) echo "<tr class='danger'> ";
+            else echo   "<tr>";
+            ?>
+<!--            <td>--><?php //echo $this->escape($vydaj->ts_vydaje_id);?><!--</td>-->
+            <td class="center no-print"> <a href="<?php echo $this->url(array('controller'=>'Vydaje',
+                'action'=>'preview', 'id'=>$vydaj->doklad_cislo, 'fromAction' => 'waitings'));?>">
+            <i class="fa fa-eye"></i>
+                </a></td>
+            <td>
+            <?php
+            $date = date('Y.m.d', strtotime($this->escape($vydaj->datum_vydaju_d)));
+            echo $date ;?>
+            </td>
+<!--               <td>--><?php //echo $this->escape($vydaj->doklad_cislo);?><!--</td>-->
+            <td><?php echo $this->escape($this->sklady->getSkratka($vydaj->sklad_enum));?></td>
+            <td><?php echo $this->escape($this->podsklady->getNazov($vydaj->podsklad_enum));?></td>
+            <td><?php echo $this->escape($this->zakaznici->getNazov($vydaj->zakaznik_enum));?></td>
+            <td><?php echo $this->escape($this->prepravci->getNazov($vydaj->prepravca_enum));?></td>
+<!--            <td>--><?php //echo $this->escape($vydaj->prepravca_spz);?><!--</td>-->
+           <td class="tonaz"><?php echo number_format($this->escape($vydaj->q_tony_merane), 2, ",", " ");?></td>
+            <td class="m3"><?php echo number_format($this->escape($vydaj->q_m3_merane), 2, ",", " ");?></td>
+            <td class="prm"><?php echo number_format($this->escape($vydaj->q_prm_merane), 2, ",", " ");?></td>
+            <td class="vlhkost">
+                <?php
+            if ($vydaj->q_vlhkost == 0.00){
+                echo "-";
+            }else {
+                echo number_format($this->escape($vydaj->q_vlhkost), 2, ",", " ") . "%";
+            }
+            ?>
+            </td>
+
+            <td><?php echo $this->escape($vydaj->doklad_cislo);?></td>
+            <td><?php echo $this->escape($this->materialyTypy->getNazov($vydaj->material_typ_enum));?></td>
+
+            <td class="center">
+
+            <?php
+            $this->stavy($vydaj);
+            ?>
+
+            </td>
+
+            <td class="no-print">
+
+                <?php
+            //            $skladID = $vydaj->sklad_enum;
+            //            $merna_jednotka = $this->sklady->getMernaJednotka($skladID);
+            $zak_id = $vydaj->zakaznik_enum;
+            $merna_jednotka = $this->zakaznici->getMernaJednotka($zak_id);
+
+
+            $this->tlacbuttons($this,$merna_jednotka,$vydaj->ts_vydaje_id,$controller);
+            ?>
+
+            </td>
+        </tr>
+    <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <div id="tonaz">   </div>
+    <div id="m3">   </div>
+    <div id="prm">   </div>
+    <div id="priemer"> </div>

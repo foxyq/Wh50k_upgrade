@@ -1,0 +1,75 @@
+<?php
+$this->title = "Príjmy";
+$this->headTitle($this->title);
+?>
+
+<!--
+<?php echo($this->podsklady->getNazov(1));?>
+<?php echo($this->prepravci->getNazov(1));?>
+<?php echo($this->dodavatelia->getNazov(1));?>
+-->
+
+
+<table class="table table-striped table-bordered table-hover">
+<tr>
+    <th>ID</th>
+    <th>Dátum príjmu</th>
+    <th>sklad</th>
+    <th>podsklad</th>
+    <th>dodávateľ</th>
+    <th>prepravca</th>
+    <th>prepravca SPZ</th>
+    <th>tony</th>
+    <th>doklad číslo</th>
+    <th>chyba</th>
+</tr>
+
+<?php $suma = 0; $pocet = 0;?>
+
+<?php foreach($this->prijmy as $prijem) : ?>
+<tr>
+    <td><?php echo $this->escape($prijem->ts_prijmy_id);?></td>
+    <td><?php echo $this->escape($prijem->datum_prijmu_d);?></td>
+    <td><?php echo $this->escape($this->sklady->getNazov($prijem->sklad_enum));?></td>
+    <td><?php echo $this->escape($this->podsklady->getNazov($prijem->podsklad_enum));?></td>
+    <td><?php echo $this->escape($this->dodavatelia->getNazov($prijem->dodavatel_enum));?></td>
+    <td><?php echo $this->escape($this->prepravci->getNazov($prijem->prepravca_enum));?></td>
+    <td><?php echo $this->escape($prijem->prepravca_spz);?></td>
+    <td><?php echo $this->escape($prijem->q_tony_merane);?></td>
+    <td><?php echo $this->escape($prijem->doklad_cislo);?></td>
+    <td>
+    	<?php 
+    		if ($this->escape($prijem->chyba) == 0)
+    			{echo "chyba";}
+    		else {echo "OK";}
+
+    			?></td>
+
+
+    <?php $this->suma += $this->escape($prijem->q_tony_merane); $this->pocet += 1;?>
+</tr>
+<?php endforeach; ?>
+
+<?php
+	
+	$priemer = $this->suma/$this->pocet;
+
+;?>
+
+
+
+
+
+<tr>
+	<td>Priemer</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><?php echo $priemer;?></td>
+    <td></td>
+    <td></td>
+</tr>
+</table>

@@ -1,0 +1,518 @@
+<!--<script type="text/javascript" src="/wh50k/public/js/vlhkost_auto.js"></script>-->
+<!--<script type="text/javascript" src="/wh50k/public/js/jquery.chained.js"></script>-->
+<script type="text/javascript" src="<?php echo $this->baseUrl().'/js/jquery.chained.js';?>"></script>
+
+<h1>Príjmy - vytvoriť nový</h1>
+
+
+<script>
+    function isEmpty(str){
+        if(document.getElementById(str).value == "")
+        {
+            return true;
+        }
+        return false;
+    }
+    function getComboA(sel) {
+        var value = sel.value;
+        var tonym = +$("#q_tony_merane").val();
+        var tonyb = +$("#q_tony_brutto").val();
+        var tonyt = +$("#q_tony_tara").val();
+        var m3 = +$("#q_m3_merane").val();
+        var prm = +$("#q_prm_merane").val();
+        var nula = "";
+        $("#q_m3_merane").val( nula );
+        $("#q_tony_brutto").val( nula );
+        $("#q_tony_merane").val( nula );
+        $("#q_tony_tara").val( nula );
+        $("#q_tony_nadrozmer").val( nula );
+        $("#q_prm_merane").val( nula );
+    }
+    $(document).ready(function(){
+
+        <?php
+            $materialyDruhyModel = new Application_Model_DbTable_MaterialyDruhy();
+            $konverznaTabulka = $materialyDruhyModel->getKonverzieAll();
+        ?>
+
+        document.getElementById('q_tony_merane').readOnly = true;
+        //    button click
+        $("#manualCalc").button().click(function(){
+
+
+            $( "#manualCalc" ).toggleClass( "hide" );
+            $( "#autoCalc" ).toggleClass( "hide" );
+
+            $("#q_tony_brutto").val( '' );
+            $("#q_tony_tara").val( '' );
+            $("#q_tony_nadrozmer").val( '' );
+            $("#q_tony_merane").val( '' );
+            $("#q_prm_merane").val( '' );
+            $("#q_m3_merane").val( '' );
+
+            document.getElementById('q_tony_nadrozmer').readOnly = false;
+            document.getElementById('q_tony_tara').readOnly = false;
+            document.getElementById('q_tony_brutto').readOnly = false;
+            document.getElementById('q_tony_merane').readOnly = false;
+            document.getElementById('q_prm_merane').readOnly = false;
+            document.getElementById('q_m3_merane').readOnly = false;
+            $('.in').unbind('keyup');
+            alert("Automatické prepočitavanie parametrov vypnuté.");
+
+
+        });
+
+        $('#autoCalc').button().click(function(){
+
+            $( "#manualCalc" ).toggleClass( "hide" );
+            $( "#autoCalc" ).toggleClass( "hide" );
+
+            $("#q_tony_brutto").val( '' );
+            $("#q_tony_tara").val( '' );
+            $("#q_tony_nadrozmer").val( '' );
+            $("#q_tony_merane").val( '' );
+            $("#q_prm_merane").val( '' );
+            $("#q_m3_merane").val( '' );
+
+            document.getElementById('q_tony_merane').readOnly = true;
+
+            $(".in").keyup(function(){
+                var konverznaTabulka = <?php echo json_encode($konverznaTabulka); ?>;
+                var tonym = +$("#q_tony_merane").val().replace(",",".");
+                var tonyb = +$("#q_tony_brutto").val().replace(",",".");
+                var tonyt = +$("#q_tony_tara").val().replace(",",".");
+                var m3 = +$("#q_m3_merane").val().replace(",",".");
+                var prm = +$("#q_prm_merane").val().replace(",",".");
+                var materialDruh =  +$("#material_druh_enum").val();
+                var tony2m3 = konverznaTabulka[materialDruh]["ton_m3"];
+                var tony2prm = konverznaTabulka[materialDruh]["ton_prm"];
+                var m32tony = konverznaTabulka[materialDruh]["m3_ton"];
+                var m32prm = konverznaTabulka[materialDruh]["m3_prm"];
+                var prm2tony = konverznaTabulka[materialDruh]["prm_ton"];
+                var prm2m3 = konverznaTabulka[materialDruh]["prm_m3"];
+                var nula = "";
+//
+                if($('#q_tony_brutto').is(':focus')) {
+                    document.getElementById('q_m3_merane').readOnly = true;
+                    document.getElementById('q_prm_merane').readOnly = true;
+                    $("#q_tony_merane").val(tonyb - tonyt);
+                    $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+                    $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+                }
+                if($('#q_tony_tara').is(':focus')) {
+                    document.getElementById('q_m3_merane').readOnly = true;
+                    document.getElementById('q_prm_merane').readOnly = true;
+                    $("#q_tony_merane").val(tonyb - tonyt);
+                    $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+                    $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+                }
+                if($('#q_tony_nadrozmer').is(':focus')) {
+//                document.getElementById('q_m3_merane').readOnly = true;
+//                document.getElementById('q_prm_merane').readOnly = true;
+//                $("#q_tony_merane").val(tonyb - tonyt);
+//                $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+//                $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+                }
+                if($('#q_m3_merane').is(':focus')) {
+                    document.getElementById('q_tony_merane').readOnly = true;
+                    document.getElementById('q_tony_brutto').readOnly = true;
+                    document.getElementById('q_tony_tara').readOnly = true;
+//                document.getElementById('q_tony_nadrozmer').readOnly = true;
+                    document.getElementById('q_prm_merane').readOnly = true;
+                    $("#q_tony_brutto").val( nula );
+                    $("#q_tony_tara").val( nula );
+                    $("#q_tony_nadrozmer").val( nula );
+                    $("#q_tony_merane").val( m3 * m32tony);
+                    $("#q_prm_merane").val( m3 * m32prm);
+                }
+                if($('#q_prm_merane').is(':focus')) {
+                    document.getElementById('q_tony_merane').readOnly = true;
+                    document.getElementById('q_tony_brutto').readOnly = true;
+                    document.getElementById('q_tony_tara').readOnly = true;
+//                document.getElementById('q_tony_nadrozmer').readOnly = true;
+                    document.getElementById('q_m3_merane').readOnly = true;
+                    $("#q_tony_brutto").val( nula );
+                    $("#q_tony_tara").val( nula );
+                    $("#q_tony_nadrozmer").val( nula );
+                    $("#q_tony_merane").val( prm * prm2tony);
+                    $("#q_m3_merane").val( prm * prm2m3);
+                }
+            });
+
+            alert("Automatické prepočitavanie parametrov zapnuté.");
+
+        });
+
+        window.setInterval(function(){
+
+            var tonym = +$("#q_tony_merane").val();
+            var tonyb = +$("#q_tony_brutto").val();
+
+            var tonyt = +$("#q_tony_tara").val();
+            var m3 = +$("#q_m3_merane").val();
+            var prm = +$("#q_prm_merane").val();
+
+            if ( //ak sa nieeco posere a vsetky fieldy sa locknu ... zmaz ich a unlockni
+            //checkujem kazdu sekundu
+            document.getElementById('q_tony_nadrozmer').getAttribute('disabled') == false
+            && document.getElementById('q_tony_tara').getAttribute('disabled') == false
+            && document.getElementById('q_tony_brutto').getAttribute('disabled') == false
+            && document.getElementById('q_tony_merane').getAttribute('disabled') == false
+            && document.getElementById('q_prm_merane').getAttribute('disabled') == false
+            && document.getElementById('q_m3_merane').getAttribute('disabled') == false
+            ) {
+                tonym = nula; tonyb = nula; tonyt = nula; tonyn = nula;
+                prm = nula; m3 = nula;
+                document.getElementById('q_tony_nadrozmer').readOnly = false;
+                document.getElementById('q_tony_tara').readOnly = false;
+                document.getElementById('q_tony_brutto').readOnly = false;
+                document.getElementById('q_tony_merane').readOnly = false;
+                document.getElementById('q_prm_merane').readOnly = false;
+                document.getElementById('q_m3_merane').readOnly = false;
+            }
+            if ( m3 == "" ) {
+                document.getElementById('q_tony_nadrozmer').readOnly = false;
+                document.getElementById('q_tony_tara').readOnly = false;
+                document.getElementById('q_tony_brutto').readOnly = false;
+                document.getElementById('q_prm_merane').readOnly = false;
+            }
+            if ( prm == "" ) {
+                document.getElementById('q_tony_nadrozmer').readOnly = false;
+                document.getElementById('q_tony_tara').readOnly = false;
+                document.getElementById('q_tony_brutto').readOnly = false;
+                document.getElementById('q_m3_merane').readOnly = false;
+            }
+//            kde je vsade nula ... otvor polia, a nuly vymaz
+            if ( prm == "0" && tonym == "0" && m3 == "0" )
+            {
+                tonyn = "";
+                tonyt = "";
+                tonyb = "";
+                document.getElementById('q_m3_merane').readOnly = false;
+                document.getElementById('q_prm_merane').readOnly = false;
+//                document.getElementById('q_tony_merane').readOnly = false;
+            }
+        }, 1000);
+
+        $(".in").keyup(function(){
+            var konverznaTabulka = <?php echo json_encode($konverznaTabulka); ?>;
+            var tonym = +$("#q_tony_merane").val().replace(",",".");
+            var tonyb = +$("#q_tony_brutto").val().replace(",",".");
+            var tonyt = +$("#q_tony_tara").val().replace(",",".");
+            var m3 = +$("#q_m3_merane").val().replace(",",".");
+            var prm = +$("#q_prm_merane").val().replace(",",".");
+            var materialDruh =  +$("#material_druh_enum").val();
+            var tony2m3 = konverznaTabulka[materialDruh]["ton_m3"];
+            var tony2prm = konverznaTabulka[materialDruh]["ton_prm"];
+            var m32tony = konverznaTabulka[materialDruh]["m3_ton"];
+            var m32prm = konverznaTabulka[materialDruh]["m3_prm"];
+            var prm2tony = konverznaTabulka[materialDruh]["prm_ton"];
+            var prm2m3 = konverznaTabulka[materialDruh]["prm_m3"];
+            var nula = "";
+//
+            if($('#q_tony_brutto').is(':focus')) {
+                document.getElementById('q_m3_merane').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+                $("#q_tony_merane").val(tonyb - tonyt);
+                $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+                $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+            }
+            if($('#q_tony_tara').is(':focus')) {
+                document.getElementById('q_m3_merane').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+                $("#q_tony_merane").val(tonyb - tonyt);
+                $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+                $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+            }
+            if($('#q_tony_nadrozmer').is(':focus')) {
+//                document.getElementById('q_m3_merane').readOnly = true;
+//                document.getElementById('q_prm_merane').readOnly = true;
+//                $("#q_tony_merane").val(tonyb - tonyt);
+//                $("#q_prm_merane").val( (tonyb - tonyt ) * tony2prm);
+//                $("#q_m3_merane").val( (tonyb - tonyt ) * tony2m3);
+            }
+            if($('#q_m3_merane').is(':focus')) {
+                document.getElementById('q_tony_merane').readOnly = true;
+                document.getElementById('q_tony_brutto').readOnly = true;
+                document.getElementById('q_tony_tara').readOnly = true;
+//                document.getElementById('q_tony_nadrozmer').readOnly = true;
+                document.getElementById('q_prm_merane').readOnly = true;
+                $("#q_tony_brutto").val( nula );
+                $("#q_tony_tara").val( nula );
+                $("#q_tony_nadrozmer").val( nula );
+                $("#q_tony_merane").val( m3 * m32tony);
+                $("#q_prm_merane").val( m3 * m32prm);
+            }
+            if($('#q_prm_merane').is(':focus')) {
+                document.getElementById('q_tony_merane').readOnly = true;
+                document.getElementById('q_tony_brutto').readOnly = true;
+                document.getElementById('q_tony_tara').readOnly = true;
+//                document.getElementById('q_tony_nadrozmer').readOnly = true;
+                document.getElementById('q_m3_merane').readOnly = true;
+                $("#q_tony_brutto").val( nula );
+                $("#q_tony_tara").val( nula );
+                $("#q_tony_nadrozmer").val( nula );
+                $("#q_tony_merane").val( prm * prm2tony);
+                $("#q_m3_merane").val( prm * prm2m3);
+            }
+        });
+
+        $("#podsklad_enum").chained("#sklad_enum");
+
+    });
+</script>
+
+
+
+<?php
+$podsklady = new Application_Model_DbTable_Podsklady();
+$arr = $podsklady->getIdsSoSkladIds();
+$moznosti = $podsklady->getMoznosti();
+?>
+
+<div class="col-lg-5">
+    <div class="panel panel-green">
+        <div class="panel-heading">
+            <h3 class="panel-title">Detail transakcie </h3>
+        </div>
+        <div class="panel-body">
+
+
+            <form action="<?php echo $this->escape($this->form->getAction()) ?>"
+                  method="<?php echo $this->escape($this->form->getMethod()) ?>"
+                  enctype="multipart/form-data" class="normal">
+
+
+                <?php echo $this->form->ts_prijmy_id; ?>
+
+
+
+
+                <div class="row">
+                    <fieldset>
+                        <!--                    <legend>Dátum príjmu</legend>-->
+
+                        <div class="col-lg-6">
+                            <!--                        Dátum:-->
+                            <?php echo $this->form->datum_prijmu_d; // render the user name field here ?>
+                        </div>
+                    </fieldset>
+                </div>
+                <!---->
+                <div class="row">
+                    <fieldset>
+                        <legend>Sklady</legend>
+
+
+                        <div class="col-lg-6">
+                            <!--                        Sklad:-->
+                            <?php echo $this->form->sklad_enum; // render the user name field here ?>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!--                        Podsklad:-->
+                            <dt id="podsklad-label"><label for="podsklad" class="optional">Sklad</label></dt>
+                            <dd id="podsklad-element">
+                                <select name="podsklad_enum" id="podsklad_enum" class="form-control">
+                                    <?php
+
+                                    $podsklady = new Application_Model_DbTable_Podsklady();
+                                    $podskladyIDs = $podsklady->getIdsSoSkladIds();
+
+
+                                    foreach ($moznosti as $key=>$podsklad ) :
+
+                                        foreach ($podskladyIDs as $podsklads ) :
+
+                                            if ($key == $podsklads['podsklad_id'])
+
+                                                echo '<option value="'.$key.'" class="'.$podsklads[sklad_id].'">'.$podsklad.'</option>';
+
+                                        endforeach;
+                                    endforeach ?>
+                                </select></dd>
+
+
+
+
+                            <?php //echo $this->form->podsklad_enum; // render the user name field here ?>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!--        -->
+                <div class="row">
+                    <fieldset>
+                        <legend>Dodanie</legend>
+                        <div class="col-lg-6">
+                            <!--                        Dodávateľ:-->
+                            <?php echo $this->form->dodavatel_enum; // render the user name field here ?>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!--                        Prepravca:-->
+                            <?php echo $this->form->prepravca_enum; // render the user name field here ?>
+                        </div>
+                </div>
+                <!--        -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!--                    ŠPZ:-->
+                        <?php echo $this->form->prepravca_spz; // render the user name field here ?>
+                    </div>
+                    </fieldset>
+                </div>
+                <!---->
+
+                <!--                cast pre prepocty -->
+                <?php
+                $merneJednotky = new Application_Model_DbTable_MerneJednotky();
+                $moznosti = $merneJednotky->getPrepoctyArray(5,1,2);
+                //            var_dump($moznosti);
+                ?>
+                <!--                koniec prepoctov .. rozparsovane -->
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Materiál</legend>
+                        <div class="col-lg-6">
+                            <!--                        Typ:-->
+                            <?php echo $this->form->material_typ_enum; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                        Druh:-->
+                            <?php echo $this->form->material_druh_enum; // render the user name field here ?>
+                        </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <!--                    Poznámka:-->
+                        <?php echo $this->form->material_poznamka; // render the user name field here ?>
+                    </div>
+                    </fieldset>
+                </div>
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Množstvo</legend>
+                        <div class="col-lg-6">
+                            <!--                        Netto:-->
+                            <?php echo $this->form->q_tony_merane; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6 ">
+                            <!--                        Brutto:-->
+                            <?php echo $this->form->q_tony_nadrozmer; // render the user name field here ?>
+                        </div>
+<!---->
+<!--                        <div class="col-lg-6">-->
+<!--                            <dt id="q_vlhkost-label"><label for="q_vlhkost" class="optional">Nadrozmer</label></dt>-->
+<!--                            <dd id="q_vlhkost-element">-->
+<!--                                <div class="form-group input-group">-->
+<!--                                    <input type="text" id="help" class="form-control" placeholder="0">-->
+<!--                                    <span class="input-group-addon">%</span>-->
+<!--                                </div>-->
+<!---->
+<!--                            </dd>-->
+<!---->
+<!--                        </div>-->
+
+                    </fieldset>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_tony_brutto; // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_tony_tara; // render the user name field here ?>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_m3_merane; // render the user name field here ?>
+                    </div>
+
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->q_prm_merane; // render the user name field here ?>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <?php echo $this->form->q_vlhkost; // render the user name field here ?>
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <dt><label>&nbsp;</label></dt>
+                        <a href="#" id="manualCalc" type="button" class="btn btn-default">Manuálne hodnoty</a>
+                        <a href="#" id="autoCalc" type="button" class="btn btn-default hide">Automatické hodnoty</a>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Doplňujúce informácie</legend>
+                        <div class="col-lg-6">
+                            <!--                        Stav:-->
+                            <?php echo $this->form->stav_transakcie; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                        Chyba:-->
+                            <?php echo $this->form->chyba; // render the user name field here ?>
+                        </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <!--                    Poznámka:-->
+                        <?php echo $this->form->poznamka; // render the user name field here ?>
+                    </div>
+                    </fieldset>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->potvrdzujuceTlacidlo; // render the user name field here ?>
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <dt>&nbsp;</dt>
+                        <a href="<?php
+                        //pageManager
+                        echo $this->url(array(
+                            'controller' => $this->fromController,
+                            'action' => $this->fromAction
+                        ), null, true) ?>"  type="button" class="btn btn-warning">Späť</a>
+
+                    </div>
+                </div>
+                <!--                --><?php //echo $this->form->doklad_typ_enum; // render the user name field here ?>
+            </form>
+

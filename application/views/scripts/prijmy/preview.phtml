@@ -1,0 +1,206 @@
+<h1>Príjmy - detail</h1>
+<!--<hr>-->
+<div class="col-lg-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-plus-square"></i> Detail príjmu <?php echo $this->prijem['doklad_cislo'];?></h3>
+        </div>
+        <div class="panel-body">
+
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-calendar"></i> Dátum príjmu</legend>
+
+                    <div class="col-lg-6">
+                        Dátum:
+                        <?php echo date("d.m.Y", strtotime($this->prijem['datum_prijmu_d']));?>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-bank"></i> Sklad</legend>
+                    <div class="col-lg-6">
+                        Lokalita:
+                        <?php echo $this->ciselniky['skladyModel']->getNazov($this->prijem['sklad_enum']); // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        Sklad:
+                        <?php echo $this->ciselniky['podskladyModel']->getNazov($this->prijem['podsklad_enum']); // render the user name field here ?>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-truck"></i> Dodanie</legend>
+                    <div class="col-lg-6">
+                        Dodávateľ:
+                        <?php echo $this->ciselniky['dodavateliaModel']->getNazov($this->prijem['dodavatel_enum']); // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        Prepravca:
+                        <?php echo $this->ciselniky['prepravciModel']->getNazov($this->prijem['prepravca_enum']); // render the user name field here ?>
+                    </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    ŠPZ:
+                    <?php echo $this->prijem['prepravca_spz']; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+            <!---->
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-database"></i> Váha</legend>
+                    <div class="col-lg-6">
+                        Netto:
+                        <?php echo number_format($this->prijem['q_tony_merane'], 2, ",", " ").'t'; // render the user name field here ?>
+                    </div>
+
+
+                    <div class="col-lg-6">
+
+                        Tara:
+                        <?php echo number_format($this->prijem['q_tony_merane_tara'], 2, ",", " ").'t'; // render the user name field here ?>
+                    </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    Brutto:
+                    <?php echo number_format($this->prijem['q_tony_merane_brutto'], 2, ",", " ").'t'; // render the user name field here ?>
+                </div>
+
+                <div class="col-lg-6">
+                    Nadrozmer:
+                    <?php echo number_format($this->prijem['q_tony_nadrozmer'], 2, ",", " ").'t'; // render the user name field here ?>
+                </fieldset>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    Vlhkosť:
+                    <?php echo number_format($this->prijem['q_vlhkost'], 2, ",", " ").'%'; // render the user name field here ?>
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-cubes"></i> Priestor</legend>
+                    <div class="col-lg-6">
+                    PRM:
+                    <?php echo number_format($this->prijem['q_prm_merane'], 2, ",", " ").' PRM'; // render the user name field here ?>
+                </div>
+
+                <div class="col-lg-6">
+                    m<sup>3</sup>:
+                    <?php echo number_format($this->prijem['q_m3_merane'], 2, ",", " ").' m<sup>3</sup>'; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+
+
+
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-tree"></i> Materiál</legend>
+                    <div class="col-lg-6">
+                        Typ:
+                        <?php echo $this->ciselniky['materialyTypyModel']->getNazov($this->prijem['material_typ_enum']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+                        Druh:
+                        <?php echo $this->ciselniky['materialyDruhyModel']->getNazov($this->prijem['material_druh_enum']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-12">
+                    Poznámka k materiálu:
+                    <?php if ($this->prijem['material_poznamka'] == '' || $this->prijem['material_poznamka'] == '0' ) echo 'žiadna poznámka';
+                    else echo $this->prijem['material_poznamka']; // render the user name field here ?>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-info-circle"></i> Doplňujúce informácie</legend>
+                    <div class="col-lg-6">
+                        Stav:
+                        <?php echo $this->ciselniky['transakcieStavyModel']->getNazov($this->prijem['stav_transakcie']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+                        Chyba:
+                        <?php if ($this->prijem['chyba'] == 1 ) echo 'áno';
+                        else echo 'nie'; // render the user name field here ?>
+                    </div>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    Poznámka:
+                    <?php if ($this->prijem['poznamka'] == '' || $this->prijem['poznamka'] == '0' ) echo 'žiadna poznámka';
+                    else echo $this->prijem['poznamka']; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+
+
+            <br>
+
+            <div class="row">
+
+
+                <div class="col-lg-6 tright">
+
+                        <?php
+                        $merna_jednotka = $this->ciselniky['skladyModel']->getMernaJednotka($this->prijem['sklad_enum']);
+                         if ($merna_jednotka == 1 )
+                            echo '<a class="btn-info btn" href="'.$this->url(array("controller"=>"Prijmy", "action"=>"printton", "id"=>$this->prijem['ts_prijmy_id'], "fromAction" => "list",
+                                )).'" target="_blank">Tlačiť</a>'
+//                <!--                    printton-->
+                            ?>
+
+                        <?php  if ($merna_jednotka == 2 )
+                            echo '<a class="btn-info btn" href="'.$this->url(array("controller"=>"Prijmy", "action"=>"printprm", "id"=>$this->prijem['ts_prijmy_id'], "fromAction" => "list",
+                                )).'" target="_blank">Tlačiť</a>'
+                        //                <!--                   printprm-->
+                        ?>
+                        <?php  if ($merna_jednotka == 3 )
+                            echo '<a class="btn-info btn" href="'.$this->url(array("controller"=>"Prijmy", "action"=>"printm3", "id"=>$this->prijem['ts_prijmy_id'], "fromAction" => "list",
+                                )).'" target="_blank">Tlačiť</a>'
+                        //                <!--                    printm3-->
+                        //                                ?>
+
+
+                </div>
+
+                <div class="col-lg-6">
+                    <!--            <dt>&nbsp;</dt>-->
+                    <a href="<?php echo $this->url(array(
+                        'controller' => $this->fromController,
+                        'action' => $this->fromAction,
+                        'id' => $this->fromId
+                    ), null, true) ?>"  type="button" class="btn btn-warning form-control">Späť</a>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>

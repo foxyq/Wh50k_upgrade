@@ -1,0 +1,85 @@
+<?php
+$this->title = "Pridanie motohodiny";
+$this->headTitle($this->title);
+?>
+
+
+
+<div class="col-lg-5">
+    <div class="panel panel-green">
+        <div class="panel-heading">
+            <h3 class="panel-title">Detail motohodiny </h3>
+        </div>
+        <div class="panel-body">
+
+
+            <form action="<?php echo $this->escape($this->form->getAction()) ?>"
+                  method="<?php echo $this->escape($this->form->getMethod()) ?>"
+                  enctype="multipart/form-data" class="normal">
+
+
+                <?php echo $this->form->motohodiny_id; ?>
+
+                <div class="row">
+                    <fieldset>
+                        <!--                    <legend>Dátum príjmu</legend>-->
+
+                        <div class="col-lg-6">
+                            <!--                        Dátum:-->
+                            <?php echo $this->form->stroj_enum; // render the user name field here ?>
+                        </div>
+                    </fieldset>
+                </div>
+                <!---->
+                <div class="row">
+                    <fieldset>
+                        <legend>Dátum</legend>
+                        <div class="col-lg-6">
+                            <!--                        Sklad:-->
+                            <?php echo $this->form->rok_enum; // render the user name field here ?>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!--                        Podsklad:-->
+                            <?php echo $this->form->mesiac_enum; // render the user name field here ?>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!--        -->
+                <div class="row">
+                    <fieldset>
+                        <legend>Kvantita</legend>
+                        <div class="col-lg-6">
+                            <!--                        Dodávateľ:-->
+                            <?php echo $this->form->pocet_hodin; // render the user name field here ?>
+                        </div>
+                </div>
+                <!--        -->
+                <div class="row">
+                    </fieldset>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->submit; // render the user name field here ?>
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <dt>&nbsp;</dt>
+                        <a href="<?php
+                        //pageManager
+                        echo $this->url(array(
+                            'controller' => $this->fromController,
+                            'action' => $this->fromAction
+                        ), null, true) ?>"  type="button" class="btn btn-warning">Späť</a>
+
+                    </div>
+                </div>
+                <!--                --><?php //echo $this->form->doklad_typ_enum; // render the user name field here ?>
+            </form>
+

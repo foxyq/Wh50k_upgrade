@@ -1,0 +1,58 @@
+<?php
+$this->headTitle($this->title);
+?>
+
+<div>
+    <h2>Príjmy</h2>
+    <hr>
+
+    <div class="dropdown left ">
+        <a href="#" class="btn-first dropdown-toggle btn btn-success" data-toggle="dropdown">Pridať príjem <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <!--            <li><a href="--><?php //echo $this->url(array('controller'=>'prijmy',
+            //                    'action'=>'add', 'fromAction'=>'list'));?><!--">Action</a>-->
+            <!--            </li>-->
+
+            <li><a href="<?php echo $this->baseUrl().'/skladnik/prijmy/addton'?>">Pridať príjem v tonách</a></li>
+            <li><a href="<?php echo $this->baseUrl().'/skladnik/prijmy/addm3'?>">Pridať príjem v m<sup>3</sup></a></li>
+            <li><a href="<?php echo $this->baseUrl().'/skladnik/prijmy/addprm'?>">Pridať príjem v PRM</a></li>
+            <!--            <li class="divider"></li>-->
+            <!--            <li class="dropdown-header">Nav header</li>-->
+
+        </ul>
+    </div>
+
+
+    <a href="<?php echo $this->url(array('controller'=>'prijmy',
+        'action'=>'list'));?>" type="button" class="btn btn-info">
+        Zoznam príjmov
+    </a>
+
+
+    <!---->
+    <!--    <ul>-->
+    <!--        <li><a href="--><?php //echo $this->baseUrl().'/skladnik/prijmy/addton'?><!--">Pridať príjem v tonách</a></li>-->
+    <!--        <li><a href="--><?php //echo $this->baseUrl().'/skladnik/prijmy/addm3'?><!--">Pridať príjem v m<sup>3</sup></a></li>-->
+    <!--        <li><a href="--><?php //echo $this->baseUrl().'/skladnik/prijmy/addprm'?><!--">Pridať príjem v PRM</a></li>-->
+    <!--        <li><a href="--><?php //echo $this->baseUrl().'/skladnik/prijmy/list'?><!--">Zoznam príjmov</a></li>-->
+    <!--    </ul>-->
+</div>
+
+<div>
+    <h2>Výdaje</h2>
+    <hr>
+
+    <a href="<?php echo $this->url(array('controller'=>'vydaje',
+        'action'=>'add'));?>" type="button" class="btn btn-first btn-success">
+        Pridať výdaj
+    </a>
+    <a href="<?php echo $this->url(array('controller'=>'vydaje',
+        'action'=>'list'));?>" type="button" class="btn btn-info">
+        Zoznam výdajov
+    </a>
+
+    <!--    <ul>-->
+    <!--        <li><a href="--><?php //echo $this->baseUrl().'/skladnik/vydaje/add'?><!--">Pridať</a></li>-->
+    <!--        <li><a href="--><?php //echo $this->baseUrl().'/skladnik/vydaje/list'?><!--">Zoznam výdajov</a></li>-->
+    <!--    </ul>-->
+</div>

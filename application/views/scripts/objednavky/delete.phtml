@@ -1,0 +1,51 @@
+<h2>Objednávky - odstránenie</h2>
+<div class="col-lg-5">
+    <div class="panel panel-red">
+        <div class="panel-heading">
+            <h3 class="panel-title">Odstránenie objednávky</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <fieldset>
+                    <legend>Zákazník</legend>
+                    <div class="col-lg-6">
+
+                        <?php echo $this->zakazniciModel->getNazov($this->objednavka['zakaznik_enum']); // render the user name field here ?>
+                    </div>
+                    <legend>Obdobie</legend>
+                    <div class="col-lg-6">
+                        <?php echo $this->rokyModel->getNazov($this->objednavka['rok_enum']).".".$this->mesiaceModel->getNazov($this->objednavka['mesiac_enum']);?>
+                    </div>
+                    <legend>Množstvo</legend>
+                    <div class="col-lg-6">
+                        <?php echo number_format($this->objednavka['mnozstvo'], 2, ",", " ");?>
+                        <?php echo $this->merneJednotkyModel->getSkratka($this->objednavka['merna_jednotka_enum']);?>
+                    </div>
+                </fieldset>
+            </div>
+            <br>
+            <div class="row">
+                <form action="<?php echo $this->url(array('action'=>'delete', 'fromAction' => $this->fromAction)); ?>"
+                      method="post">
+                        <div>
+                            <input type="hidden" name="id" value="<?php echo $this->objednavka['objednavky_id']; ?>" />
+                            <div class="col-lg-6 tright">
+                            <input type="submit" name="del" value="Áno" class="btn btn-danger"/></div>
+                                <div class="col-lg-6">
+                            <input type="submit" name="del" value="Nie" class="form-control btn-warning btn"/>
+                                    </div>
+                        </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+

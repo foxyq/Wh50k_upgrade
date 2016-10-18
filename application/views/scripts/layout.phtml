@@ -1,0 +1,492 @@
+﻿<!--TOTO JE NORMALNY LAYOUT-->
+
+<?php
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('A-Z Lokomat Sklady');
+echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <?php echo $this->headMeta(); ?>
+    <?php echo $this->headTitle(); ?>
+
+    <!--  *********** HEAD JS + JQUERY INCLUDES   ******** -->
+
+    <script type="text/javascript" src="<?php echo $this->baseUrl().'/js/jjquery.js';?>"></script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl().'/js/bootstrap.min.js';?>"></script>
+
+    <!--jquery kamos so zendom-->
+    <?php
+    echo $this->jQuery()
+        ->enable()
+        ->uiEnable(); ?>
+    <!--jquery-->
+
+    <?php
+
+    $this->inlineScript()->appendFile($this->baseUrl().'/js/jquery.dataTables.min.js');
+    echo $this->inlineScript(); ?>
+
+    <!--  *********** KONIEC HEAD JS + JQUERY INCLUDES   ******** -->
+
+<!--   ************ HEAD CSS INCLUDES *****************   -->
+
+    <?php  $this->headLink()
+        ->prependStylesheet($this->baseUrl().'/css/sb-admin.css', 'screen'); ?>
+    <?php  $this->headLink()
+        ->prependStylesheet($this->baseUrl().'/css/print.css', 'print'); ?>
+	<?php $this->headLink()
+        ->prependStylesheet($this->baseUrl().'/css/bootstrap.min.css'); ?>
+	<?php  $this->headLink()
+        ->prependStylesheet($this->baseUrl().'/css/morris.css'); ?>
+    <?php $this->headLink()
+        ->prependStylesheet($this->baseUrl().'/css/font-awesome.min.css'); ?>
+    <?php $this->headLink()
+        ->prependStylesheet($this->baseUrl().'/css/jquery.dataTables.css'); ?>
+    <?php $this->headLink()
+        ->prependStylesheet($this->baseUrl().'/js/jquery/jquery-ui-dark.css'); ?>
+
+
+	<?php echo $this->headLink(); ?>
+
+<!--    ************** KONIEC CSS INCLUDES ************ -->
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<body >
+
+<!--<div id="loading"></div>-->
+<div id="page">
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top no-print" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Navigácia</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index'));?>">a-z Lokomat Sklady</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+
+                <li class="dropdown">
+
+
+                    <?php
+
+                    $notifikacie     = new Application_Model_Notifikacie();
+                    $notif_info = $notifikacie->getStatusArray();
+
+
+                    $count_notif = $notif_info['total'];
+                    $prijmy_w = $notif_info['prijmy_waitings'];
+                    $prijmy_e = $notif_info['prijmy_errors'];
+                    $vydaje_w = $notif_info['vydaje_waitings'];
+                    $vydaje_e = $notif_info['vydaje_errors'];
+                    $ubytky_ch = $notif_info['ubytky_chyba'];
+                    $ex_dod_w = $notif_info['externe_dodavky_waitings'];
+                    $ex_dod_e = $notif_info['externe_dodavky_errors'];
+                    $ex_vyr_w = $notif_info['externe_vyroby_waitings'];
+                    $ex_vyr_e = $notif_info['externe_vyroby_errors'];
+                    $obj_nekomp = $notif_info['objednavky_nekompatibilne'];
+                    $unekomp = $notif_info['mikroObjednavky_nekompatibilne'];
+                    $unekmp_obj = $notif_info['mikroObjednavky_nekompatibilne_ku_objednavkam'];
+
+
+                    ?>
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <?php if ($count_notif > 0)
+
+                        echo '<span id="notif-number">'.$count_notif .' </span>';
+
+                        ?>
+
+                        <i class="fa fa-bell"></i>
+
+                        <b class="caret"></b>
+                    </a>
+
+
+
+                    <ul class="dropdown-menu alert-dropdown">
+
+                    <?php if ($prijmy_w > 0) { ?>
+                        <li>
+                            <a href="<?php echo $this->url(array(
+                                'controller' => 'prijmy',
+                                'action' => 'waitings'
+                            ), null, true) ?>">  <span class="label label-warning tleft">Čakajúcich príjmov</span> <span class="notif_count right"> <?php echo $prijmy_w; ?></span> </a>
+                        </li>
+
+                    <?php }
+
+                    if ($prijmy_e > 0) { ?>
+                        <li>
+                            <a href="<?php echo $this->url(array(
+                                'controller' => 'prijmy',
+                                'action' => 'errors'
+                            ), null, true) ?>">  <span class="label label-danger tleft">Chybných príjmov</span> <span class="notif_count right"> <?php echo $prijmy_e; ?> </span></a>
+                        </li>
+                    <?php }
+
+                    if ($prijmy_w + $prijmy_e > 0) {
+                    ?>
+                        <li class="divider"></li>
+
+                        <?php }
+
+                    if ($vydaje_w >0) {
+                    ?>
+
+                        <li>
+                            <a href="<?php echo $this->url(array(
+                                'controller' => 'vydaje',
+                                'action' => 'waitings'
+                            ), null, true) ?>"> <span class="label label-warning tleft">Čakajúcich výdajov</span> <span class="notif_count right"> <?php echo $vydaje_w; ?> </span> </a>
+                        </li>
+
+                    <?php }
+
+                    if ($vydaje_e > 0 ) {
+                        ?>
+
+                        <li>
+                            <a href="<?php echo $this->url(array(
+                                'controller' => 'vydaje',
+                                'action' => 'errors'
+                            ), null, true) ?>"> <span class="label label-danger tleft">Chybných výdajov</span> <span class="notif_count right"> <?php echo $vydaje_e; ?> </span>  </a>
+                        </li>
+
+                        <?php }
+
+                    if ($vydaje_e + $vydaje_w > 0) {
+
+                        echo '<li class="divider"></li>';
+
+                    } ?>
+
+                        <?php if ($ex_dod_w > 0) { ?>
+                            <li>
+                                <a href="<?php echo $this->url(array(
+                                    'controller' => 'externadodavka',
+                                    'action' => 'waitings'
+                                ), null, true) ?>">  <span class="label label-warning tleft">Čakajúcich externých dodávok</span> <span class="notif_count right"> <?php echo $ex_dod_w; ?></span> </a>
+                            </li>
+
+                        <?php }
+
+                        if ($ex_dod_e > 0) { ?>
+                            <li>
+                                <a href="<?php echo $this->url(array(
+                                    'controller' => 'externadodavka',
+                                    'action' => 'errors'
+                                ), null, true) ?>">  <span class="label label-danger tleft">Chybných externých dodávok</span> <span class="notif_count right"> <?php echo $ex_dod_e; ?> </span></a>
+                            </li>
+                        <?php }
+
+                        if ($ex_dod_e + $ex_dod_w > 0) {
+                            ?>
+                            <li class="divider"></li>
+
+                        <?php }
+
+                        if ($ex_vyr_w >0) {
+                            ?>
+
+                            <li>
+                                <a href="<?php echo $this->url(array(
+                                    'controller' => 'externavyroba',
+                                    'action' => 'waitings'
+                                ), null, true) ?>"> <span class="label label-warning tleft">Čakajúcej externej výroby</span> <span class="notif_count right"> <?php echo $ex_vyr_w; ?> </span> </a>
+                            </li>
+
+                        <?php }
+
+                        if ($ex_vyr_e > 0 ) {
+                            ?>
+
+                            <li>
+                                <a href="<?php echo $this->url(array(
+                                    'controller' => 'externavyroba',
+                                    'action' => 'errors'
+                                ), null, true) ?>"> <span class="label label-danger tleft">Chybnej externej výroby</span> <span class="notif_count right"> <?php echo $ex_vyr_e; ?> </span>  </a>
+                            </li>
+
+                        <?php }
+
+                        if ($ex_vyr_e + $ex_vyr_w> 0) {
+
+                            echo '<li class="divider"></li>';
+
+                        }
+
+                        if ($unekomp >0) {
+                        ?>
+
+                        <li>
+                            <a href="<?php echo $this->url(array(
+                                'controller' => 'mikroobjednavky',
+                                'action' => 'list'
+                            ), null, true) ?>"> <span class="label label-warning tleft">Nekompatibilné mikro</span> <span class="notif_count right"> <?php echo $unekomp; ?> </span> </a>
+                        </li>
+
+                        <?php }
+
+                        if ($unekmp_obj > 0 ) {
+                            ?>
+
+                            <li>
+                                <a href="<?php echo $this->url(array(
+                                    'controller' => 'mikroobjednavky',
+                                    'action' => 'list'
+                                ), null, true) ?>"> <span class="label label-danger tleft">Nespárované mikro </span> <span class="notif_count right"> <?php echo $unekmp_obj; ?> </span>  </a>
+                            </li>
+
+                        <?php }
+
+                        if ($unekomp + $unekmp_obj> 0) {
+
+                            echo '<li class="divider"></li>';
+
+                        }
+
+                        if ($ubytky_ch > 0 ) {
+                        ?>
+                        <li>
+                            <a href="<?php echo $this->url(array(
+                                'controller' => 'ubytky',
+                                'action' => 'list'
+                            ), null, true) ?>"> <span class="label label-info tleft">Chybných úbytkov</span> <span class="notif_count right"> <?php echo $ubytky_ch; ?> </span>  </a>
+                        </li>
+
+
+
+                    <?php }
+
+                    if ($obj_nekomp > 0 ) { ?>
+
+                        <li>
+                            <a href="<?php echo $this->url(array(
+                                'controller' => 'Objednavky',
+                                'action' => 'list'
+                            ), null, true) ?>"> <span class="label label-default tleft">Chybných objednávok</span> <span class="notif_count right"> <?php echo $obj_nekomp; ?> </span>  </a>
+                        </li>
+
+
+
+                    <?php  }
+
+                    if ($count_notif >0) {
+                        ?>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="#">Celkovo <?php echo $count_notif; ?> notifikácií</a>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                        <?php
+                            $array = (array)$_SESSION['Zend_Auth']['storage'];
+                            echo $array['name'];
+                        ?>
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'profil', 'action' => 'index'));?>"><i class="fa fa-fw fa-user"></i> Profil</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'nastavenia', 'action' => 'index'));?>"><i class="fa fa-fw fa-gear"></i> Nastavenia</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'ubytky', 'action' => 'refreshdataexternal', 'fromController' => Zend_Controller_Front::getInstance()->getRequest()->getControllerName(), 'fromAction'=>Zend_Controller_Front::getInstance()->getRequest()->getActionName()));?>"><i class="fa fa-fw fa-refresh"></i> Aktualizuj dáta</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout'));?>"><i class="fa fa-fw fa-sign-out"></i> Odhlásiť</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="<?php echo $this->baseUrl().'/index/index'?>"><i class="fa fa-fw fa-dashboard"></i> Nástenka</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#trans"><i class="fa fa-fw fa-exchange"></i> Transakcie <i class="fa fa-fw fa-caret-down"></i></a>
+                          
+                        
+                        <ul id="trans" class="collapse">
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/prijmy/list'?>"><i class="fa fa-fw fa-plus-square"></i> Príjmy</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/vydaje/list'?>"><i class="fa fa-fw fa-minus-square"></i> Výdaje</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/externadodavka/list'?>"><i class="fa fa-fw fa-th-large"></i> Externá dodávka</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/externavyroba/list'?>"><i class="fa fa-fw fa-cogs"></i> Externá výroba</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/ubytky/list'?>"><i class="fa fa-fw fa-line-chart"></i> Úbytky hmotnosti</a>
+                            </li>
+                        </ul>
+
+
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#objednavky"><i class="fa fa-fw fa-truck"></i> Objednávky <i class="fa fa-fw fa-caret-down"></i></a>
+
+
+                        <ul id="objednavky" class="collapse">
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/objednavky/list'?>"><i class="fa fa-fw fa-newspaper-o"></i> Objednávky</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/mikroobjednavky/list'?>"><i class="fa fa-fw fa-keyboard-o" ></i> Mikroobjednávky</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/objednavky/add'?>"><i class="fa fa-fw fa-plus"></i> Pridať objednávku</a>
+                            </li>
+                            <!--
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/objednavky/calendar'?>"><i class="fa fa-fw fa-calendar-o"></i> Kalendár objednávok</a>
+                            </li>
+                            -->
+                        </ul>
+                    </li>
+
+                    <li>
+    
+                        <a href="javascript:;" data-toggle="collapse" data-target="#administracia"><i class="fa fa-fw fa-edit"></i> Administrácia <i class="fa fa-fw fa-caret-down"></i></a>
+
+
+                        <ul id="administracia" class="collapse">
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/dodavatelia/list'?>"><i class="fa fa-fw fa-edit"></i> Dodávatelia</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/prepravci/list'?>"><i class="fa fa-fw fa-truck"></i> Prepravcovia</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/zakaznici/list'?>"><i class="fa fa-group"></i> Zákazníci</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/sklady/list'?>"><i class="fa fa-fw fa-university"></i> Lokality</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/podsklady/list'?>"><i class="fa fa-fw fa-sitemap"></i> Sklady</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/stroje/list'?>"><i class="fa fa-fw fa-cogs"></i> Stroje</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/motohodiny/list'?>"><i class="fa fa-fw fa-clock-o"></i> Motohodiny</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/miestastiepenia/list'?>"><i class="fa fa-fw fa-flag-o"></i> Miesta štiepenia</a>
+                            </li>
+<!--                            <li>-->
+<!--                                <a href="#">Miesta Štiepenia</a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="#">Objednávky Odberateľov</a>-->
+<!--                            </li>-->
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/materialydruhy/list'?>"><i class="fa fa-fw fa-tree"></i> Druhy materiálov</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/materialytypy/list'?>"><i class="fa fa-fw fa-cubes"></i> Typy materiálov</a>
+                            </li>
+
+                        </ul>
+
+
+                    </li>
+                    <li>
+
+                         <a href="javascript:;" data-toggle="collapse" data-target="#prehlady"><i class="fa fa-fw fa-bar-chart-o"></i> Prehľady<i class="fa fa-fw fa-caret-down"></i></a>
+                          
+                        
+                        <ul id="prehlady" class="collapse">
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/sklady'?>"><i class="fa fa-fw fa-university"></i> Stav Skladov</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/zakaznici'?>"><i class="fa fa-fw fa-group"></i> Dodané zákazníkom</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->baseUrl().'/stroje'?>"><i class="fa fa-fw fa-cogs"></i> Vyťaženie Strojov</a>
+                            </li>
+                        </ul>
+                    </li>
+                      
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+	    <div id="page-wrapper">
+
+			<div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12 print">
+
+
+                          <h1><?php echo $this->escape($this->title); ?></h1>
+                        <?php
+
+                        echo $this->layout()->content; ?>
+
+                    </div>
+                </div>
+                <!-- end of row    -->
+
+			<!-- end of container -->
+			</div>
+
+
+		<!-- end of page-wrapper -->
+		</div>
+
+
+	 <!-- /.end-of-wrapper -->
+	</div>
+
+
+
+</div>
+</body>
+
+</html>

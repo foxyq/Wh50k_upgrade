@@ -1,0 +1,184 @@
+<h1 >Externá výroba - detail</h1>
+<!--<hr>-->
+<div class="col-lg-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-cogs"></i> Detail ext. výroby  <?php echo $this->vyroba['doklad_cislo'];?></h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-calendar"></i> Dátum externej výroby</legend>
+
+                    <div class="col-lg-6">
+                        Dátum:
+                        <?php echo date("d.m.Y", strtotime($this->vyroba['datum_xvyroby_d'])); // render the user name field here ?>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-user    "></i> Zákazník</legend>
+                    <div class="col-lg-6">
+                        Zákazník:
+                        <?php echo $this->ciselniky['zakazniciModel']->getNazov($this->vyroba['zakaznik_enum']); // render the user name field here ?>
+                    </div>
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-truck"></i> Dodanie</legend>
+                    <div class="col-lg-6">
+                        Dodávateľ:
+                        <?php echo $this->ciselniky['dodavateliaModel']->getNazov($this->vyroba['dodavatel_enum']); // render the user name field here ?>
+                    </div>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-cogs"></i> Spracovanie</legend>
+                    <div class="col-lg-6">
+                        Stroj:
+                        <?php echo $this->ciselniky['strojeModel']->getNazov($this->vyroba['stroj_enum']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+                        Miesto štiepenia:
+                        <?php echo $this->ciselniky['miestaStiepeniaModel']->getNazov($this->vyroba['miesto_stiepenia_enum']); // render the user name field here ?>
+                    </div>
+            </div>
+            <div class="row">
+
+                <legend><i class="fa fa-truck"></i> Preprava</legend>
+
+                <div class="col-lg-6">
+                        Prepravca:
+                        <?php echo $this->ciselniky['prepravciModel']->getNazov($this->vyroba['prepravca_enum']); // render the user name field here ?>
+                    </div>
+                <div class="col-lg-6">
+                    ŠPZ:
+                    <?php echo $this->vyroba['prepravca_spz']; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-cubes"></i> Množstvo</legend>
+                    <div class="col-lg-6">
+                        Váha:
+                        <?php echo number_format($this->vyroba['q_tony_merane'], 2, ",", " ").' t'; // render the user name field here ?>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        Objem:
+                        <?php echo number_format($this->vyroba['q_m3_merane'], 2, ",", " ").' m<sup>3</sup>'; // render the user name field here ?>
+                    </div>
+
+            </div>
+            <div class="row">
+
+
+                <div class="col-lg-6">
+                    Priestor:
+                    <?php echo number_format($this->vyroba['q_prm_merane'], 2, ",", " ").' PRM'; // render the user name field here ?>
+                </div>
+                <div class="col-lg-6">
+                    Vlhkosť:
+                    <?php echo number_format($this->vyroba['q_vlhkost'], 2, ",", " ").' %'; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-tree"></i> Materiál</legend>
+                    <div class="col-lg-6">
+                        Typ:
+                        <?php echo $this->ciselniky['materialyTypyModel']->getNazov($this->vyroba['material_typ_enum']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+                        Druh:
+                        <?php echo $this->ciselniky['materialyDruhyModel']->getNazov($this->vyroba['material_druh_enum']); // render the user name field here ?>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    Využitý stroj:
+                    <?php echo $this->ciselniky['strojeModel']->getNazov($this->vyroba['stroj_enum']); // render the user name field here ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-info-circle"></i> Doplňujúce informácie</legend>
+                    <div class="col-lg-6">
+                        Stav:
+                        <?php echo $this->ciselniky['transakcieStavyModel']->getNazov($this->vyroba['stav_transakcie']); // render the user name field here ?>
+                    </div>
+                    <div class="col-lg-6">
+                        Chyba:
+                        <?php if ($this->vyroba['chyba'] == 1 ) echo 'áno';
+                        else echo 'nie'; // render the user name field here ?>
+                    </div>
+            </div>
+            <br>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    Poznámka:
+                    <?php if ($this->vyroba['poznamka'] == '' || $this->vyroba['poznamka'] == '0' ) echo 'žiadna poznámka';
+                    else echo $this->vyroba['poznamka']; // render the user name field here ?>
+                </div>
+                </fieldset>
+            </div>
+
+
+
+            <br>
+
+            <div class="row">
+
+
+                <div class="col-lg-6 tright">
+
+                    <?php
+//                    $merna_jednotka = $this->ciselniky['skladyModel']->getMernaJednotka($this->vyroba['sklad_enum']);
+//                    if ($merna_jednotka == 1 )
+//                        echo '<a class="btn-info btn" href="'.$this->url(array("controller"=>"vyrobae", "action"=>"printton", "id"=>$this->vyroba['ts_vyrobae_id'], "fromAction" => "list",
+//                            )).'" target="_blank">Tlačiť</a>'
+                    //                <!--                    printton-->
+                    ?>
+
+                    <?php  if ($merna_jednotka == 2 )
+//                        echo '<a class="btn-info btn" href="'.$this->url(array("controller"=>"vyrobae", "action"=>"printprm", "id"=>$this->vyroba['ts_vyrobae_id'], "fromAction" => "list",
+//                            )).'" target="_blank">Tlačiť</a>'
+                    //                <!--                   printprm-->
+                    ?>
+                    <?php  if ($merna_jednotka == 3 )
+//                        echo '<a class="btn-info btn" href="'.$this->url(array("controller"=>"vyrobae", "action"=>"printm3", "id"=>$this->vyroba['ts_vyrobae_id'], "fromAction" => "list",
+//                            )).'" target="_blank">Tlačiť</a>'
+                    //                <!--                    printm3-->
+                    //                                ?>
+
+
+
+                </div>
+
+                <div class="col-lg-6">
+                    <!--            <dt>&nbsp;</dt>-->
+                    <a href="<?php echo $this->url(array(
+                        'controller' => $this->fromController,
+                        'action' => $this->fromAction,
+                        'id' => $this->fromId
+                    ), null, true) ?>"  type="button" class="btn btn-warning form-control">Späť</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>

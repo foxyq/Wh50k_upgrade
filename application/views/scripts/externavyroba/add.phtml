@@ -1,0 +1,169 @@
+<h1 >Pridať novú externú výrobu</h1>
+
+
+<div class="col-lg-5">
+    <div class="panel panel-green">
+        <div class="panel-heading">
+            <h3 class="panel-title">Detail transakcie </h3>
+        </div>
+        <div class="panel-body">
+            <form action="<?php echo $this->escape($this->form->getAction()) ?>"
+                  method="<?php echo $this->escape($this->form->getMethod()) ?>"
+                  enctype="multipart/form-data" class="normal">
+
+                <?php echo $this->form->tx_vyroba_id; ?>
+
+                <div class="row">
+                    <fieldset>
+
+                        <!--                    <legend>Dátum príjmu</legend>-->
+
+                        <div class="col-lg-6">
+                            <!--                        Dátum:-->
+                            <?php echo $this->form->datum_xvyroby_d; // render the user name field here ?>
+                        </div>
+                    </fieldset>
+                </div>
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Zákazník</legend>
+                        <div class="col-lg-6">
+                            <!--                        Dodávateľ:-->
+                            <?php echo $this->form->zakaznik_enum; // render the user name field here ?>
+                        </div>
+                </div>
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Dodávateľ a spracovanie</legend>
+                        <div class="col-lg-6">
+                            <!--                        Dodávateľ:-->
+                            <?php echo $this->form->dodavatel_enum; // render the user name field here ?>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!--                        Dodávateľ:-->
+                            <?php echo $this->form->miesto_stiepenia_enum; // render the user name field here ?>
+                        </div>
+                </div>
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Preprava</legend>
+                        <div class="col-lg-6">
+                            <!--                        Prepravca:-->
+                            <?php echo $this->form->prepravca_enum; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                        <!--                    ŠPZ:-->
+                        <?php echo $this->form->prepravca_spz; // render the user name field here ?>
+                    </div>
+                </div>
+                <!--        -->
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Množstvo</legend>
+                        <div class="col-lg-6">
+                            <!--                        Netto:-->
+                            <?php echo $this->form->q_tony_merane; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <?php echo $this->form->q_m3_merane; // render the user name field here ?>
+                        </div>
+
+
+                    </fieldset>
+                </div>
+                <div class="row">
+
+
+                    <div class="col-lg-6">
+                        <?php echo $this->form->q_prm_merane; // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <?php echo $this->form->q_vlhkost; // render the user name field here ?>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Spracovanie</legend>
+
+                        <div class="col-lg-12">
+                            <!--                        Netto:-->
+                            <?php echo $this->form->stroj_enum; // render the user name field here ?>
+                        </div>
+
+
+                    </fieldset>
+                </div>
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Materiál</legend>
+                        <div class="col-lg-6">
+                            <!--                        Typ:-->
+                            <?php echo $this->form->material_typ_enum; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                        Druh:-->
+                            <?php echo $this->form->material_druh_enum; // render the user name field here ?>
+                        </div>
+
+                </div>
+
+
+                <div class="row">
+                    <fieldset>
+                        <legend>Doplňujúce informácie</legend>
+                        <div class="col-lg-6">
+                            <!--                        Stav:-->
+                            <?php echo $this->form->stav_transakcie; // render the user name field here ?>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                        Chyba:-->
+                            <?php echo $this->form->chyba; // render the user name field here ?>
+                        </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <!--                    Poznámka:-->
+                        <?php echo $this->form->poznamka; // render the user name field here ?>
+                    </div>
+                    </fieldset>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <?php echo $this->form->potvrdzujuceTlacidlo; // render the user name field here ?>
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <dt>&nbsp;</dt>
+                        <a href="<?php
+                        //pageManager
+                        echo $this->url(array(
+                            'controller' => $this->fromController,
+                            'action' => $this->fromAction
+                        ), null, true) ?>"  type="button" class="btn btn-warning">Späť</a>
+
+                    </div>
+                </div>
+                <!--                --><?php //echo $this->form->doklad_typ_enum; // render the user name field here ?>
+            </form>
+

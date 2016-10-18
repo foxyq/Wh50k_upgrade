@@ -1,0 +1,18 @@
+----------!!POZOR!!!----------
+
+Kvoli modularite aplikacie a podpore roznych layouts pre rozne uzivatelske role sa musel zmenit system nacitanie layoutov.
+
+Po novom zlozka layouts/scripts/ sice obsahuje layout.phtml ale on sa nenacitava - namiesto toho sa nacitava layout z views/scripts/layout.phtml.
+
+
+
+----------Uprava v appllication.ini----------
+
+Prebehla uprava kde sa zakomentoval kod:
+
+;resources.layout.layoutPath = APPLICATION_PATH "/layouts/scripts/"
+
+a nahradil sa kodom:
+
+resources.layout.layout = "layout"
+resources.frontController.moduleDirectory = APPLICATION_PATH "/modules"
