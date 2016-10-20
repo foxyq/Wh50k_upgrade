@@ -2,76 +2,14 @@
 $this->headTitle($this->title);
 $this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
 $this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table_mikroobj.js');
+
+
+// inicializacia rozsireneho filtrovania aka table filters
+// ofc cez view helper .. lebo si to mozme dovolit ;)
+$this->tablefiltersMikro($this);
+
 ?>
-
-<link href='<?php echo $this->baseUrl()."/css/jquery.dataTables.yadcf.css"?>' rel="stylesheet" type="text/css" />
-<script src="<?php echo $this->baseUrl().'/js/jquery.dataTables.yadcf.js'?>"></script>
-
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
-
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-
-<script type="text/javascript" language="javascript" class="init">
-    $(document).ready(function() {
-        $('#fancy_table').DataTable( {
-            "order": [[ 1, "desc" ]],
-            columnDefs: [
-                { "sType": "title-string", "aTargets": [ 3 ],
-                            "targets": 3 },
-                    // columns.render property
-                  
-                    { "render": function ( data, type, row, meta ) {
-                        var jsDate = new Date(row[3] * 1000);
-                        return $.datepicker.formatDate("dd.mm.yy", jsDate);
-                        }
-                    }
-                
-//                    { "sType": "alt-string", "aTargets" : 11 }
-            ],
-            initComplete: function () {
-                var api = this.api();
-                var abc = 0;
-                api.columns().indexes().flatten().each( function ( i ) {
-                    var column = api.column( i );
-                    if (i != abc) {
-                        var select = $('<select><option value=""></option></select>')
-                            .appendTo( $(column.footer()).empty() )
-                            .on( 'change', function () {
-                                var val = $.fn.DataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-                                column
-                                    .search( val ? '^'+val+'$' : '', true, false )
-                                    .draw();
-                            } );
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
-                    }
-                } );
-            }
-        } );
-
-    } );
-</script>
-
-
-<!-- range filtering pre datumy a dodavatelov atd. -->
-<script>
-$(document).ready(function(){
-  $('#fancy_table').dataTable().yadcf([
-        // {column_number : 1},
-        {column_number : 1, filter_type: "multi_select", select_type:'chosen', filter_container_id: "external_zakaznik"},
-        {column_number: 3,  filter_type: "range_date", date_format: "dd.mm.yyyy", filter_container_id: "external_datum"}
-    ]);
-});
-</script>
-<!-- koniec range filteringu  -->
-   
-
-
 
 <p>
     <a href="<?php echo $this->url(array('controller'=>'Mikroobjednavky',
