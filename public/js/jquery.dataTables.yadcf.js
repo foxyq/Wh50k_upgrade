@@ -421,11 +421,11 @@ var yadcf = (function ($) {
         selectElementCustomRefreshFunc,
         selectElementCustomDestroyFunc,
         placeholderLang = {
-            'select': 'Select value',
-            'select_multi': 'Select values',
+            'select': 'Vyberte hodnotu',
+            'select_multi': 'Vyberte hodnoty',
             'filter': 'Type to filter',
-            'range': ['From', 'To'],
-            'date': 'Select a date'
+            'range': ['Od', 'Do'],
+            'date': 'Vyberte dátum'
         },
         settingsMap = {};
 
