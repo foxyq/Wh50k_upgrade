@@ -14,48 +14,10 @@ $prijmy_e = $notif_info['prijmy_errors'];
 
 $controller = 'prijmy';
 
-$this->tablefiltersVydaje($this);
-
 $this->prijmybuttons($this,$prijmy_w,$prijmy_e,$controller);
 
-
+$this->tablefiltersVydaje($this, "Dodávateľ");
 ?>
-<div class="row">
-
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    <a data-toggle="collapse" href="#collapse1">Rozšírené filtrovanie</a>
-                </h4>
-            </div>
-            <div id="collapse1" class="panel-collapse collapse">
-                <div class="panel-body">
-
-                    <div class="col-md-3">
-                        Rozsah dátumov:
-                        <div id="external_datum" > </div>
-                    </div>
-
-                    <div class="col-md-2"">
-                        Dodávateľ:
-                        <div id="external_dodavatel" style="width: 120%" > </div>
-                    </div>
-
-                    <div class="col-md-2"">
-                        Prepravca:
-                        <div id="external_prepravca" style="width: 120%" > </div>
-                    </div>
-
-                </div>
-                <div class="panel-footer"></div>
-            </div>
-        </div>
-    </div>
-
-
-</div>
 
 <div id=".col-lg-12"  class="table-responsive">
     <table id="fancy_table"  class="table table-striped table-hover">

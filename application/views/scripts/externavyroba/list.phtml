@@ -15,6 +15,7 @@ $externe_vyroby_e = $notif_info['externe_vyroby_errors'];
 $controller = 'externavyroba';
 $this->prijmybuttons($this,$externe_vyroby_w,$externe_vyroby_e,$controller);
 
+$this->tablefiltersExterne($this, "vyroba");
 //pouzitie funkcie getDokladyCislaByDate
 //$date = date('Y-m-d', time());
 //print_r($this->externeVyrobyModel->getDokladyCislaByDate($date));
@@ -32,9 +33,10 @@ $this->prijmybuttons($this,$externe_vyroby_w,$externe_vyroby_e,$controller);
             <th>Dátum</th>
             <th>Zákazník</th>
             <th>Dodávateľ</th>
+            <th>Prepravca</th>
             <th>Stroj</th>
             <th>Miesto štp.</th>
-            <th>Prepravca</th>
+
             <th>Tony</th>
             <th>m<sup>3</sup></th>
             <th>PRM </th>
@@ -81,9 +83,10 @@ $this->prijmybuttons($this,$externe_vyroby_w,$externe_vyroby_e,$controller);
             </td>
             <td><?php echo $this->escape($this->zakaznici->getNazov($externa_vyroba->zakaznik_enum));?></td>
             <td><?php echo $this->escape($this->dodavatelia->getNazov($externa_vyroba->dodavatel_enum));?></td>
+            <td><?php echo $this->escape($this->prepravci->getNazov($externa_vyroba->prepravca_enum));?></td>
             <td><?php echo $this->escape($this->stroje->getNazov($externa_vyroba->stroj_enum));?></td>
             <td><?php echo $this->escape($this->miestaStiepenia->getNazov($externa_vyroba->miesto_stiepenia_enum));?></td>
-            <td><?php echo $this->escape($this->prepravci->getNazov($externa_vyroba->prepravca_enum));?></td>
+
             <td class="tonaz"><?php echo number_format($this->escape($externa_vyroba->q_tony_merane), 2, ",", " ");?></td>
 
             <td class="m3"><?php echo number_format($this->escape($externa_vyroba->q_m3_merane), 2, ",", " ");?></td>
