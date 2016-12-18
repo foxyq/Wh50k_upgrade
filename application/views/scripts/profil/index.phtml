@@ -10,6 +10,95 @@
     </ul>
 </div>
 
+<h3>Navigácia</h3>
+<?php
+    $container = new Zend_Navigation();
+    $this->navigation($container);
+
+        $container->addPage(
+            array(
+                'label'      => 'Nastenka',
+                'module'     => 'default',
+                'controller' => 'profil',
+                'action'     => 'index',
+                'pages'      =>
+                    array(
+                        array(
+                            'label'      => 'Nastenka',
+                            'module'     => 'default',
+                            'controller' => 'profil',
+                            'action'     => 'index'
+                        ),
+                        array(
+                            'label'      => 'Nastenka',
+                            'module'     => 'default',
+                            'controller' => 'profil',
+                            'action'     => 'index'
+                        ),array(
+                        'label'      => 'Nastenka',
+                        'module'     => 'default',
+                        'controller' => 'profil',
+                        'action'     => 'index'
+                    ),
+                    )
+            )
+
+
+                    );
+
+    //Finally, echo the breadcrumb!
+    echo '<div>';
+    echo 'You are in: '.$this->navigation()->breadcrumbs()->setLinkLast(false)->setMinDepth(0)->render();
+    echo '</div>';
+php?>
+
+
+<!--for display text and submit fields i use viewHelpers it's very comfortable and easy way.-->
+<div class="submit_area">
+    <?php echo $this->formText('message', 'empty', array('size' => 32, 'id' => 'message')) ?>
+    <?php echo $this->formSubmit('submitTo', 'submit', array('id' => 'submitTo')) ?>
+
+    <div class="show-msg">TRalala</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+    //for send data i'll use jquery library
+    $(document).ready(
+        function(){
+
+            //By clicking on button submit condition makes validate on empty message
+            //unless field message will be not empty  , the programm make send data to
+            //controller via ajax
+            $("#submitTo").click(function() {
+                //moje kodis
+                //$(".show-msg").html("víno");
+
+                var message = $('#message').val();
+                //var message = 'Bitch I might be!';
+                if (message != '') {
+                    //run ajax
+                    $.post('profil/ajax',
+                        {'message' : message},
+
+                        //callback function
+                        function (respond) {
+
+                            //put respond in class show-msg
+                            $(".show-msg").html(respond);
+
+                        }
+                    );
+                }
+
+            });
+
+
+        }
+    );
+
+    </script>
+
 
 
 <?php
