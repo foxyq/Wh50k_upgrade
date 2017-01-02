@@ -6,6 +6,13 @@ class IndexController extends Zend_Controller_Action
     public function init()
     {
         $_SESSION['pomoc'] = "mala macinka";
+
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+
+        $ajaxContext->addActionContext('list', 'html')
+            ->addActionContext('modify', 'html')
+            ->initContext();
+
     }
 
     public function indexAction()

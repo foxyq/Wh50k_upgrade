@@ -50,11 +50,10 @@ class ProfilController extends Zend_Controller_Action
             prepravca_spz AS spz,
             q_tony_merane AS tony,
             q_m3_merane AS m3,
-            q_prm_merane AS prm,
-            doklad_cislo AS listok,
+            q_vlhkost AS vlhkost,
+            q_tony_nadrozmer AS nadrozmer,
+            doklad_cislo AS doklad_cislo,
             materialy_typy.nazov AS typ,
-            materialy_druhy.nazov AS druh,
-            poznamka,
             chyba,
             stav_transakcie AS stav
             FROM
@@ -64,8 +63,8 @@ class ProfilController extends Zend_Controller_Action
             LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
             LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
             LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
-            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id
-            LIMIT '.$limit
+            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id'
+//            LIMIT '.$limit
         );
 
         $vystup = (array) $stmt->fetchAll();

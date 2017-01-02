@@ -61,6 +61,9 @@ $colors = array('1' => 'red', '2' => 'primary', '3' => 'green', '4' => 'yellow',
 
                     <?php foreach ($skladyIds AS $skladId) :
                         if ($counter>count($colors)) {$counter = 1;}
+
+                        if ($counter != 1) { //podmienka na odstranenie skladu HB z frontendu
+
                         ?>
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-<?php echo $colors[$counter]?>">
@@ -167,7 +170,7 @@ $colors = array('1' => 'red', '2' => 'primary', '3' => 'green', '4' => 'yellow',
 
                         </div>
                     </div>
-                    <?php
+                    <?php }
                     $counter++;
                     endforeach; ?>
 

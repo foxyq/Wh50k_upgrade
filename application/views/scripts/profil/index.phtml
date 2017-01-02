@@ -1,3 +1,13 @@
+<?php
+
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
+//$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table_test.js');
+
+
+?>
+
 <br /><br />
 <div id="view-content">
     <h1>Profil</h1>
@@ -85,7 +95,14 @@ php?>
                         function (respond) {
 
                             //put respond in class show-msg
+
+//                            $('#fancy_table').DataTable( {
+//                                    "ajax": respond
+//                                } );
+
+
                             $(".show-msg").html(respond);
+
 
                         }
                     );
@@ -94,10 +111,82 @@ php?>
             });
 
 
+
+
+
         }
     );
 
     </script>
+
+
+<script>
+
+
+
+
+</script>
+
+
+
+
+
+    <div id=".col-lg-12"  class="table-responsive">
+        <table id="fancy_table"  class="table table-striped table-hover">
+
+            <thead>
+            <tr class="tableizer-firsrow">
+                <!--    <th>ID</th>-->
+                <!--        <th>doklad číslo</th>-->
+                <th class="no-print">Detail</th>
+                <th>Dátum</th>
+                <th>Lokalita</th>
+                <th class="col-podsklad">Sklad</th>
+                <th>Dodávateľ</th>
+                <th>Prepravca</th>
+                <!--    <th>SPZ</th>-->
+                <th>Tony</th>
+                <th>m<sup>3</sup></th>
+                <th>Vlhkosť</th>
+                <th class="col-tony-nadrozmer">Nadrozmer</th>
+                <th>Doklad</th>
+                <!--    <th>t v</th>-->
+
+                <!--    <th>m3 v</th>-->
+                <!--    <th>PRM m</th>-->
+                <!--    <th>PRM v</th>-->
+
+                <!--    <th>materiál typ</th>-->
+                <th>Materiál</th>
+                <th class="col-stav">Stav</th>
+                <!--    <th class="col-chyba">chyba</th>-->
+                <th class="col-upravy no-print">Úpravy</th>
+
+            </tr>
+            </thead>
+
+            <tfoot>
+            <tr>
+                <!--        <th>ID</th>-->
+                <!--        <th>doklad číslo</th>-->
+                <th></th>
+                <th>datum</th>
+                <th>sklad</th>
+                <th>podsklad</th>
+                <th>dod</th>
+                <th>prepravca</th>
+                <th>SPZ</th>
+                <th>t m</th>
+                <th>t nadrozmer</th>
+                <th>t v</th>
+                <th>m3 m</th>
+                <th>m3 v</th>
+
+            </tr>
+            </tfoot>
+
+
+        </table>
 
 
 

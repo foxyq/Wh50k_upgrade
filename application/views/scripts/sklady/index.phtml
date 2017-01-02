@@ -31,9 +31,10 @@ $id = $this->id;
         $skladyIds = $this->skladyModel->getIds();
 
         foreach($skladyIds as $skladId):?>
+            <?php if ($skladId != 2) { //vyradenie skladu HB hronska breznica z listu (frontend) ?>
             <li <?php if ($skladId == $id){echo "class=\"active\"";}?>><a  href="<?php echo $this->url(array('controller'=>'sklady',
                     'action'=>'index', 'skladID'=> $skladId, 'fromAction' => 'list'));?>"><?php echo $this->skladyModel->getNazov($skladId);?></a></li>
-        <?php endforeach; ?>
+        <?php } endforeach; ?>
     </ul>
 
 
