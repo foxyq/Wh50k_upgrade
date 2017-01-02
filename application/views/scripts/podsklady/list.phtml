@@ -21,6 +21,8 @@ $this->headTitle($this->title);
         <th>Patrí skladu</th>
         <th>Mesto</th>
         <th>Adresa</th>
+        <th>Poradie</th>
+        <th>Viditelnost</th>
         <th>Úpravy</th>
     </tr>
 
@@ -35,6 +37,20 @@ $this->headTitle($this->title);
             <td><?php echo $this->escape($this->skladyModel->getNazov($podsklad->sklad_enum));?></td>
             <td><?php echo $this->escape($this->mesta->getNazov($podsklad->mesto_enum));?></td>
             <td><?php echo $this->escape($podsklad->adresa);?></td>
+            <td><?php echo $this->escape($podsklad->poradie);?></td>
+            <td>
+                <?php
+                $this->viditelnost($this->escape($podsklad->viditelnost));
+                /*
+                if ($this->escape($podsklad->viditelnost)){
+                    echo "áno";
+                }else{
+                    echo "nie";
+                }
+                //3T stary kod:
+                //echo $this->escape($podsklad->viditelnost);
+                */
+                ?></td>
             <td>
                 <a href="<?php echo $this->url(array('controller'=>'Podsklady',
                     'action'=>'edit', 'id'=>$podsklad->podsklady_id));?>">Upraviť</a>

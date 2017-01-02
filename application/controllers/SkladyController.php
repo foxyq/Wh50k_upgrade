@@ -68,7 +68,7 @@ class SkladyController extends Zend_Controller_Action
 
         //vypocet stavu podskladov
         $podskladyModel = new Application_Model_DbTable_Podsklady();
-        $podsklady = $podskladyModel->fetchAll();
+        $podsklady = $podskladyModel->fetchAll("viditelnost = 1", "poradie");
         $podskladyPole = array();
         foreach ($podsklady AS $podsklad){
             if (strtolower($podsklad->kod_podskladu) == "nedef"){continue;}
