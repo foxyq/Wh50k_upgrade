@@ -69,7 +69,9 @@ class ProfilController extends Zend_Controller_Action
         );
 
         $vystup = (array) $stmt->fetchAll();
-        echo json_encode($vystup, JSON_UNESCAPED_UNICODE);
+        $data = array('data' => $vystup);
+        //print_r($vystup);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
         //print_r($vystup);
         /*
