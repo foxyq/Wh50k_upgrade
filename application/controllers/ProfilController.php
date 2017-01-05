@@ -55,7 +55,8 @@ class ProfilController extends Zend_Controller_Action
             doklad_cislo AS doklad_cislo,
             materialy_typy.nazov AS typ,
             chyba,
-            stav_transakcie AS stav
+            stav_transakcie AS stav,
+            merna_jednotka_enum AS merna_jednotka
             FROM
             ts_prijmy
             LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id

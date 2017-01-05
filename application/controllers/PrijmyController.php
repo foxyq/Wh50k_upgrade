@@ -488,7 +488,7 @@ class PrijmyController extends Zend_Controller_Action
         );
         $id = $this->_getParam('id');
         $prijmy = new Application_Model_DbTable_Prijmy();
-        $prijem = $prijmy->getPrijemByDokladCislo($id);
+        $prijem = $prijmy->getPrijem($id);
         $this->view->prijem = $prijem;
         $this->view->ciselniky = $ciselniky;
     }

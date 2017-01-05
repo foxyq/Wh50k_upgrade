@@ -6,30 +6,14 @@ $zakazniciModel = $this->zakazniciModel;
 
 ?>
 
-
-<!--<script src="--><?php //echo $this->baseUrl().'/js/morris.min.js';?><!--"></script>-->
-<!--<script src="--><?php //echo $this->baseUrl().'/js/raphael.min.js';?><!--"></script>-->
-
-
-
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function() {
         $('.fancy_table').DataTable( {
             "order": [[ 1, "desc" ]],
             columnDefs: [
-                { "sType": "title-string", "aTargets": [ 2 ]  }
+                { "sType": "title-string", "aTargets": [ 1 ]  }
+//                    { "sType": "alt-string", "aTargets" : 11 }
             ],
-//            "processing": true,
-//            "serverSide": true,
-            "ajax": "profil/ajax",
-
-            "columns": [
-                { "data": "dodavatel" },
-                { "data": "prepravca" },
-                { "data": "tony" }
-
-            ],
-
             initComplete: function () {
                 var api = this.api();
                 var abc = 0;
@@ -53,9 +37,6 @@ $zakazniciModel = $this->zakazniciModel;
                 } );
             }
         } );
-
-
-
     } );
 </script>
 <!--Taby-->
@@ -79,19 +60,17 @@ $zakazniciModel = $this->zakazniciModel;
                         <th>MJ</th>
                     </tr>
                     </thead>
+                    <tbody>
+                    <?php foreach($this->zakazniciModel->getIds() as $zakaznikId) : ?>
+                        <tr>
+                            <td><?php echo $this->escape($this->zakazniciModel->getNazov($zakaznikId));?></td>
 
-<!--                    <tbody>-->
-<!--                    --><?php //foreach($this->zakazniciModel->getIds() as $zakaznikId) : ?>
-<!--                        <tr>-->
-<!--                            <td>--><?php //echo $this->escape($this->zakazniciModel->getNazov($zakaznikId));?><!--</td>-->
-<!---->
-<!--                            <td>--><?php //echo number_format($this->escape($this->zakazniciModel->getQuantityByYearIdQuantityTypeIdZakaznikId($rokId, $zakaznikId)), 2, ",", " ");?><!--</td>-->
-<!---->
-<!--                            <td>--><?php //echo $this->escape($this->merneJednotkyModel->getSkratka($this->zakazniciModel->getMernaJednotka($zakaznikId)));?><!--</td>-->
-<!--                        </tr>-->
-<!--                    --><?php //endforeach; ?>
-<!--                    </tbody>-->
+                            <td><?php echo number_format($this->escape($this->zakazniciModel->getQuantityByYearIdQuantityTypeIdZakaznikId($rokId, $zakaznikId)), 2, ",", " ");?></td>
 
+                            <td><?php echo $this->escape($this->merneJednotkyModel->getSkratka($this->zakazniciModel->getMernaJednotka($zakaznikId)));?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
                     <tfoot>
                     <tr>
                         <th> </th>
@@ -107,30 +86,7 @@ $zakazniciModel = $this->zakazniciModel;
 
 </div>
 
-<script>
 
-//    Morris.Bar({
-//        element: 'morris-bar-chart',
-//        data: [
-//
-//            <?php //$counter = 0;
-//foreach($this->zakazniciModel->getIds() as $zakaznikId) : ?>
-//            { device: <?php //echo "'".$this->zakazniciModel->getNazov($zakaznikId)."' ,";?>
-//                geekbench: <?php //echo $this->zakazniciModel->getCountTransactionsByStrojId($zakaznikId); ?>// }
-//    <?php //$counter++; if ($counter < count($this->zakazniciModel->getIds()) ) echo ','; ?>
-<!--    --><?php //endforeach; ?>
-//
-//    ],
-//    xkey: 'device',
-//        ykeys: ['geekbench'],
-//        labels: ['Dodané objednávky'],
-//        barRatio: 15,
-//        xLabelAngle: 35,
-//        hideHover: 'auto',
-//        resize: false
-//    });
-
-</script>
 
 
 
