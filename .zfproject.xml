@@ -30,6 +30,7 @@
           <actionMethod actionName="printton"/>
           <actionMethod actionName="printm3"/>
           <actionMethod actionName="printprm"/>
+          <actionMethod actionName="getprijmy"/>
         </controllerFile>
         <controllerFile controllerName="Vydaje">
           <actionMethod actionName="index"/>
@@ -866,6 +867,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Motohodiny">
             <viewScriptFile forActionName="delete"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Prijmy">
+            <viewScriptFile forActionName="getprijmy"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

@@ -1,53 +1,41 @@
 $(document).ready(function() {
 
-
-    //render : function (data, type, row) {
-    //return "<a href="+'"'+ "'<?php echo $this->url(array("+"'controller'=>'prijmy','action'=>'preview', 'id'=>$prijem->doklad_cislo, 'fromAction' => 'list'));?>"+'" '+"<i class='fa fa-eye'></i></a>";
-    //return "<a href='preview/id/"+data_doklad_cislo+"/fromAction/list'><i class='fa fa-eye'></i></a>";
-    //}
-
-    //jQuery.fn.dataTable.render.ellipsis = function ( data ) {
-    //
-    //
-    //    return 'deved';
-    //
-    //};
-
-        $('#fancy_table').DataTable( {
+    var table =  $('#fancy_table').DataTable( {
             "order": [[ 1, "desc" ]],
             columnDefs: [{ "sType": "string", "aTargets": [ 12 ]  }],
-
-            "ajax": "../profil/ajax",
+            //"processing": true,
+            //"ajax": "../profil/ajax",
+            "ajax": "getprijmy",
             "type": "POST",
+
             "columns": [
                 { "data": "id",
                     render:
                         function ( data, type, row ) {
                             return "<a href='preview/id/"+data+"/fromAction/list'><i class='fa fa-eye'></i></a>";
                         }
-
-                    //render: $.fn.dataTable.render.ellipsis( data )
                 },
                 { "data": "datum"
-                , render: function ( data, type, row ) {
-                    var dateSplit = data.split('-');
-                    return type === "display" || type === "filter" ?
-                    dateSplit[0] +'.'+ dateSplit[1] +'.'+ dateSplit[2] :
-                        data;
-                }
+                //render: function ( data, type, row ) {
+                //    var dateSplit = data.split('-');
+                //    return type === "display" || type === "filter" ?
+                //    dateSplit[0] +'.'+ dateSplit[1] +'.'+ dateSplit[2] :
+                //        data;
+                //}
                 },
                 { "data": "sklad" },
                 { "data": "podsklad" },
                 { "data": "dodavatel" },
                 { "data": "prepravca" },
-                { "data": "tony" },
-                { "data": "m3" },
-                { "data": "vlhkost"
-                    //,
-                    //render: function ( data, type, row ) {
-                    //    return  data + ' %';
-                    //}
-                },
+                { "data": "tony",
+                    "className": "tonaz",
+                    render: $.fn.dataTable.render.number( '.', ',', 2, '' )},
+                { "data": "m3",
+                    "className": "m3",
+                    render: $.fn.dataTable.render.number( '.', ',', 2, '' )},
+                { "data": "vlhkost",
+                    "className": "vlhkost",
+                    render: $.fn.dataTable.render.number( '.', ',', 2, '', ' %' )},
                 { "data": "nadrozmer" },
                 { "data": "doklad_cislo" },
                 { "data": "typ" },
@@ -74,17 +62,17 @@ $(document).ready(function() {
 
                     render:
                         function (  data, type, row ) {
-                            buttons = "<a href='edit/id/" +row.id+ "/fromAction/list'> <i class='fa fa-pencil-square-o'></i>   </a>";                   buttons += "<a href='delete/id/" +row.id+ "/fromAction/list'> <i class='fa fa-trash-o'></i> </a>";
+                            buttons = "<a href='edit/id/" +row.id+ "/fromAction/list'><i class='fa fa-pencil-square-o'></i></a>";                   buttons += "<a href='delete/id/" +row.id+ "/fromAction/list'> <i class='fa fa-trash-o'></i> </a>";
 
 
                             if (data == 1 ) {
-                            buttons +=  ' <a href="printton/id/' +row.id+ '/fromAction/errors" target="_blank"><i class="fa fa-print"></i> </a>';
+                            buttons +=  '<a href="printton/id/' +row.id+ '/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
                             }
                             else if (data == 2 ) {
-                            buttons += ' <a href="printprm/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i> </a>';
+                            buttons += '<a href="printprm/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
                             }
                             else if (data == 3 ) {
-                                buttons +=  '<a href="printm3/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i> </a>';
+                                buttons +=  '<a href="printm3/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
                             }
                             return String(buttons);
                         }
@@ -124,4 +112,3 @@ $(document).ready(function() {
             }
         } );
     } );
-

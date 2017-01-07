@@ -1,17 +1,21 @@
 <?php
 class PrijmyController extends Zend_Controller_Action
 {
+
     protected $_request = null;
+
     public function init()
     {
 //        celkom dolezite pre jquery ...
         $this->view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
     }
+
     public function indexAction()
     {
         // action body
         $this->view->message = 'Stránka kde sa bude zobrazovať prehľad za príjmy.';
     }
+
     public function listAction()
     {
         // vytvorenie instancií modelov
@@ -39,6 +43,7 @@ class PrijmyController extends Zend_Controller_Action
         //názov stránky
         $this->view->title = "Príjmy - zoznam";
     }
+
     public function addAction()
     {
 
@@ -172,114 +177,6 @@ class PrijmyController extends Zend_Controller_Action
             }
         }
     }
-    /* OLD VERSION
-    public function editAction()
-    {
-        $fromAction = $this->_getParam('fromAction', 'list');
-        $this->view->fromAction = $fromAction;
-        $fromController = $this->_getParam('fromController', 'prijmy');
-        $this->view->fromController = $fromController;
-
-        //$request = $this->getRequest()->getServer('HTTP_REFERER');
-        //print_r($request);
-        //TDODO THIS: print_r( $this->_request);
-
-        //instancia modelu z ktoreho budeme tahat zoznam
-        $skladyMoznosti = new Application_Model_DbTable_Sklady();
-        $podskladyMoznosti = new Application_Model_DbTable_Podsklady();
-        $dodavateliaMoznosti = new Application_Model_DbTable_Dodavatelia();
-        $prepravciMoznosti = new Application_Model_DbTable_Prepravci();
-        $dokladyTypyMoznosti = new Application_Model_DbTable_DokladyTypy();
-        $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
-        $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
-        $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
-        //metoda ktorou vytiahneme do premennej zoznam
-        $skladyMoznosti = $skladyMoznosti->getMoznosti();
-        $podskladyMoznosti = $podskladyMoznosti->getMoznosti();
-        $dodavateliaMoznosti = $dodavateliaMoznosti->getMoznosti();
-        $prepravciMoznosti = $prepravciMoznosti->getMoznosti();
-        $dokladyTypyMoznosti = $dokladyTypyMoznosti->getMoznosti();
-        $materialyDruhyMoznosti = $materialyDruhy->getMoznosti();
-        $materialyTypyMoznosti = $materialyTypy->getMoznosti();
-        $transakcieStavyMoznosti = $transakcieStavy->getMoznosti();
-        //samostatne premenne ktore posielame na form
-        $potvrdzujuceTlacidlo = 'Upraviť';
-        //vytvorime form a v paramatre mu tam posleme nase pole
-        $form = new Application_Form_Prijem(array(
-            'skladyMoznosti' => $skladyMoznosti,
-            'podskladyMoznosti' => $podskladyMoznosti,
-            'dodavateliaMoznosti' => $dodavateliaMoznosti,
-            'prepravciMoznosti' => $prepravciMoznosti,
-            'dokladyTypyMoznosti' => $dokladyTypyMoznosti,
-            'materialyDruhyMoznosti' => $materialyDruhyMoznosti,
-            'materialyTypyMoznosti' => $materialyTypyMoznosti,
-            'transakcieStavyMoznosti' => $transakcieStavyMoznosti,
-            'potvrdzujuceTlacidlo' => $potvrdzujuceTlacidlo
-        ));
-        $this->view->form = $form;
-        if ($this->getRequest()->isPost()) {
-            $formData = $this->getRequest()->getPost();
-            //tu musi byt premenne $id pretoze podla toho on upravuje a nacitava data
-            if ($form->isValid($formData)) {
-                $id = (int)$form->getValue('ts_prijmy_id');
-                $datum_prijmu = $form->getValue('datum_prijmu_d');
-                $sklad = $form->getValue('sklad_enum');
-                $podsklad = $form->getValue('podsklad_enum');
-                $dodavatel = $form->getValue('dodavatel_enum');
-                $prepravca = $form->getValue('prepravca_enum');
-                $prepravca_spz = $form->getValue('prepravca_spz');
-                $q_tony_merane = $form->getValue('q_tony_merane');
-                $q_tony_nadrozmer = $form->getValue('q_tony_nadrozmer');
-                $q_m3_merane = $form->getValue('q_m3_merane');
-                $q_prm_merane = $form->getValue('q_prm_merane');
-                $q_vlhkost = $form->getValue('q_vlhkost');
-//                $doklad_typ = $form->getValue('doklad_typ_enum');
-                $material_druh = $form->getValue('material_druh_enum');
-                $material_typ = $form->getValue('material_typ_enum');
-                $poznamka = $form->getValue('poznamka');
-                $chyba = $form->getValue('chyba');
-                $stav_transakcie = $form->getValue('stav_transakcie');
-//                var_dump($datum_prijmu);
-                $prijmy = new Application_Model_DbTable_Prijmy();
-                $prijmy->editPrijem(
-                    $id,
-                    $datum_prijmu,
-                    $sklad,
-                    $podsklad,
-                    $dodavatel,
-                    $prepravca,
-                    $prepravca_spz,
-                    $q_tony_merane,
-                    $q_tony_nadrozmer,
-                    $q_m3_merane,
-                    $q_prm_merane,
-                    $q_vlhkost,
-//                    $doklad_typ,
-                    $material_druh,
-                    $material_typ,
-                    $poznamka,
-                    $chyba,
-                    $stav_transakcie
-                );
-                $this->_helper->redirector($fromAction);
-                //pageManager
-                //$this->_helper->redirector($_SESSION['pageManager']['lastPageParameters']['action']);
-            } else {
-                $form->populate($formData);
-                //pageManager
-                //$_SESSION[pageManager][ignore] = 1;
-            }
-        } else {
-            $id = $this->_getParam('id', 0);
-            if ($id > 0) {
-                $prijmy = new Application_Model_DbTable_Prijmy();
-                $form->populate($prijmy->getPrijemFormatted($id));
-                $this->view->data = $prijmy->getPrijem($id);
-                //pageManager
-                //$_SESSION[pageManager][ignore] = 1;
-            }
-        }
-    }*/
 
     public function deleteAction()
     {
@@ -335,8 +232,7 @@ class PrijmyController extends Zend_Controller_Action
         }
     }
 
-    //NEW VERSION
-        public function editAction()
+    public function editAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
         $this->view->fromAction = $fromAction;
@@ -452,12 +348,14 @@ class PrijmyController extends Zend_Controller_Action
             }
         }
     }
+
     public function printAction()
     {
         $id = $this->_getParam('id', 0);
         $prijmy = new Application_Model_DbTable_Prijmy();
         $this->view->prijem = $prijmy->getPrijem($id);
     }
+
     public function previewAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
@@ -492,6 +390,7 @@ class PrijmyController extends Zend_Controller_Action
         $this->view->prijem = $prijem;
         $this->view->ciselniky = $ciselniky;
     }
+
     public function waitingsAction()
     {
         //$param = "stav_transakcie = 1";
@@ -517,6 +416,7 @@ class PrijmyController extends Zend_Controller_Action
         //názov stránky
         $this->view->title ='Príjmy - čaká na schválenie';
     }
+
     public function errorsAction()
     {
         //$param = "chyba = 1";
@@ -542,6 +442,7 @@ class PrijmyController extends Zend_Controller_Action
         //názov stránky
         $this->view->title = "Príjmy - chyby";
     }
+
     public function printtonAction()
     {
         $sklady = new Application_Model_DbTable_Sklady();
@@ -564,6 +465,7 @@ class PrijmyController extends Zend_Controller_Action
         $prijmy = new Application_Model_DbTable_Prijmy();
         $this->view->prijem = $prijmy->getPrijem($id);
     }
+
     public function printm3Action()
     {
         $sklady = new Application_Model_DbTable_Sklady();
@@ -586,6 +488,7 @@ class PrijmyController extends Zend_Controller_Action
         $prijmy = new Application_Model_DbTable_Prijmy();
         $this->view->prijem = $prijmy->getPrijem($id);
     }
+
     public function printprmAction()
     {
         $sklady = new Application_Model_DbTable_Sklady();
@@ -608,4 +511,70 @@ class PrijmyController extends Zend_Controller_Action
         $prijmy = new Application_Model_DbTable_Prijmy();
         $this->view->prijem = $prijmy->getPrijem($id);
     }
+
+    public function getprijmyAction()
+    {
+
+
+        //get post request (standart approach)
+        $request = $this->getRequest()->getPost();
+
+        //referring to the index
+        //gets value from ajax request
+        $message = $request['message'];
+
+        // makes disable renderer
+        $this->_helper->viewRenderer->setNoRender();
+
+        //makes disable layout
+        $this->_helper->getHelper('layout')->disableLayout();
+
+
+        //return callback message to the function javascript
+        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+            'host'     => 'localhost',
+            'username' => 'root',
+            'password' => 'mysql',
+            'dbname'   => 'database',
+            'charset'  => 'utf8'
+        ));
+        $limit = $message;
+        $stmt = $db->query(
+            'SELECT
+            ts_prijmy_id AS id,
+            datum_prijmu_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            nazov_spolocnosti AS dodavatel,
+            prepravci.meno AS prepravca,
+            prepravca_spz AS spz,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_vlhkost AS vlhkost,
+            q_tony_nadrozmer AS nadrozmer,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav,
+            merna_jednotka_enum AS merna_jednotka
+            FROM
+            ts_prijmy
+            LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_prijmy.podsklad_enum=podsklady.podsklady_id
+            LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
+            LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+
+    }
+
+
 }
+
+

@@ -17,11 +17,11 @@ class Zend_View_Helper_TablefiltersVydaje extends Zend_View_Helper_Abstract
             $(document).ready(function(){
                 $('#fancy_table').dataTable().yadcf([
                     // {column_number : 1},
-                    {column_number : 2, filter_type: "multi_select", select_type:'chosen', filter_container_id: "external_lokalita"},
-                    {column_number : 3, filter_type: "multi_select", select_type:'chosen', filter_container_id: "external_sklad"},
+                    {column_number : 2, filter_type: "multi_select", select_type:'chosen',  filter_container_id: "external_lokalita"},
+                    {column_number : 3, filter_type: "multi_select", select_type:'chosen', filter_match_mode: "exact", filter_container_id: "external_sklad"},
                     {column_number : 4, filter_type: "multi_select", select_type:'chosen', filter_container_id: "external_<?php echo $parameter ?>"},
                     {column_number : 5, filter_type: "multi_select", select_type:'chosen', filter_container_id: "external_prepravca"},
-                    {column_number: 1,  filter_type: "range_date", date_format: "yyyy.mm.dd", filter_container_id: "external_datum"}
+                    {column_number: 1,  filter_type: "range_date", date_format: "yyyy-mm-dd", filter_container_id: "external_datum"}
                 ]);
             });
         </script>
