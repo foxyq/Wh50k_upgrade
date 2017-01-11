@@ -45,6 +45,7 @@
           <actionMethod actionName="printton"/>
           <actionMethod actionName="printprm"/>
           <actionMethod actionName="printm3"/>
+          <actionMethod actionName="getvydaje"/>
         </controllerFile>
         <controllerFile controllerName="Zakaznici">
           <actionMethod actionName="index"/>
@@ -176,6 +177,7 @@
           <actionMethod actionName="delete"/>
           <actionMethod actionName="add"/>
           <actionMethod actionName="print"/>
+          <actionMethod actionName="getdodavky"/>
         </controllerFile>
         <controllerFile controllerName="Externavyroba">
           <actionMethod actionName="index"/>
@@ -187,6 +189,7 @@
           <actionMethod actionName="add"/>
           <actionMethod actionName="delete"/>
           <actionMethod actionName="print"/>
+          <actionMethod actionName="getdodavky"/>
         </controllerFile>
         <controllerFile controllerName="Miestastiepenia">
           <actionMethod actionName="index"/>
@@ -870,6 +873,15 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Prijmy">
             <viewScriptFile forActionName="getprijmy"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Vydaje">
+            <viewScriptFile forActionName="getvydaje"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Externadodavka">
+            <viewScriptFile forActionName="getdodavky"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Externavyroba">
+            <viewScriptFile forActionName="getdodavky"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

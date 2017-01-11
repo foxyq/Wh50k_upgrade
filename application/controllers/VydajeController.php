@@ -1,15 +1,18 @@
 <?php
 class VydajeController extends Zend_Controller_Action
 {
+
     public function init()
     {
         /* Initialize action controller here */
         $this->view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
     }
+
     public function indexAction()
     {
         // action body
     }
+
     public function listAction()
     {
 
@@ -39,6 +42,7 @@ class VydajeController extends Zend_Controller_Action
         //názov stránky
         $this->view->title = "Výdaje - zoznam";
     }
+
     public function addAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
@@ -172,6 +176,7 @@ class VydajeController extends Zend_Controller_Action
             }
         }
     }
+
     public function editAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
@@ -275,6 +280,7 @@ class VydajeController extends Zend_Controller_Action
             }
         }
     }
+
     public function deleteAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
@@ -323,6 +329,7 @@ class VydajeController extends Zend_Controller_Action
             //$_SESSION[pageManager][ignore] = 1;
         }
     }
+
     public function printAction()
     {
         $id = $this->_getParam('ts_vydaje_id', 0);
@@ -330,6 +337,7 @@ class VydajeController extends Zend_Controller_Action
         $this->view->vydaj = $vydaje->getVydaj($id);
 
     }
+
     public function previewAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
@@ -364,10 +372,12 @@ class VydajeController extends Zend_Controller_Action
         );
         $id = $this->_getParam('id');
         $vydaje = new Application_Model_DbTable_Vydaje();
-        $vydaj = $vydaje->getVydajByDokladCislo($id);
+//        $vydaj = $vydaje->getVydajByDokladCislo($id);
+        $vydaj = $vydaje->getVydaj($id);
         $this->view->vydaj = $vydaj;
         $this->view->ciselniky = $ciselniky;
     }
+
     public function waitingsAction()
     {
         //$param = "stav_transakcie = 1";
@@ -398,6 +408,7 @@ class VydajeController extends Zend_Controller_Action
         //názov stránky
         $this->view->title = "Výdaje - čaká na schválenie";
     }
+
     public function errorsAction()
     {
         //$param = "chyba = 1";
@@ -428,6 +439,7 @@ class VydajeController extends Zend_Controller_Action
         //názov stránky
         $this->view->title = "Výdaje - chyby";
     }
+
     public function printtonAction()
     {
         $sklady = new Application_Model_DbTable_Sklady();
@@ -450,6 +462,7 @@ class VydajeController extends Zend_Controller_Action
         $vydaje = new Application_Model_DbTable_Vydaje();
         $this->view->vydaj = $vydaje->getVydaj($id);
     }
+
     public function printprmAction()
     {
         $sklady = new Application_Model_DbTable_Sklady();
@@ -472,6 +485,7 @@ class VydajeController extends Zend_Controller_Action
         $vydaje = new Application_Model_DbTable_Vydaje();
         $this->view->vydaj = $vydaje->getVydaj($id);
     }
+
     public function printm3Action()
     {
         $sklady = new Application_Model_DbTable_Sklady();
@@ -494,4 +508,68 @@ class VydajeController extends Zend_Controller_Action
         $vydaje = new Application_Model_DbTable_Vydaje();
         $this->view->vydaj = $vydaje->getVydaj($id);
     }
+
+    public function getvydajeAction()
+    {
+        //get post request (standart approach)
+        $request = $this->getRequest()->getPost();
+
+        //referring to the index
+        //gets value from ajax request
+        $message = $request['message'];
+
+        // makes disable renderer
+        $this->_helper->viewRenderer->setNoRender();
+
+        //makes disable layout
+        $this->_helper->getHelper('layout')->disableLayout();
+
+
+        //return callback message to the function javascript
+        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+            'host'     => 'localhost',
+            'username' => 'root',
+            'password' => 'mysql',
+            'dbname'   => 'database',
+            'charset'  => 'utf8'
+        ));
+        $limit = $message;
+        $stmt = $db->query(
+            'SELECT
+            ts_vydaje_id AS id,
+            datum_vydaju_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            nazov_spolocnosti AS zakaznik,
+            prepravci.meno AS prepravca,
+            prepravca_spz AS spz,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav,
+            sklady.merna_jednotka_enum AS merna_jednotka
+
+            FROM
+            ts_vydaje
+            LEFT JOIN sklady ON ts_vydaje.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_vydaje.podsklad_enum=podsklady.podsklady_id
+            LEFT JOIN zakaznici ON ts_vydaje.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN prepravci ON ts_vydaje.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON ts_vydaje.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON ts_vydaje.material_druh_enum=materialy_druhy.materialy_druhy_id'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
 }
+
+

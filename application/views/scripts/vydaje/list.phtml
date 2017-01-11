@@ -2,9 +2,11 @@
 $this->headTitle($this->title);
 $this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
 $this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
-$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
-$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
 
+//$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
+
+$this->inlineScript()->appendFile($this->baseUrl().'/js/ajax_vydaje.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
 
 $notifikacie     = new Application_Model_Notifikacie();
 $notif_info = $notifikacie->getStatusArray();
@@ -68,65 +70,65 @@ $this->tablefiltersVydaje($this, "Zákazník");
         </tr>
         </tfoot>
 
-        <tbody>
-
-        <?php foreach($this->vydaje as $vydaj) : ?>
-            <?php if ($vydaj->chyba == 1 ) echo "<tr class='danger'> ";
-            else echo   "<tr>";
-            ?>
-            <td class="center no-print"> <a href="<?php echo $this->url(array('controller'=>'Vydaje',
-                'action'=>'preview', 'id'=>$vydaj->doklad_cislo, 'fromAction' => 'list'));?>"><i class="fa fa-eye"></i>
-                </a></td>
-            <td>
-            <?php
-            $date = date('Y.m.d', strtotime($this->escape($vydaj->datum_vydaju_d)));
-            echo $date ;?>
-            </td>
-
-            <td><?php echo $this->escape($this->sklady->getSkratka($vydaj->sklad_enum));?></td>
-            <td><?php echo $this->escape($this->podsklady->getNazov($vydaj->podsklad_enum));?></td>
-            <td><?php echo $this->escape($this->zakaznici->getNazov($vydaj->zakaznik_enum));?></td>
-            <td><?php echo $this->escape($this->prepravci->getNazov($vydaj->prepravca_enum));?></td>
-            <td class="tonaz"><?php echo number_format($this->escape($vydaj->q_tony_merane), 2, ",", " ");?></td>
-            <td class="m3"><?php echo number_format($this->escape($vydaj->q_m3_merane), 2, ",", " ");?></td>
-            <td class="prm"><?php echo number_format($this->escape($vydaj->q_prm_merane), 2, ",", " ");?></td>
-            <td class="vlhkost">
-                <?php
-            if ($vydaj->q_vlhkost == 0.00){
-                echo "-";
-            }else {
-                echo number_format($this->escape($vydaj->q_vlhkost), 2, ",", " ") . "%";
-            }
-            ?>
-            </td>
-
-            <td><?php echo $this->escape($vydaj->doklad_cislo);?></td>
-            <td><?php echo $this->escape($this->materialyTypy->getNazov($vydaj->material_typ_enum));?></td>
-
-            <td class="center">
-
-            <?php
-            $this->stavy($vydaj);
-            ?>
-
-            </td>
-
-            <td class="no-print">
-
-                <?php
-    //            $skladID = $vydaj->sklad_enum;
-    //            $merna_jednotka = $this->sklady->getMernaJednotka($skladID);
-                $zak_id = $vydaj->zakaznik_enum;
-                $merna_jednotka = $this->zakaznici->getMernaJednotka($zak_id);
-
-
-                $this->tlacbuttons($this,$merna_jednotka,$vydaj->ts_vydaje_id,$controller);
-                ?>
-
-            </td>
-        </tr>
-    <?php endforeach; ?>
-        </tbody>
+<!--        <tbody>-->
+<!---->
+<!--        --><?php //foreach($this->vydaje as $vydaj) : ?>
+<!--            --><?php //if ($vydaj->chyba == 1 ) echo "<tr class='danger'> ";
+//            else echo   "<tr>";
+//            ?>
+<!--            <td class="center no-print"> <a href="--><?php //echo $this->url(array('controller'=>'Vydaje',
+//                'action'=>'preview', 'id'=>$vydaj->doklad_cislo, 'fromAction' => 'list'));?><!--"><i class="fa fa-eye"></i>-->
+<!--                </a></td>-->
+<!--            <td>-->
+<!--            --><?php
+//            $date = date('Y.m.d', strtotime($this->escape($vydaj->datum_vydaju_d)));
+//            echo $date ;?>
+<!--            </td>-->
+<!---->
+<!--            <td>--><?php //echo $this->escape($this->sklady->getSkratka($vydaj->sklad_enum));?><!--</td>-->
+<!--            <td>--><?php //echo $this->escape($this->podsklady->getNazov($vydaj->podsklad_enum));?><!--</td>-->
+<!--            <td>--><?php //echo $this->escape($this->zakaznici->getNazov($vydaj->zakaznik_enum));?><!--</td>-->
+<!--            <td>--><?php //echo $this->escape($this->prepravci->getNazov($vydaj->prepravca_enum));?><!--</td>-->
+<!--            <td class="tonaz">--><?php //echo number_format($this->escape($vydaj->q_tony_merane), 2, ",", " ");?><!--</td>-->
+<!--            <td class="m3">--><?php //echo number_format($this->escape($vydaj->q_m3_merane), 2, ",", " ");?><!--</td>-->
+<!--            <td class="prm">--><?php //echo number_format($this->escape($vydaj->q_prm_merane), 2, ",", " ");?><!--</td>-->
+<!--            <td class="vlhkost">-->
+<!--                --><?php
+//            if ($vydaj->q_vlhkost == 0.00){
+//                echo "-";
+//            }else {
+//                echo number_format($this->escape($vydaj->q_vlhkost), 2, ",", " ") . "%";
+//            }
+//            ?>
+<!--            </td>-->
+<!---->
+<!--            <td>--><?php //echo $this->escape($vydaj->doklad_cislo);?><!--</td>-->
+<!--            <td>--><?php //echo $this->escape($this->materialyTypy->getNazov($vydaj->material_typ_enum));?><!--</td>-->
+<!---->
+<!--            <td class="center">-->
+<!---->
+<!--            --><?php
+//            $this->stavy($vydaj);
+//            ?>
+<!---->
+<!--            </td>-->
+<!---->
+<!--            <td class="no-print">-->
+<!---->
+<!--                --><?php
+//    //            $skladID = $vydaj->sklad_enum;
+//    //            $merna_jednotka = $this->sklady->getMernaJednotka($skladID);
+//                $zak_id = $vydaj->zakaznik_enum;
+//                $merna_jednotka = $this->zakaznici->getMernaJednotka($zak_id);
+//
+//
+//                $this->tlacbuttons($this,$merna_jednotka,$vydaj->ts_vydaje_id,$controller);
+//                ?>
+<!---->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    --><?php //endforeach; ?>
+<!--        </tbody>-->
     </table>
 
     <div id="tonaz">   </div>

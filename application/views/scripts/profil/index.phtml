@@ -88,17 +88,11 @@ php?>
                 //var message = 'Bitch I might be!';
                 if (message != '') {
                     //run ajax
-                    $.post('profil/ajax',
+                    $.post('vydaje/getvydaje',
                         {'message' : message},
 
                         //callback function
                         function (respond) {
-
-                            //put respond in class show-msg
-
-//                            $('#fancy_table').DataTable( {
-//                                    "ajax": respond
-//                                } );
 
 
                             $(".show-msg").html(respond);
