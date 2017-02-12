@@ -30,7 +30,6 @@
           <actionMethod actionName="printton"/>
           <actionMethod actionName="printm3"/>
           <actionMethod actionName="printprm"/>
-          <actionMethod actionName="getprijmy"/>
         </controllerFile>
         <controllerFile controllerName="Vydaje">
           <actionMethod actionName="index"/>
@@ -45,7 +44,6 @@
           <actionMethod actionName="printton"/>
           <actionMethod actionName="printprm"/>
           <actionMethod actionName="printm3"/>
-          <actionMethod actionName="getvydaje"/>
         </controllerFile>
         <controllerFile controllerName="Zakaznici">
           <actionMethod actionName="index"/>
@@ -177,7 +175,6 @@
           <actionMethod actionName="delete"/>
           <actionMethod actionName="add"/>
           <actionMethod actionName="print"/>
-          <actionMethod actionName="getdodavky"/>
         </controllerFile>
         <controllerFile controllerName="Externavyroba">
           <actionMethod actionName="index"/>
@@ -189,7 +186,6 @@
           <actionMethod actionName="add"/>
           <actionMethod actionName="delete"/>
           <actionMethod actionName="print"/>
-          <actionMethod actionName="getdodavky"/>
         </controllerFile>
         <controllerFile controllerName="Miestastiepenia">
           <actionMethod actionName="index"/>
@@ -216,28 +212,6 @@
           <actionMethod actionName="add"/>
           <actionMethod actionName="edit"/>
           <actionMethod actionName="delete"/>
-        </controllerFile>
-        <controllerFile controllerName="Spotreby">
-          <actionMethod actionName="index"/>
-          <actionMethod actionName="add"/>
-          <actionMethod actionName="edit"/>
-          <actionMethod actionName="list"/>
-          <actionMethod actionName="delete"/>
-          <actionMethod actionName="print"/>
-          <actionMethod actionName="preview"/>
-          <actionMethod actionName="waitings"/>
-          <actionMethod actionName="errors"/>
-        </controllerFile>
-        <controllerFile controllerName="Inventury">
-          <actionMethod actionName="index"/>
-          <actionMethod actionName="add"/>
-          <actionMethod actionName="edit"/>
-          <actionMethod actionName="list"/>
-          <actionMethod actionName="delete"/>
-          <actionMethod actionName="print"/>
-          <actionMethod actionName="preview"/>
-          <actionMethod actionName="waitings"/>
-          <actionMethod actionName="errors"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -292,11 +266,6 @@
           <dbTableFile dbTableName="MiestaStiepenia"/>
           <dbTableFile dbTableName="MikroObjednavky"/>
           <dbTableFile dbTableName="Motohodiny"/>
-          <dbTableFile dbTableName="Odpisy"/>
-          <dbTableFile dbTableName="Albums"/>
-          <dbTableFile dbTableName="Albums2"/>
-          <dbTableFile dbTableName="Inventury"/>
-          <dbTableFile dbTableName="Spotreby"/>
         </dbTableDirectory>
         <modelFile modelName="Notifikacie"/>
         <modelFile modelName="LibraryAcl"/>
@@ -896,72 +865,6 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Motohodiny">
             <viewScriptFile forActionName="delete"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Prijmy">
-            <viewScriptFile forActionName="getprijmy"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Vydaje">
-            <viewScriptFile forActionName="getvydaje"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Externadodavka">
-            <viewScriptFile forActionName="getdodavky"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Externavyroba">
-            <viewScriptFile forActionName="getdodavky"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="index"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="index"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="add"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="edit"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="list"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="delete"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="print"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="preview"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="waitings"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Inventury">
-            <viewScriptFile forActionName="errors"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="add"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="edit"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="list"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="delete"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="print"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="preview"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="waitings"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Spotreby">
-            <viewScriptFile forActionName="errors"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

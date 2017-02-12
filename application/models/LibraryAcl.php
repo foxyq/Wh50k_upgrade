@@ -23,6 +23,8 @@ class Application_Model_LibraryAcl extends Zend_Acl
         $this->add(new Zend_Acl_Resource('default:ubytky'));
         $this->add(new Zend_Acl_Resource('default:externavyroba'));
         $this->add(new Zend_Acl_Resource('default:externadodavka'));
+        $this->add(new Zend_Acl_Resource('default:spotreby'));
+        $this->add(new Zend_Acl_Resource('default:inventury'));
         //LINUX srvr
         $this->add(new Zend_Acl_Resource('default:externa-vyroba'));
         $this->add(new Zend_Acl_Resource('default:externa-dodavka'));
@@ -99,6 +101,8 @@ class Application_Model_LibraryAcl extends Zend_Acl
         $this->allow('2', 'default:ubytky');
         $this->allow('2', 'default:externadodavka');
         $this->allow('2', 'default:externavyroba');
+        $this->allow('2', 'default:spotreby');
+        $this->allow('2', 'default:inventury');
         //LINUX srvr
         $this->allow('2', 'default:externa-dodavka');
         $this->allow('2', 'default:externa-vyroba');
