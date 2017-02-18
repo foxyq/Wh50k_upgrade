@@ -25,6 +25,7 @@ class Application_Model_LibraryAcl extends Zend_Acl
         $this->add(new Zend_Acl_Resource('default:externadodavka'));
         $this->add(new Zend_Acl_Resource('default:spotreby'));
         $this->add(new Zend_Acl_Resource('default:inventury'));
+        $this->add(new Zend_Acl_Resource('default:sluzby'));
         //LINUX srvr
         $this->add(new Zend_Acl_Resource('default:externa-vyroba'));
         $this->add(new Zend_Acl_Resource('default:externa-dodavka'));
@@ -47,6 +48,7 @@ class Application_Model_LibraryAcl extends Zend_Acl
         $this->add(new Zend_Acl_Resource('default:materialytypy'));
         $this->add(new Zend_Acl_Resource('default:miestastiepenia'));
         $this->add(new Zend_Acl_Resource('default:motohodiny'));
+        $this->add(new Zend_Acl_Resource('default:zakaznicisluzby'));
         //LINUX srvr
         $this->add(new Zend_Acl_Resource('default:materialy-druhy'));
         $this->add(new Zend_Acl_Resource('default:materialy-typy'));
@@ -103,6 +105,7 @@ class Application_Model_LibraryAcl extends Zend_Acl
         $this->allow('2', 'default:externavyroba');
         $this->allow('2', 'default:spotreby');
         $this->allow('2', 'default:inventury');
+        $this->allow('2', 'default:sluzby');
         //LINUX srvr
         $this->allow('2', 'default:externa-dodavka');
         $this->allow('2', 'default:externa-vyroba');
@@ -127,6 +130,7 @@ class Application_Model_LibraryAcl extends Zend_Acl
         $this->allow('2', 'default:profil');
         $this->allow('2', 'default:miestastiepenia');
         $this->allow('2', 'default:motohodiny');
+        $this->allow('2', 'default:zakaznicisluzby');
         //LINUX srvr
         $this->allow('2', 'default:materialy-druhy');
         $this->allow('2', 'default:materialy-typy');

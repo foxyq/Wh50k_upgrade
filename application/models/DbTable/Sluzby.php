@@ -1,19 +1,19 @@
 <?php
 
-class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
+class Application_Model_DbTable_Sluzby extends Zend_Db_Table_Abstract
 {
-    //metody modelu vychadzaju z modelu Vydajov
 
-    protected $_name = 'ts_inventury';
+    protected $_name = 't_sluzby';
 
-    public function addInventura(
-        $datum_inventury,
-        $sklad,
-        $podsklad,
-        $q_tony_merane,
-        $q_m3_merane,
-        $q_prm_merane,
-        $q_vlhkost,
+    public function addSluzba(
+        $datum_sluzby_od,
+        $datum_sluzby_do,
+        $zakaznik,
+        $miesto_stiepenia,
+        $stroj,
+        $q_tony,
+        $q_prm,
+        $q_motohodiny,
         $doklad_typ,
         $poznamka,
         $chyba,
@@ -24,16 +24,17 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
         $identity = (int) $identity['id'];
 
         $data = array(
-            'datum_inventury_d' => $datum_inventury,
-            'sklad_enum' => $sklad,
-            'podsklad_enum' => $podsklad,
-            'q_tony_merane' => $q_tony_merane,
-            'q_m3_merane' => $q_m3_merane,
-            'q_prm_merane' => $q_prm_merane,
-            'q_vlhkost' => $q_vlhkost,
-            'doklad_typ_enum' => $doklad_typ,
+            'datum_sluzby_od_d' => $datum_sluzby_od,
+            'datum_sluzby_do_d' => $datum_sluzby_do,
+            'zakaznik_enum' => $zakaznik,
+            'miesto_stiepenia_enum' => $miesto_stiepenia,
+            'stroj_enum' => $stroj,
+            'q_tony' => $q_tony,
+            'q_prm' => $q_prm,
+            'q_motohodiny' => $q_motohodiny,
             'poznamka' => $poznamka,
             'chyba' => $chyba,
+            'doklad_typ_enum' => $doklad_typ,
             'stav_transakcie' => $stav_transakcie,
             'doklad_cislo' => $doklad_cislo,
             'vytvoril_u' => $identity,
@@ -45,15 +46,16 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
         $this->insert($data);
     }
 
-    public function editInventura(
+    public function editSluzba(
         $id,
-        $datum_inventury,
-        $sklad,
-        $podsklad,
-        $q_tony_merane,
-        $q_m3_merane,
-        $q_prm_merane,
-        $q_vlhkost,
+        $datum_sluzby_od,
+        $datum_sluzby_do,
+        $zakaznik,
+        $miesto_stiepenia,
+        $stroj,
+        $q_tony,
+        $q_prm,
+        $q_motohodiny,
         $doklad_typ,
         $poznamka,
         $chyba,
@@ -63,36 +65,39 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
         $identity = (int) $identity['id'];
 
         $data = array(
-            'datum_inventury_d' => $datum_inventury,
-            'sklad_enum' => $sklad,
-            'podsklad_enum' => $podsklad,
-            'q_tony_merane' => $q_tony_merane,
-            'q_m3_merane' => $q_m3_merane,
-            'q_prm_merane' => $q_prm_merane,
-            'q_vlhkost' => $q_vlhkost,
-            'doklad_typ_enum' => $doklad_typ,
+            'datum_sluzby_od_d' => $datum_sluzby_od,
+            'datum_sluzby_do_d' => $datum_sluzby_do,
+            'zakaznik_enum' => $zakaznik,
+            'miesto_stiepenia_enum' => $miesto_stiepenia,
+            'stroj_enum' => $stroj,
+            'q_tony' => $q_tony,
+            'q_prm' => $q_prm,
+            'q_motohodiny' => $q_motohodiny,
             'poznamka' => $poznamka,
             'chyba' => $chyba,
+            'doklad_typ_enum' => $doklad_typ,
             'stav_transakcie' => $stav_transakcie,
+            'vytvoril_u' => $identity,
+            'posledna_uprava_u' => $identity,
 
             'vytvoril_u' => self::getAutor($id),
             'posledna_uprava_u' => $identity
 
         );
-        $this->update($data, 'ts_inventury_id ='. (int)$id);
+        $this->update($data, 't_sluzby_id ='. (int)$id);
     }
 
-    public function deleteInventura($id)
+    public function deleteSluzba($id)
     {
-        $this->delete('ts_inventury_id =' . (int)$id);
+        $this->delete('t_sluzby_id =' . (int)$id);
     }
 
     //get SUM of column1 by column2
 
-    public function getInventura($id)
+    public function getSluzba($id)
     {
         $id = (int)$id;
-        $row = $this->fetchRow('ts_inventury_id = ' . $id);
+        $row = $this->fetchRow('t_sluzby_id = ' . $id);
         if (!$row) {
             throw new Exception("Could not find row $id");
         }
@@ -101,7 +106,7 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
 
     public function getAutor($id){
         $id = (int)$id;
-        $row = $this->fetchRow('ts_inventury_id = ' . $id);
+        $row = $this->fetchRow('t_sluzby_id = ' . $id);
         if (!$row) {
             throw new Exception("Could not find row $id");
         }
@@ -110,10 +115,10 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
     }
     //toto nie je optimalne pri velkom mnozstve dat to bude dlho trvat
     public function getSumByColumn($column1, $column2, $column2_value){
-        $inventury = $this->fetchAll($column2.' = '. $column2_value);
+        $sluzby = $this->fetchAll($column2.' = '. $column2_value);
         $sum = 0;
-        foreach ($inventury as $inventura){
-            $sum = $sum + $inventura[$column1];
+        foreach ($sluzby as $sluzba){
+            $sum = $sum + $sluzba[$column1];
         }
         return $sum;
     }
@@ -121,17 +126,17 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
     //get Count of rows where column equals $column_value
     //toto nie je optimalne pri velkom mnozstve dat to bude dlho trvat
     public function getRowCountByColumn($column, $column_value){
-        $inventury = $this->fetchAll($column.' = '. $column_value . ' AND stav_transakcie = 2');
-        $rowCount = count($inventury);
+        $sluzby = $this->fetchAll($column.' = '. $column_value . ' AND stav_transakcie = 2');
+        $rowCount = count($sluzby);
         return $rowCount;
     }
 
     //get SUM of column1 by column2 (date) and column3 (stock)
     public function getSumByDateAndStock($column1, $column2, $column2_value, $column3, $column3_value){
-        $inventury = $this->fetchAll($column2." = '".$column2_value."' AND ".$column3." = ".$column3_value." AND stav_transakcie = 2");
+        $sluzby = $this->fetchAll($column2." = '".$column2_value."' AND ".$column3." = ".$column3_value." AND stav_transakcie = 2");
         $sum = 0;
-        foreach ($inventury as $inventura){
-            $sum = $sum + $inventura[$column1];
+        foreach ($sluzby as $sluzba){
+            $sum = $sum + $sluzba[$column1];
         }
         return $sum;
     }
@@ -148,11 +153,11 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
         }
 
         $sql = $column3." = ".$column3_value1." AND (".$column2." BETWEEN '".$column2_value1."' AND '".$column2_value2."')";
-        $inventury = $this->fetchAll($sql);
+        $sluzby = $this->fetchAll($sql);
 
         $sum = 0;
-        foreach ($inventury as $inventura){
-            $sum = $sum + $inventura[$column1];
+        foreach ($sluzby as $sluzba){
+            $sum = $sum + $sluzba[$column1];
         }
         return $sum;
     }
@@ -170,11 +175,11 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
         }
 
         $sql = $column3." = ".$column3_value1." AND (".$column2." BETWEEN '".$column2_value1."' AND '".$column2_value2."') AND stav_transakcie = 2";
-        $inventury = $this->fetchAll($sql);
+        $sluzby = $this->fetchAll($sql);
 
         $sum = 0;
-        foreach ($inventury as $inventura){
-            $sum = $sum + $inventura[$column1];
+        foreach ($sluzby as $sluzba){
+            $sum = $sum + $sluzba[$column1];
         }
         return $sum;
     }
@@ -199,7 +204,7 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
 
         $id = (int) $id;
         $data = array('chyba'=>1);
-        $this->update($data, 'ts_inventury_id ='. (int)$id);
+        $this->update($data, 't_sluzby_id ='. (int)$id);
     }
 
     public function getQuantityByYearIdQuantityTypeIdColumnAndColumnValue($yearId, $quantityTypeId, $columnName, $columnValue){
@@ -224,13 +229,13 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
         }
 
         //SQL dotaz
-        $sql = $columnName." = ".$columnValue." AND (datum_inventury_d BETWEEN ".$dateFrom." AND ".$dateTo.") AND stav_transakcie = 2";
-        $inventury = $this->fetchAll($sql);
+        $sql = $columnName." = ".$columnValue." AND (datum_sluzby_od_d BETWEEN ".$dateFrom." AND ".$dateTo.") AND stav_transakcie = 2";
+        $sluzby = $this->fetchAll($sql);
 
         //SUMA v definovanom stlpci
         $sum = 0;
-        foreach ($inventury as $inventura){
-            $sum = $sum + $inventura[$column];
+        foreach ($sluzby as $sluzba){
+            $sum = $sum + $sluzba[$column];
         }
         return $sum;
 
@@ -239,13 +244,13 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
     }
 
     public function getDokladyCislaByDate($date){
-        $sql = "datum_inventury_d = '".$date."'";
-        $inventury = $this->fetchAll($sql);
+        $sql = "datum_sluzby_od_d = '".$date."'";
+        $sluzby = $this->fetchAll($sql);
         $cislaDokladovArray = array();
         $counter = 0;
 
-        foreach ($inventury AS $inventura){
-            $cislaDokladovArray[$counter] = $inventura->doklad_cislo;
+        foreach ($sluzby AS $sluzba){
+            $cislaDokladovArray[$counter] = $sluzba->doklad_cislo;
             $counter++;
         }
 
@@ -253,58 +258,48 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
     }
 
     public function getSubmittedSumByColumn($column1, $column2, $column2_value){
-        $inventury = $this->fetchAll($column2.' = '.$column2_value. " AND stav_transakcie = 2");
+        $sluzby = $this->fetchAll($column2.' = '.$column2_value. " AND stav_transakcie = 2");
         $sum = 0;
-        foreach ($inventury as $inventura){
-            $sum = $sum + $inventura[$column1];
+        foreach ($sluzby as $sluzba){
+            $sum = $sum + $sluzba[$column1];
         }
         return $sum;
     }
 
-    public function getInventuraFormatted($id)
+    public function getSluzbaFormatted($id)
     {
         $id = (int)$id;
-        $row = $this->fetchRow('ts_inventury_id = ' . $id);
+        $row = $this->fetchRow('t_sluzby_id = ' . $id);
         if (!$row) {
             throw new Exception("Could not find row $id");
         }
         $row = $row->toArray();
-        $row['q_tony_merane']=number_format($row['q_tony_merane'], 2, ",", "");
-        $row['q_tony_merane_brutto']=number_format($row['q_tony_merane_brutto'], 2, ",", "");
-        $row['q_tony_merane_tara']=number_format($row['q_tony_merane_tara'], 2, ",", "");
-        $row['q_tony_nadrozmer']=number_format($row['q_tony_nadrozmer'], 2, ",", "");
-        //$row['q_tony_vypocet']=number_format($row['q_tony_vypocet'], 2, ",", "");
-        $row['q_m3_merane']=number_format($row['q_m3_merane'], 2, ",", "");
-        //$row['q_m3_vypocet']=number_format($row['q_m3_vypocet'], 2, ",", "");
-        $row['q_prm_merane']=number_format($row['q_prm_merane'], 2, ",", "");
-        //$row['q_prm_vypocet']=number_format($row['q_prm_vypocet'], 2, ",", "");
+        $row['q_tony']=number_format($row['q_tony'], 2, ",", "");
+        $row['q_prm']=number_format($row['q_prm'], 2, ",", "");
+        $row['q_motohodiny']=number_format($row['q_motohodiny'], 2, ",", "");
+
 
 
         return $row;
     }
 
-    public function getInventuryAjax()
+    public function getSluzbyAjax()
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $stmt = $db->query(
             'SELECT
-            ts_inventury_id AS id,
-            datum_inventury_d AS datum,
-            nazov_skladu AS sklad,
-            nazov_podskladu AS podsklad,
-            q_tony_merane AS tony,
-            q_m3_merane AS m3,
-            q_prm_merane AS prm ,
-            q_vlhkost AS vlhkost,
+            t_sluzby_id AS id,
+            datum_sluzby_od_d AS datum_od,
+            datum_sluzby_do_d AS datum_do,
+            q_tony AS tony,
+            q_prm AS prm,
+            q_motohodiny AS motohodiny,
             doklad_cislo AS doklad_cislo,
-            chyba,
+            chyba AS chyba,
             stav_transakcie AS stav
-
             FROM
-            ts_inventury
-            LEFT JOIN sklady ON ts_inventury.sklad_enum=sklady.sklady_id
-            LEFT JOIN podsklady ON ts_inventury.podsklad_enum=podsklady.podsklady_id'
+            `t_sluzby`'
         );
 
         $vystup = (array) $stmt->fetchAll();

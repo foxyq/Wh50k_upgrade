@@ -1,0 +1,54 @@
+<?php
+$this->headTitle($this->title);
+?>
+
+<p>
+	<a href="<?php echo $this->url(array('controller'=>'Zakaznicisluzby',
+			'action'=>'add'));?>">
+		<button type="button" class="btn btn-success">Pridať zákazníka pre služby</button>
+	</a>
+</p>
+
+<div class="alert alert-info alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<i class="fa fa-info-circle"></i> Definujte správnu <strong>MERNÚ JEDNOTKU</strong> pre všetkých zákazníkov!
+</div>
+
+
+<table class="table table-striped table-bordered table-hover">
+	<tr>
+		<!--
+        <th>ID</th>
+        -->
+		<th>Int. kód</th>
+		<th>Meno</th>
+		<th>Názov spoločnosti</th>
+		<th>IČO</th>
+		<th>IČ DPH</th>
+		<th>Adresa</th>
+		<th>Merná jednotka</th>
+		<th>Úpravy</th>
+	</tr>
+
+
+	<?php foreach($this->zakazniciSluzby as $zakaznik) : ?>
+		<tr>
+			<!--
+            <td><?php echo $this->escape($zakaznik->zakaznici_sluzby_id);?></td>
+            -->
+
+			<td> <?php echo $this->escape($zakaznik->interny_kod ); ?></td>
+			<td><?php echo $this->escape($zakaznik->meno);?></td>
+			<td><?php echo $this->escape($zakaznik->nazov_spolocnosti);?></td>
+			<td> <?php echo $this->escape($zakaznik->ico ); ?></td>
+			<td> <?php echo $this->escape($zakaznik->ic_dph ); ?></td>
+			<td> <?php echo $this->escape($zakaznik->adresa ); ?></td>
+			<td><?php echo $this->escape($this->merneJednotky->getSkratka($zakaznik->merna_jednotka_enum));?></td>
+			<td>
+				<a href="<?php echo $this->url(array('controller'=>'Zakaznicisluzby',
+						'action'=>'edit', 'id'=>$zakaznik->zakaznici_sluzby_id));?>">Upraviť</a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+
+</table>

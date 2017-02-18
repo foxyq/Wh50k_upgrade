@@ -1,0 +1,156 @@
+<!--<script type="text/javascript" src="--><?php //echo $this->baseUrl().'/js/jquery.chained.js';?><!--"></script>-->
+<script type="text/javascript" src="<?php echo $this->baseUrl().'/js/jquery.chained.js';?>"></script>
+<script>
+
+	$(document).ready(function() {
+
+		$("#podsklad_enum").chained("#sklad_enum");
+
+	});
+
+</script>
+
+<?php
+$podsklady = new Application_Model_DbTable_Podsklady();
+$arr = $podsklady->getIdsSoSkladIds();
+$moznosti = $podsklady->getMoznosti();
+?>
+
+<h1 >Inventúry - vytvoriť novú</h1>
+<div class="col-lg-5">
+	<div class="panel panel-green">
+		<div class="panel-heading">
+			<h3 class="panel-title">Detail transakcie </h3>
+		</div>
+		<div class="panel-body">
+			<form action="<?php echo $this->escape($this->form->getAction()) ?>"
+				  method="<?php echo $this->escape($this->form->getMethod()) ?>"
+				  enctype="multipart/form-data" class="normal" id="myForm">
+
+				<?php echo $this->form->ts_inventury_id; ?>
+
+				<div class="row">
+					<fieldset>
+						<!--                    <legend>Dátum príjmu</legend>-->
+
+						<div class="col-lg-6">
+							<!--                        Dátum:-->
+							<?php echo $this->form->datum_inventury_d; // render the user name field here ?>
+						</div>
+					</fieldset>
+				</div>
+				<!---->
+				<div class="row">
+					<fieldset>
+						<legend>Sklady</legend>
+						<div class="col-lg-6">
+							<!--                        Sklad:-->
+							<?php echo $this->form->sklad_enum; // render the user name field here ?>
+						</div>
+
+						<div class="col-lg-6">
+							<!--                        Podsklad:-->
+
+
+							<dt id="podsklad-label"><label for="podsklad" class="optional">Sklad</label></dt>
+							<dd id="podsklad-element">
+								<select name="podsklad_enum" id="podsklad_enum" class="form-control">
+									<?php
+
+									$podsklady = new Application_Model_DbTable_Podsklady();
+									$podskladyIDs = $podsklady->getIdsSoSkladIds();
+
+
+									foreach ($moznosti as $key=>$podsklad ) :
+
+										foreach ($podskladyIDs as $podsklads ) :
+
+											if ($key == $podsklads['podsklad_id'])
+
+												echo '<option value="'.$key.'" class="'.$podsklads[sklad_id].'">'.$podsklad.'</option>';
+
+										endforeach;
+									endforeach ?>
+								</select></dd>
+							<!--                            --><?php //echo $this->form->podsklad_enum; // render the user name field here ?>
+						</div>
+					</fieldset>
+				</div>
+
+
+				<div class="row">
+					<fieldset>
+						<legend>Množstvo</legend>
+						<div class="col-lg-6">
+							<!--                        Netto:-->
+							<?php echo $this->form->q_tony_merane; // render the user name field here ?>
+						</div>
+						<div class="col-lg-6">
+							<?php echo $this->form->q_m3_merane; // render the user name field here ?>
+						</div>
+
+
+					</fieldset>
+				</div>
+				<div class="row">
+
+
+					<div class="col-lg-6">
+						<?php echo $this->form->q_prm_merane; // render the user name field here ?>
+					</div>
+
+					<div class="col-lg-6">
+						<?php echo $this->form->q_vlhkost; // render the user name field here ?>
+					</div>
+
+				</div>
+
+
+				<div class="row">
+					<fieldset>
+						<legend>Doplňujúce informácie</legend>
+						<div class="col-lg-6">
+							<!--                        Stav:-->
+							<?php echo $this->form->stav_transakcie; // render the user name field here ?>
+						</div>
+						<div class="col-lg-6">
+							<!--                        Chyba:-->
+							<?php echo $this->form->chyba; // render the user name field here ?>
+						</div>
+				</div>
+
+				<div class="row">
+
+					<div class="col-lg-12">
+						<!--                    Poznámka:-->
+						<?php echo $this->form->poznamka; // render the user name field here ?>
+					</div>
+					</fieldset>
+				</div>
+
+
+
+				<div class="row">
+
+					<div class="col-lg-6">
+
+						<?php echo $this->form->potvrdzujuceTlacidlo; // render the user name field here ?>
+
+					</div>
+
+
+					<div class="col-lg-6">
+						<dt>&nbsp;</dt>
+						<a href="<?php
+						//pageManager
+						echo $this->url(array(
+								'controller' => $this->fromController,
+								'action' => $this->fromAction
+						), null, true) ?>"  type="button" class="btn btn-warning">Späť</a>
+
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>

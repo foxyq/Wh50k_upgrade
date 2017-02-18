@@ -1,0 +1,118 @@
+<div class="col-lg-5">
+	<div class="panel panel-red">
+		<div class="panel-heading">
+			<h3 class="panel-title">Detail transakcie  <?php echo $this->sluzba['doklad_cislo'];?></h3>
+		</div>
+		<div class="panel-body">
+
+
+			<div class="row">
+				<fieldset>
+					<legend>Dátum služby</legend>
+
+					<div class="col-lg-6">
+						Dátum od:
+						<?php echo date("d.m.Y", strtotime($this->sluzba['datum_sluzby_od_d']));?>
+					</div>
+
+					<div class="col-lg-6">
+						Dátum do:
+						<?php echo date("d.m.Y", strtotime($this->sluzba['datum_sluzby_do_d']));?>
+					</div>
+				</fieldset>
+			</div>
+
+
+			<div class="row">
+				<fieldset>
+					<legend>Množstvo</legend>
+					<div class="col-lg-6">
+						Váha:
+						<?php echo number_format($this->sluzba['q_tony'],2,","," ").' t'; // render the user name field here ?>
+					</div>
+
+
+					<div class="col-lg-6">
+						Objem:
+						<?php echo number_format($this->sluzba['q_prm'],2,","," ").' PRM'; // render the user name field here ?>
+					</div>
+
+			</div>
+			<div class="row">
+
+
+				<div class="col-lg-6">
+					Čas:
+					<?php echo number_format($this->sluzba['q_motohodiny'],2,","," ").' motohodín'; // render the user name field here ?>
+				</div>
+				</fieldset>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					Využitý stroj:
+					<?php echo $this->ciselniky['strojeModel']->getNazov($this->sluzba['stroj_enum']); // render the user name field here ?>
+				</div>
+
+				<div class="col-lg-12">
+					Miesto štiepenia:
+					<?php echo $this->ciselniky['miestaStiepeniaModel']->getNazov($this->sluzba['miesto_stiepenia_enum']); // render the user name field here ?>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<fieldset>
+					<legend>Doplňujúce informácie</legend>
+					<div class="col-lg-6">
+						Stav:
+						<?php echo $this->ciselniky['transakcieStavyModel']->getNazov($this->sluzba['stav_transakcie']); // render the user name field here ?>
+					</div>
+					<div class="col-lg-6">
+						Chyba:
+						<?php if ($this->sluzba['chyba'] == 1 ) echo 'áno';
+						else echo 'nie'; // render the user name field here ?>
+					</div>
+			</div>
+			<br >
+			<div class="row">
+
+				<div class="col-lg-12">
+					Poznámka:
+					<?php if ($this->sluzba['poznamka'] == '' || $this->inventura['poznamka'] == '0' ) echo 'žiadna poznámka';
+					else echo $this->sluzba['poznamka']; // render the user name field here ?>
+				</div>
+				</fieldset>
+			</div>
+
+
+
+			<br>
+
+			<div class="row">
+				<form action="<?php echo $this->url(array('action'=>'delete', 'fromAction' => $this->fromAction)); ?>"
+					  method="post">
+					<div>
+						<input type="hidden" name="t_sluzby_id" value="<?php echo $this->sluzba['t_sluzby_id']; ?>" />
+
+
+						<div class="col-lg-6 tright">
+
+							<input type="submit" name="del" value="Áno" class="btn btn-danger" />
+
+						</div>
+
+
+						<div class="col-lg-6">
+
+							<input type="submit" name="del" value="Nie" class="btn btn-warning form-control"/>
+						</div>
+
+
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+

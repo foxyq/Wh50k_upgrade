@@ -58,7 +58,6 @@ class ZakazniciController extends Zend_Controller_Action
                 $zakaznici = new Application_Model_DbTable_Zakaznici();
                 $zakaznici->addZakaznik($meno, $nazov_spolocnosti, $merna_jednotka, $ico, $ic_dph, $adresa, $internyKod);
 
-                $this->_helper->redirector('list');
             } else {
                 $form->populate($formData);
             }

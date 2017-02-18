@@ -1,6 +1,6 @@
 <?php
 
-class InventuryController extends Zend_Controller_Action
+class SluzbyController extends Zend_Controller_Action
 {
 
     public function init()
@@ -17,30 +17,36 @@ class InventuryController extends Zend_Controller_Action
     {
         $fromAction = $this->_getParam('fromAction', 'list');
         $this->view->fromAction = $fromAction;
-        $fromController = $this->_getParam('fromController', 'inventury');
+        $fromController = $this->_getParam('fromController', 'sluzby');
         $this->view->fromController = $fromController;
 
 
         //instancia modelu z ktoreho budeme tahat zoznam
-        $skladyMoznosti = new Application_Model_DbTable_Sklady();
-        $podskladyMoznosti = new Application_Model_DbTable_Podsklady();
+        $zakazniciMoznosti = new Application_Model_DbTable_Zakaznici();
         $dokladyTypyMoznosti = new Application_Model_DbTable_DokladyTypy();
         $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
+        $stroje = new Application_Model_DbTable_Stroje();
+        $miestaStiepeniaModel = new Application_Model_DbTable_MiestaStiepenia();
 
         //metoda ktorou vytiahneme do premennej zoznam
-        $skladyMoznosti = $skladyMoznosti->getMoznosti();
-        $podskladyMoznosti = $podskladyMoznosti->getMoznosti();
+        $zakazniciMoznosti = $zakazniciMoznosti->getMoznosti();
         $dokladyTypyMoznosti = $dokladyTypyMoznosti->getMoznosti();
         $transakcieStavyMoznosti = $transakcieStavy->getMoznosti();
+        $strojeMoznosti = $stroje->getMoznosti();
+        $miestaStiepeniaMoznosti = $miestaStiepeniaModel->getMoznosti();
 
+        //zoradenie
+        asort($zakazniciMoznosti);
+        asort($miestaStiepeniaMoznosti);
 
         //samostatne premenne ktore posielame na form
         $potvrdzujuceTlacidlo = 'Vložiť';
-        $form = new Application_Form_Inventura(array(
-            'skladyMoznosti' => $skladyMoznosti,
-            'podskladyMoznosti' => $podskladyMoznosti,
+        $form = new Application_Form_Sluzba(array(
+            'zakazniciMoznosti' => $zakazniciMoznosti,
             'dokladyTypyMoznosti' => $dokladyTypyMoznosti,
             'transakcieStavyMoznosti' => $transakcieStavyMoznosti,
+            'strojeMoznosti' => $strojeMoznosti,
+            'miestaStiepeniaMoznosti' => $miestaStiepeniaMoznosti,
             'potvrdzujuceTlacidlo' => $potvrdzujuceTlacidlo,
         ));
         $this->view->form = $form;
@@ -50,14 +56,15 @@ class InventuryController extends Zend_Controller_Action
             $formData = $this->getRequest()->getPost();
 //            var_dump($this->getRequest()->getPost());
             if ($form->isValid($formData)) {
-                $datum_inventury = $form->getValue('datum_inventury_d');
-                $sklad = $form->getValue('sklad_enum');
-                $podsklad = $form->getValue('podsklad_enum');
-                $q_tony_merane = $form->getValue('q_tony_merane');
-                $q_m3_merane = $form->getValue('q_m3_merane');
-                $q_prm_merane = $form->getValue('q_prm_merane');
-                $q_vlhkost = $form->getValue('q_vlhkost');
+                $datum_sluzby_od = $form->getValue('datum_sluzby_od_d');
+                $datum_sluzby_do = $form->getValue('datum_sluzby_do_d');
+                $zakaznik = $form->getValue('zakaznik_enum');
+                $miestoStiepenia = $form->getValue('miesto_stiepenia_enum');
+                $q_tony = $form->getValue('q_tony');
+                $q_prm = $form->getValue('q_prm');
+                $q_motohodiny = $form->getValue('q_motohodiny');
                 $doklad_typ = $form->getValue('doklad_typ_enum');
+                $stroj = $form->getValue('stroj_enum');
                 $poznamka = $form->getValue('poznamka');
                 $chyba = $form->getValue('chyba');
                 $stav_transakcie = $form->getValue('stav_transakcie');
@@ -65,8 +72,8 @@ class InventuryController extends Zend_Controller_Action
 //                $code = substr( $code, 2);
 //                $doklad_cislo = 'SV'.$code.'-'.substr(uniqid(),6);
 
-                $inventury = new Application_Model_DbTable_Inventury();
-                $count = count($inventury->getDokladyCislaByDate($datum_inventury));
+                $sluzby = new Application_Model_DbTable_Sluzby();
+                $count = count($sluzby->getDokladyCislaByDate($datum_sluzby_od));
 
 //                $max = $count + 1;
 
@@ -77,7 +84,7 @@ class InventuryController extends Zend_Controller_Action
                 }
                 else {
 
-                    $last = end($inventury->getDokladyCislaByDate($datum_inventury));
+                    $last = end($sluzby->getDokladyCislaByDate($datum_sluzby_od));
                     $max = substr($last, -3);
                     $max += 1;
                 }
@@ -86,7 +93,7 @@ class InventuryController extends Zend_Controller_Action
 
 
 
-                $nove_meno = "SI-" . $datum_inventury . "-" .$max; // . ".pdf";
+                $nove_meno = "SL-" . $datum_sluzby_od . "-" .$max; // . ".pdf";
                 $doklad_cislo = $nove_meno;
 
 //                echo $doklad_cislo;
@@ -94,24 +101,30 @@ class InventuryController extends Zend_Controller_Action
                 ////////////////////
 
 
-                $inventury->addInventura(
-                    $datum_inventury,
-                    $sklad,
-                    $podsklad,
-                    $q_tony_merane,
-                    $q_m3_merane,
-                    $q_prm_merane,
-                    $q_vlhkost,
+                $sluzby->addSluzba(
+                    $datum_sluzby_od,
+                    $datum_sluzby_do,
+                    $zakaznik,
+                    $miestoStiepenia,
+                    $stroj,
+                    $q_tony,
+                    $q_prm,
+                    $q_motohodiny,
                     $doklad_typ,
                     $poznamka,
                     $chyba,
                     $stav_transakcie,
                     $doklad_cislo);
+
+                echo "TRinidad GOLD";
                 //$this->_helper->redirector('list');
                 //var_dump( $doklad_cislo);
                 //pageManager
                 //$this->_helper->redirector($_SESSION['pageManager']['lastPageParameters']['action']);
-                $this->_helper->redirector($fromAction);
+
+                //$this->_helper->redirector($fromAction);
+                $this->_helper->redirector("list");
+
             } else {
                 $form->populate($formData);
                 //pageManager
@@ -124,32 +137,35 @@ class InventuryController extends Zend_Controller_Action
     {
         $fromAction = $this->_getParam('fromAction', 'list');
         $this->view->fromAction = $fromAction;
-        $fromController = $this->_getParam('fromController', 'inventury');
+        $fromController = $this->_getParam('fromController', 'sluzby');
         $this->view->fromController = $fromController;
 
         //instancia modelu z ktoreho budeme tahat zoznam
-        $skladyMoznosti = new Application_Model_DbTable_Sklady();
-        $podskladyMoznosti = new Application_Model_DbTable_Podsklady();
+        $zakazniciMoznosti = new Application_Model_DbTable_Zakaznici();
         $dokladyTypyMoznosti = new Application_Model_DbTable_DokladyTypy();
         $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
         $stroje = new Application_Model_DbTable_Stroje();
+        $miestaStiepeniaModel = new Application_Model_DbTable_MiestaStiepenia();
 
         //metoda ktorou vytiahneme do premennej zoznam
-        $skladyMoznosti = $skladyMoznosti->getMoznosti();
-        $podskladyMoznosti = $podskladyMoznosti->getMoznosti();
+        $zakazniciMoznosti = $zakazniciMoznosti->getMoznosti();
         $dokladyTypyMoznosti = $dokladyTypyMoznosti->getMoznosti();
         $transakcieStavyMoznosti = $transakcieStavy->getMoznosti();
         $strojeMoznosti = $stroje->getMoznosti();
+        $miestaStiepeniaMoznosti = $miestaStiepeniaModel->getMoznosti();
 
+        //zoradenie
+        asort($zakazniciMoznosti);
+        asort($miestaStiepeniaMoznosti);
 
         //samostatne premenne ktore posielame na form
         $potvrdzujuceTlacidlo = 'Upraviť';
-        $form = new Application_Form_Inventura(array(
-            'skladyMoznosti' => $skladyMoznosti,
-            'podskladyMoznosti' => $podskladyMoznosti,
+        $form = new Application_Form_Sluzba(array(
+            'zakazniciMoznosti' => $zakazniciMoznosti,
             'dokladyTypyMoznosti' => $dokladyTypyMoznosti,
             'transakcieStavyMoznosti' => $transakcieStavyMoznosti,
             'strojeMoznosti' => $strojeMoznosti,
+            'miestaStiepeniaMoznosti' => $miestaStiepeniaMoznosti,
             'potvrdzujuceTlacidlo' => $potvrdzujuceTlacidlo
         ));
         $this->view->form = $form;
@@ -157,29 +173,32 @@ class InventuryController extends Zend_Controller_Action
             $formData = $this->getRequest()->getPost();
 //            print_r($formData);
             if ($form->isValid($formData)) {
-                $id = (int)$form->getValue('ts_inventury_id');
-                $datum_inventury = $form->getValue('datum_inventury_d');
-                $sklad = $form->getValue('sklad_enum');
-                $podsklad = $form->getValue('podsklad_enum');
-                $q_tony_merane = $form->getValue('q_tony_merane');
-                $q_m3_merane = $form->getValue('q_m3_merane');
-                $q_prm_merane = $form->getValue('q_prm_merane');
-                $q_vlhkost = $form->getValue('q_vlhkost');
+                $id = (int)$form->getValue('t_sluzby_id');
+                $datum_sluzby_od = $form->getValue('datum_sluzby_od_d');
+                $datum_sluzby_do = $form->getValue('datum_sluzby_do_d');
+                $zakaznik = $form->getValue('zakaznik_enum');
+                $q_tony = $form->getValue('q_tony');
+                $q_prm = $form->getValue('q_prm');
+                $q_motohodiny = $form->getValue('q_motohodiny');
                 $doklad_typ = $form->getValue('doklad_typ_enum');
+                $stroj = $form->getValue('stroj_enum');
+                $miestoStiepenia = $form->getValue('miesto_stiepenia_enum');
                 $poznamka = $form->getValue('poznamka');
                 $chyba = $form->getValue('chyba');
                 $stav_transakcie = $form->getValue('stav_transakcie');
-                $inventury = new Application_Model_DbTable_Inventury();
-                $inventury->editInventura(
+
+                $sluzby = new Application_Model_DbTable_Sluzby();
+                $sluzby->editSluzba(
                     $id,
-                    $datum_inventury,
-                    $sklad,
-                    $podsklad,
-                    $q_tony_merane,
-                    $q_m3_merane,
-                    $q_prm_merane,
-                    $q_vlhkost,
+                    $datum_sluzby_od,
+                    $datum_sluzby_do,
+                    $zakaznik,
+                    $miestoStiepenia,
+                    $q_tony,
+                    $q_prm,
+                    $q_motohodiny,
                     $doklad_typ,
+                    $stroj,
                     $poznamka,
                     $chyba,
                     $stav_transakcie);
@@ -193,57 +212,59 @@ class InventuryController extends Zend_Controller_Action
             $id = $this->_getParam('id', 0);
 
             if ($id > 0) {
-                $inventury = new Application_Model_DbTable_Inventury();
-                $form->populate($inventury->getInventuraFormatted($id));
-                $this->view->data = $inventury->getInventura($id);
+                $sluzby = new Application_Model_DbTable_Sluzby();
+                $form->populate($sluzby->getSluzbaFormatted($id));
+                $this->view->data = $sluzby->getSluzba($id);
 
             }
         }
-    }
-
-    public function listAction()
-    {
-        // action body
-        $inventuryModel = new Application_Model_DbTable_Inventury();
-        echo $inventuryModel->getInventuryAjax();
     }
 
     public function deleteAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
         $this->view->fromAction = $fromAction;
-        $fromController = $this->_getParam('fromController', 'inventury');
+        $fromController = $this->_getParam('fromController', 'sluzby');
         $this->view->fromController = $fromController;
         //inicializacia pre vypis premennych - pre getNazov() metody
-        $skladyModel = new Application_Model_DbTable_Sklady();
-        $podskladyModel = new Application_Model_DbTable_Podsklady();
+        $zakazniciModel = new Application_Model_DbTable_Zakaznici();
+        $strojeModel = new Application_Model_DbTable_Stroje();
+        $miestaStiepeniaModel = new Application_Model_DbTable_MiestaStiepenia();
         $dokladyTypyModel = new Application_Model_DbTable_DokladyTypy();
         $transakcieStavyModel = new Application_Model_DbTable_TransakcieStavy();
         $ciselniky = array(
-            'skladyModel' => $skladyModel,
-            'podskladyModel' => $podskladyModel,
+            'zakazniciModel' => $zakazniciModel,
+            'strojeModel'=>$strojeModel,
+            'miestaStiepeniaModel'=>$miestaStiepeniaModel,
             'dokladyTypyModel' => $dokladyTypyModel,
-            'transakcieStavyModel' => $transakcieStavyModel
+            'transakcieStavyModel' => $transakcieStavyModel,
+            'strojeMoznosti' => $strojeModel
         );
         $this->view->ciselniky = $ciselniky;
-        $this->view->title = "Zmazať inventuru?";
+        $this->view->title = "Zmazať službu?";
         if ($this->getRequest()->isPost()) {
             $del = $this->getRequest()->getPost('del');
             if ($del == 'Áno') {
-                $id = $this->getRequest()->getPost('ts_inventury_id');
-                $inventury = new Application_Model_DbTable_Inventury();
-                $inventury->deleteInventura($id);
+                $id = $this->getRequest()->getPost('t_sluzby_id');
+                $sluzby = new Application_Model_DbTable_Sluzby();
+                $sluzby->deleteSluzba($id);
             }
             $this->_helper->redirector($fromAction);
             //pageManager
             //$this->_helper->redirector($_SESSION['pageManager']['lastPageParameters']['action']);
         } else {
             $id = $this->_getParam('id', 0);
-            $inventury = new Application_Model_DbTable_Inventury();
-            $this->view->inventura = $inventury->getInventura($id);
+            $sluzby = new Application_Model_DbTable_Sluzby();
+            $this->view->sluzba = $sluzby->getSluzba($id);
             //pageManager
             //$_SESSION[pageManager][ignore] = 1;
         }
+    }
+
+    public function listAction()
+    {
+        $sluzbyModel = new Application_Model_DbTable_Sluzby();
+        echo $sluzbyModel->getSluzbyAjax();
     }
 
     public function printAction()
@@ -253,31 +274,7 @@ class InventuryController extends Zend_Controller_Action
 
     public function previewAction()
     {
-        $fromAction = $this->_getParam('fromAction', 'list');
-        $fromController = $this->_getParam('fromController', 'inventury');
-        $fromId = $this->_getParam('fromId', null);
-        $this->view->fromAction = $fromAction;
-        $this->view->fromController = $fromController;
-        $this->view->fromId = $fromId;
-
-        $fromAction = $this->_getParam('fromAction', 'list');
-        $this->view->fromAction = $fromAction;
-        //inicializacia pre vypis premennych - pre getNazov() metody
-        $skladyModel = new Application_Model_DbTable_Sklady();
-        $podskladyModel = new Application_Model_DbTable_Podsklady();
-        $dokladyTypyModel = new Application_Model_DbTable_DokladyTypy();
-        $transakcieStavyModel = new Application_Model_DbTable_TransakcieStavy();
-        $ciselniky = array(
-            'skladyModel' => $skladyModel,
-            'podskladyModel' => $podskladyModel,
-            'dokladyTypyModel' => $dokladyTypyModel,
-            'transakcieStavyModel' => $transakcieStavyModel
-        );
-        $id = $this->_getParam('id');
-        $inventuryModel = new Application_Model_DbTable_Inventury();
-        $inventura = $inventuryModel->getInventura($id);
-        $this->view->inventura = $inventura;
-        $this->view->ciselniky = $ciselniky;
+        // action body
     }
 
     public function waitingsAction()

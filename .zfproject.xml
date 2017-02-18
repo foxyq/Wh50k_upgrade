@@ -227,6 +227,7 @@
           <actionMethod actionName="preview"/>
           <actionMethod actionName="waitings"/>
           <actionMethod actionName="errors"/>
+          <actionMethod actionName="getspotreby"/>
         </controllerFile>
         <controllerFile controllerName="Inventury">
           <actionMethod actionName="index"/>
@@ -238,6 +239,31 @@
           <actionMethod actionName="preview"/>
           <actionMethod actionName="waitings"/>
           <actionMethod actionName="errors"/>
+        </controllerFile>
+        <controllerFile controllerName="Sluzby">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="add"/>
+          <actionMethod actionName="edit"/>
+          <actionMethod actionName="delete"/>
+          <actionMethod actionName="list"/>
+          <actionMethod actionName="print"/>
+          <actionMethod actionName="preview"/>
+          <actionMethod actionName="waitings"/>
+          <actionMethod actionName="errors"/>
+        </controllerFile>
+        <controllerFile controllerName="ZakazniciSluzby">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="list"/>
+          <actionMethod actionName="add"/>
+          <actionMethod actionName="edit"/>
+          <actionMethod actionName="preview"/>
+        </controllerFile>
+        <controllerFile controllerName="Zakaznicisluzby">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="list"/>
+          <actionMethod actionName="add"/>
+          <actionMethod actionName="edit"/>
+          <actionMethod actionName="preview"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -256,6 +282,10 @@
         <formFile formName="MiestoStiepenia"/>
         <formFile formName="MikroObjednavka"/>
         <formFile formName="Motohodina"/>
+        <formFile formName="Spotreba"/>
+        <formFile formName="Inventura"/>
+        <formFile formName="Sluzba"/>
+        <formFile formName="ZakaznikSluzby"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -297,6 +327,8 @@
           <dbTableFile dbTableName="Albums2"/>
           <dbTableFile dbTableName="Inventury"/>
           <dbTableFile dbTableName="Spotreby"/>
+          <dbTableFile dbTableName="Sluzby"/>
+          <dbTableFile dbTableName="ZakazniciSluzby"/>
         </dbTableDirectory>
         <modelFile modelName="Notifikacie"/>
         <modelFile modelName="LibraryAcl"/>
@@ -962,6 +994,66 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Spotreby">
             <viewScriptFile forActionName="errors"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="add"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="edit"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="delete"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="print"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="preview"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="waitings"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sluzby">
+            <viewScriptFile forActionName="errors"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ZakazniciSluzby">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ZakazniciSluzby">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ZakazniciSluzby">
+            <viewScriptFile forActionName="add"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ZakazniciSluzby">
+            <viewScriptFile forActionName="edit"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ZakazniciSluzby">
+            <viewScriptFile forActionName="preview"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Zakaznicisluzby">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Zakaznicisluzby">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Zakaznicisluzby">
+            <viewScriptFile forActionName="add"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Zakaznicisluzby">
+            <viewScriptFile forActionName="edit"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Zakaznicisluzby">
+            <viewScriptFile forActionName="preview"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Spotreby">
+            <viewScriptFile forActionName="getspotreby"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

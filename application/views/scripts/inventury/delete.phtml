@@ -1,0 +1,119 @@
+<div class="col-lg-5">
+	<div class="panel panel-red">
+		<div class="panel-heading">
+			<h3 class="panel-title">Detail transakcie  <?php echo $this->inventura['doklad_cislo'];?></h3>
+		</div>
+		<div class="panel-body">
+
+
+			<div class="row">
+				<fieldset>
+					<legend>Dátum inventúry</legend>
+
+					<div class="col-lg-6">
+						Dátum:
+						<?php echo date("d.m.Y", strtotime($this->inventura['datum_inventury_d']));?>
+					</div>
+				</fieldset>
+			</div>
+			<!---->
+			<div class="row">
+				<fieldset>
+					<legend>Sklady</legend>
+					<div class="col-lg-6">
+						Lokalita:
+
+						<?php echo $this->ciselniky['skladyModel']->getNazov($this->inventura['sklad_enum']); // render the user name field here ?>
+					</div>
+
+					<div class="col-lg-6">
+						Sklad:
+						<?php echo $this->ciselniky['podskladyModel']->getNazov($this->inventura['podsklad_enum']); // render the user name field here ?>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="row">
+				<fieldset>
+					<legend>Množstvo</legend>
+					<div class="col-lg-6">
+						Váha:
+						<?php echo number_format($this->inventura['q_tony_merane'],2,","," ").' t'; // render the user name field here ?>
+					</div>
+
+
+					<div class="col-lg-6">
+						Objem:
+						<?php echo number_format($this->inventura['q_m3_merane'],2,","," ").' m<sup>3</sup>'; // render the user name field here ?>
+					</div>
+
+			</div>
+			<div class="row">
+
+
+				<div class="col-lg-6">
+					Priestor:
+					<?php echo number_format($this->inventura['q_prm_merane'],2,","," ").' PRM'; // render the user name field here ?>
+				</div>
+				<div class="col-lg-6">
+					Vlhkosť:
+					<?php echo number_format($this->inventura['q_vlhkost'],2,","," ").' %'; // render the user name field here ?>
+				</div>
+				</fieldset>
+			</div>
+
+			<div class="row">
+				<fieldset>
+					<legend>Doplňujúce informácie</legend>
+					<div class="col-lg-6">
+						Stav:
+						<?php echo $this->ciselniky['transakcieStavyModel']->getNazov($this->inventura['stav_transakcie']); // render the user name field here ?>
+					</div>
+					<div class="col-lg-6">
+						Chyba:
+						<?php if ($this->inventura['chyba'] == 1 ) echo 'áno';
+						else echo 'nie'; // render the user name field here ?>
+					</div>
+			</div>
+			<br >
+			<div class="row">
+
+				<div class="col-lg-12">
+					Poznámka:
+					<?php if ($this->inventura['poznamka'] == '' || $this->inventura['poznamka'] == '0' ) echo 'žiadna poznámka';
+					else echo $this->inventura['poznamka']; // render the user name field here ?>
+				</div>
+				</fieldset>
+			</div>
+
+
+
+			<br>
+
+			<div class="row">
+				<form action="<?php echo $this->url(array('action'=>'delete', 'fromAction' => $this->fromAction)); ?>"
+					  method="post">
+					<div>
+						<input type="hidden" name="ts_inventury_id" value="<?php echo $this->inventura['ts_inventury_id']; ?>" />
+
+
+						<div class="col-lg-6 tright">
+
+							<input type="submit" name="del" value="Áno" class="btn btn-danger" />
+
+						</div>
+
+
+						<div class="col-lg-6">
+
+							<input type="submit" name="del" value="Nie" class="btn btn-warning form-control"/>
+						</div>
+
+
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+
