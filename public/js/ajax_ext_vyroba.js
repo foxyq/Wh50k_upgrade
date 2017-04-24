@@ -74,6 +74,14 @@ $(document).ready(function() {
                 }
 
             ],
+        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+            var sDirectionClass;
+            if ( aData['chyba'] == "1" )
+                sDirectionClass = "danger";
+
+            $(nRow).addClass( sDirectionClass );
+            return nRow;
+        },
 
             initComplete: function () {
                 var api = this.api();

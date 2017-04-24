@@ -30,5 +30,8 @@
         width: 100%;
         border: 2px solid #000000;
     }
+    input {
+        float: left;
+    }
 
 }

@@ -1,4 +1,74 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Inventury</b> and script/action name <b>waitings</b></p>
+<?php
+$this->headTitle($this->title);
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+
+//$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
+
+$this->inlineScript()->appendFile($this->baseUrl().'/js/ajax_inventury_waitings.js');
+//$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
+
+$notifikacie     = new Application_Model_Notifikacie();
+$notif_info = $notifikacie->getStatusArray();
+$count_notif = $notif_info['total'];
+$vydaje_w = $notif_info['vydaje_waitings'];
+$vydaje_e = $notif_info['vydaje_errors'];
+
+
+$controller = 'inventury';
+
+
+$this->prijmybuttons($this,$vydaje_w,$vydaje_e,$controller);
+
+$this->tablefiltersVydaje($this, "Tony");
+
+//pouzitie funkcie getDokladyCislaByDate
+//$date = date('Y-m-d', time());
+//print_r($this->vydajeModel->getDokladyCislaByDate($date));
+
+?>
+
+<div class="table-responsive">
+	<table id="fancy_table" class="table table-hover table-striped" >
+
+		<thead>
+		<tr class="tableizer-firstrow">
+
+			<th class="no-print">Detail</th>
+			<th>Dátum</th>
+			<th>Lokalita</th>
+			<th class="col-podsklad">Sklad</th>
+			<th>Tony</th>
+			<th>m<sup>3</sup></th>
+			<th>PRM </th>
+			<th>Vlhkosť</th>
+			<th>Doklad</th>
+			<th class="col-stav">Stav</th>
+			<th class="col-upravy no-print">Úpravy</th>
+		</tr>
+		</thead>
+
+		<tfoot>
+		<tr>
+
+			<th></th>
+			<th>Dátum výdaju</th>
+			<th>sklad</th>
+			<th>podsklad</th>
+			<th>tony m</th>
+			<th>vlhkost</th>
+			<th>m3 m</th>
+			<th>prm m</th>
+			<th>assss</th>
+			<th>material typ</th>
+
+		</tr>
+		</tfoot>
+
+	</table>
+
+	<div id="tonaz">   </div>
+	<div id="m3">   </div>
+	<div id="prm">   </div>
+	<div id="priemer"> </div>
 </div>

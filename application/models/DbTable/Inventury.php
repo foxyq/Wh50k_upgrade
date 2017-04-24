@@ -313,6 +313,69 @@ class Application_Model_DbTable_Inventury extends Zend_Db_Table_Abstract
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function getInventuryWaitingsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            ts_inventury_id AS id,
+            datum_inventury_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            chyba,
+            stav_transakcie AS stav
+
+            FROM
+            ts_inventury
+            LEFT JOIN sklady ON ts_inventury.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_inventury.podsklad_enum=podsklady.podsklady_id
+            WHERE stav_transakcie=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
+    public function getInventuryErrorsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            ts_inventury_id AS id,
+            datum_inventury_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            chyba,
+            stav_transakcie AS stav
+
+            FROM
+            ts_inventury
+            LEFT JOIN sklady ON ts_inventury.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_inventury.podsklad_enum=podsklady.podsklady_id
+            WHERE chyba=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
 
 }
 

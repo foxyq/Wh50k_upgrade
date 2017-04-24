@@ -1,4 +1,73 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Spotreby</b> and script/action name <b>errors</b></p>
+<?php
+$this->headTitle($this->title);
+$this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+
+$this->inlineScript()->appendFile($this->baseUrl().'/js/ajax_spotreby_errors.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
+
+
+$notifikacie     = new Application_Model_Notifikacie();
+$notif_info = $notifikacie->getStatusArray();
+$count_notif = $notif_info['total'];
+
+// TODO notifikacie
+$externe_vyroby_w = $notif_info['externe_vyroby_waitings'];
+$externe_vyroby_e = $notif_info['externe_vyroby_errors'];
+
+$controller = 'spotreby';
+$this->prijmybuttons($this,$externe_vyroby_w,$externe_vyroby_e,$controller);
+
+$this->tablefiltersVydaje($this, "Zákazník");
+//pouzitie funkcie getDokladyCislaByDate
+//$date = date('Y-m-d', time());
+//print_r($this->externeVyrobyModel->getDokladyCislaByDate($date));
+?>
+
+
+
+<div class="table-responsive">
+	<table id="fancy_table" class="table table-hover table-striped" >
+
+		<thead>
+		<tr class="tableizer-firstrow">
+
+			<th class="no-print">Detail</th>
+			<th>Dátum</th>
+			<th>Lokalita</th>
+			<th>Sklad</th>
+			<th>Zákazník</th>
+			<th>Tony</th>
+			<th>m<sup>3</sup></th>
+			<th>PRM </th>
+			<th>Vlhkosť</th>
+			<th>Doklad</th>
+			<th>Materiál</th>
+			<th class="col-stav">Stav</th>
+			<th class="col-upravy no-print">Úpravy</th>
+		</tr>
+		</thead>
+
+		<tfoot>
+		<tr>
+			<th></th>
+			<th>dátum</th>
+			<th>sklad</th>
+			<th>podsklad</th>
+			<th>zak</th>
+			<th>tony</th>
+			<th>m3</th>
+			<th>prm</th>
+			<th>vlhkost</th>
+			<th>assss</th>
+			<th>materiál</th>
+		</tr>
+		</tfoot>
+
+	</table>
+
+	<div id="tonaz">   </div>
+	<div id="m3">   </div>
+	<div id="prm">   </div>
+	<div id="priemer"> </div>
 </div>

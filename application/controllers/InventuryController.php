@@ -203,9 +203,15 @@ class InventuryController extends Zend_Controller_Action
 
     public function listAction()
     {
-        // action body
-        $inventuryModel = new Application_Model_DbTable_Inventury();
-        echo $inventuryModel->getInventuryAjax();
+        $this->view->title = "Inventúry - list";
+    }
+
+    public function listajaxAction(){
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $model = new Application_Model_DbTable_Inventury();
+        echo $model->getInventuryAjax();
     }
 
     public function deleteAction()
@@ -280,14 +286,30 @@ class InventuryController extends Zend_Controller_Action
         $this->view->ciselniky = $ciselniky;
     }
 
+
+
     public function waitingsAction()
     {
-        // action body
+        $this->view->title = "Inventúry - čakajúce";
+    }
+    public function waitingsajaxAction(){
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $model = new Application_Model_DbTable_Inventury();
+        echo $model->getInventuryWaitingsAjax();
     }
 
     public function errorsAction()
     {
-        // action body
+        $this->view->title = "Inventúry - chybné";
+    }
+    public function errorsajaxAction(){
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $model = new Application_Model_DbTable_Inventury();
+        echo $model->getInventuryErrorsAjax();
     }
 
 

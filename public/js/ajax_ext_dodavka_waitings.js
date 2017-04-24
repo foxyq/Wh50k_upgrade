@@ -3,7 +3,8 @@ $(document).ready(function() {
     var table =  $('#fancy_table').DataTable( {
             "order": [[ 1, "desc" ]],
             columnDefs: [{ "sType": "string", "aTargets": [ 12 ]  }],
-            "ajax": "getprijmy",
+            //"processing": true,
+            "ajax": "getdodavkywaitings",
             "type": "POST",
 
             "columns": [
@@ -21,8 +22,7 @@ $(document).ready(function() {
                 //        data;
                 //}
                 },
-                { "data": "sklad" },
-                { "data": "podsklad" },
+                { "data": "zakaznik" },
                 { "data": "dodavatel" },
                 { "data": "prepravca" },
                 { "data": "tony",
@@ -31,54 +31,47 @@ $(document).ready(function() {
                 { "data": "m3",
                     "className": "m3",
                     render: $.fn.dataTable.render.number( '.', ',', 2, '' )},
+                { "data": "prm",
+                    "className": "prm",
+                    render: $.fn.dataTable.render.number( '.', ',', 2, '' )},
                 { "data": "vlhkost",
                     "className": "vlhkost",
                     render: $.fn.dataTable.render.number( '.', ',', 2, '', ' %' )},
-                { "data": "nadrozmer" },
+                //{ "data": "nadrozmer" },
                 { "data": "doklad_cislo" },
                 { "data": "typ" },
                 { "data": "stav",
-
                     render: function ( data, type, row ) {
-
                         if ( data  == '2' ) {
                             return '<i class="fa fa-check-circle-o" alt="schválené"></i>';
                         }
                         else if (data == '1') {
                             return '<i class="fa fa-clock-o" alt="čakajúce"></i>';
                         }
-
                         else return '<i class="fa fa-times-circle-o" alt="zrušené"></i>';
-
                     }
-
-
-
                 },
                 {
-                    "data": "merna_jednotka",
-
+                    "data": "stav",
                     render:
                         function (  data, type, row ) {
                             buttons = "<a href='edit/id/" +row.id+ "/fromAction/list'><i class='fa fa-pencil-square-o'></i></a>";                   buttons += "<a href='delete/id/" +row.id+ "/fromAction/list'> <i class='fa fa-trash-o'></i> </a>";
 
 
-                            if (data == 1 ) {
-                            buttons +=  '<a href="printton/id/' +row.id+ '/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
-                            }
-                            else if (data == 2 ) {
-                            buttons += '<a href="printprm/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
-                            }
-                            else if (data == 3 ) {
-                                buttons +=  '<a href="printm3/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
-                            }
+                            //if (data == 1 ) {
+                            //buttons +=  '<a href="printton/id/' +row.id+ '/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
+                            //}
+                            //else if (data == 2 ) {
+                            //buttons += '<a href="printprm/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
+                            //}
+                            //else if (data == 3 ) {
+                            //    buttons +=  '<a href="printm3/id/'+row.id+'/fromAction/errors" target="_blank"><i class="fa fa-print"></i></a>';
+                            //}
                             return String(buttons);
                         }
                 }
 
             ],
-
-
         "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
             var sDirectionClass;
             if ( aData['chyba'] == "1" )

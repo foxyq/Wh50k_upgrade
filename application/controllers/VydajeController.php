@@ -17,35 +17,37 @@ class VydajeController extends Zend_Controller_Action
     {
 
         // vytvorenie instancií modelov
-        $vydaje = new Application_Model_DbTable_Vydaje();
-        $sklady = new Application_Model_DbTable_Sklady();
-        $podsklady = new Application_Model_DbTable_Podsklady();
-        $zakaznici = new Application_Model_DbTable_Zakaznici();
-        $prepravci = new Application_Model_DbTable_Prepravci();
-        $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
-        $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
-        $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
+//        $vydaje = new Application_Model_DbTable_Vydaje();
+//        $sklady = new Application_Model_DbTable_Sklady();
+//        $podsklady = new Application_Model_DbTable_Podsklady();
+//        $zakaznici = new Application_Model_DbTable_Zakaznici();
+//        $prepravci = new Application_Model_DbTable_Prepravci();
+//        $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
+//        $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
+//        $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
+
+
+//         priradenie modelov do premenných a poslanie na view script
+//        $param = $this->_getParam('param', null);
+//        $title = $this->_getParam('title', null);
+//        if (!isset($title)){$title = 'Výdaje - zoznam';}
         // priradenie modelov do premenných a poslanie na view script
-        $param = $this->_getParam('param', null);
-        $title = $this->_getParam('title', null);
-        if (!isset($title)){$title = 'Výdaje - zoznam';}
-        // priradenie modelov do premenných a poslanie na view script
-        $this->view->vydaje = $vydaje->fetchAll($param);
-        $this->view->vydajeModel = $vydaje;
-        $this->view->sklady = $sklady;
-        $this->view->podsklady = $podsklady;
-        $this->view->zakaznici = $zakaznici;
-        $this->view->prepravci = $prepravci;
-        $this->view->materialyTypy = $materialyTypy;
-        $this->view->materialyDruhy = $materialyDruhy;
-        $this->view->transakcieStavy = $transakcieStavy;
+//        $this->view->vydaje = $vydaje->fetchAll($param);
+//        $this->view->vydajeModel = $vydaje;
+//        $this->view->sklady = $sklady;
+//        $this->view->podsklady = $podsklady;
+//        $this->view->zakaznici = $zakaznici;
+//        $this->view->prepravci = $prepravci;
+//        $this->view->materialyTypy = $materialyTypy;
+//        $this->view->materialyDruhy = $materialyDruhy;
+//        $this->view->transakcieStavy = $transakcieStavy;
         //názov stránky
         $this->view->title = "Výdaje - zoznam";
     }
 
     public function addAction()
     {
-        $fromAction = $this->_getParam('fromAction', 'list');
+            $fromAction = $this->_getParam('fromAction', 'list');
         $this->view->fromAction = $fromAction;
         $fromController = $this->_getParam('fromController', 'vydaje');
         $this->view->fromController = $fromController;
@@ -383,28 +385,34 @@ class VydajeController extends Zend_Controller_Action
         //$param = "stav_transakcie = 1";
         //$title = "Výdaje - čaká na schválenie";
         //$this->_forward('list', 'vydaje', null, array('param' => $param, 'title' => $title));
+
+
         // vytvorenie instancií modelov
-        $vydaje = new Application_Model_DbTable_Vydaje();
-        $sklady = new Application_Model_DbTable_Sklady();
-        $podsklady = new Application_Model_DbTable_Podsklady();
-        $zakaznici = new Application_Model_DbTable_Zakaznici();
-        $prepravci = new Application_Model_DbTable_Prepravci();
-        $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
-        $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
-        $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
+//        $vydaje = new Application_Model_DbTable_Vydaje();
+//        $sklady = new Application_Model_DbTable_Sklady();
+//        $podsklady = new Application_Model_DbTable_Podsklady();
+//        $zakaznici = new Application_Model_DbTable_Zakaznici();
+//        $prepravci = new Application_Model_DbTable_Prepravci();
+//        $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
+//        $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
+//        $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
+
+
         // priradenie modelov do premenných a poslanie na view script
         //$param = $this->_getParam('param', null);
         //$title = $this->_getParam('title', null);
         //if (!isset($title)){$title = 'Výdaje - zoznam';}
         // priradenie modelov do premenných a poslanie na view script
-        $this->view->vydaje = $vydaje->fetchAll("stav_transakcie = 1");
-        $this->view->sklady = $sklady;
-        $this->view->podsklady = $podsklady;
-        $this->view->zakaznici = $zakaznici;
-        $this->view->prepravci = $prepravci;
-        $this->view->materialyTypy = $materialyTypy;
-        $this->view->materialyDruhy = $materialyDruhy;
-        $this->view->transakcieStavy = $transakcieStavy;
+
+
+//        $this->view->vydaje = $vydaje->fetchAll("stav_transakcie = 1");
+//        $this->view->sklady = $sklady;
+//        $this->view->podsklady = $podsklady;
+//        $this->view->zakaznici = $zakaznici;
+//        $this->view->prepravci = $prepravci;
+//        $this->view->materialyTypy = $materialyTypy;
+//        $this->view->materialyDruhy = $materialyDruhy;
+//        $this->view->transakcieStavy = $transakcieStavy;
         //názov stránky
         $this->view->title = "Výdaje - čaká na schválenie";
     }
@@ -415,27 +423,32 @@ class VydajeController extends Zend_Controller_Action
         //$title = "Výdaje - chyby";
         //$this->_forward('list', 'vydaje', null, array('param' => $param, 'title' => $title));
         // vytvorenie instancií modelov
-        $vydaje = new Application_Model_DbTable_Vydaje();
-        $sklady = new Application_Model_DbTable_Sklady();
-        $podsklady = new Application_Model_DbTable_Podsklady();
-        $zakaznici = new Application_Model_DbTable_Zakaznici();
-        $prepravci = new Application_Model_DbTable_Prepravci();
-        $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
-        $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
-        $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
+
+
+//        $vydaje = new Application_Model_DbTable_Vydaje();
+//        $sklady = new Application_Model_DbTable_Sklady();
+//        $podsklady = new Application_Model_DbTable_Podsklady();
+//        $zakaznici = new Application_Model_DbTable_Zakaznici();
+//        $prepravci = new Application_Model_DbTable_Prepravci();
+//        $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
+//        $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
+//        $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
+
+
         // priradenie modelov do premenných a poslanie na view script
         //$param = $this->_getParam('param', null);
         //$title = $this->_getParam('title', null);
         //if (!isset($title)){$title = 'Výdaje - zoznam';}
         // priradenie modelov do premenných a poslanie na view script
-        $this->view->vydaje = $vydaje->fetchAll("chyba = 1");
-        $this->view->sklady = $sklady;
-        $this->view->podsklady = $podsklady;
-        $this->view->zakaznici = $zakaznici;
-        $this->view->prepravci = $prepravci;
-        $this->view->materialyTypy = $materialyTypy;
-        $this->view->materialyDruhy = $materialyDruhy;
-        $this->view->transakcieStavy = $transakcieStavy;
+
+//        $this->view->vydaje = $vydaje->fetchAll("chyba = 1");
+//        $this->view->sklady = $sklady;
+//        $this->view->podsklady = $podsklady;
+//        $this->view->zakaznici = $zakaznici;
+//        $this->view->prepravci = $prepravci;
+//        $this->view->materialyTypy = $materialyTypy;
+//        $this->view->materialyDruhy = $materialyDruhy;
+//        $this->view->transakcieStavy = $transakcieStavy;
         //názov stránky
         $this->view->title = "Výdaje - chyby";
     }
@@ -561,6 +574,128 @@ class VydajeController extends Zend_Controller_Action
             LEFT JOIN prepravci ON ts_vydaje.prepravca_enum=prepravci.prepravci_id
             LEFT JOIN materialy_typy ON ts_vydaje.material_typ_enum=materialy_typy.materialy_typy_id
             LEFT JOIN materialy_druhy ON ts_vydaje.material_druh_enum=materialy_druhy.materialy_druhy_id'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getvydajewaitingsAction()
+    {
+        //get post request (standart approach)
+        $request = $this->getRequest()->getPost();
+
+        //referring to the index
+        //gets value from ajax request
+        $message = $request['message'];
+
+        // makes disable renderer
+        $this->_helper->viewRenderer->setNoRender();
+
+        //makes disable layout
+        $this->_helper->getHelper('layout')->disableLayout();
+
+
+        //return callback message to the function javascript
+        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+            'host'     => 'localhost',
+            'username' => 'root',
+            'password' => 'mysql',
+            'dbname'   => 'database',
+            'charset'  => 'utf8'
+        ));
+        $limit = $message;
+        $stmt = $db->query(
+            'SELECT
+            ts_vydaje_id AS id,
+            datum_vydaju_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            nazov_spolocnosti AS zakaznik,
+            prepravci.meno AS prepravca,
+            prepravca_spz AS spz,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav,
+            sklady.merna_jednotka_enum AS merna_jednotka
+
+            FROM
+            ts_vydaje
+            LEFT JOIN sklady ON ts_vydaje.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_vydaje.podsklad_enum=podsklady.podsklady_id
+            LEFT JOIN zakaznici ON ts_vydaje.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN prepravci ON ts_vydaje.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON ts_vydaje.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON ts_vydaje.material_druh_enum=materialy_druhy.materialy_druhy_id
+            WHERE stav_transakcie=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getvydajeerrorsAction()
+    {
+        //get post request (standart approach)
+        $request = $this->getRequest()->getPost();
+
+        //referring to the index
+        //gets value from ajax request
+        $message = $request['message'];
+
+        // makes disable renderer
+        $this->_helper->viewRenderer->setNoRender();
+
+        //makes disable layout
+        $this->_helper->getHelper('layout')->disableLayout();
+
+
+        //return callback message to the function javascript
+        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+            'host'     => 'localhost',
+            'username' => 'root',
+            'password' => 'mysql',
+            'dbname'   => 'database',
+            'charset'  => 'utf8'
+        ));
+        $limit = $message;
+        $stmt = $db->query(
+            'SELECT
+            ts_vydaje_id AS id,
+            datum_vydaju_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            nazov_spolocnosti AS zakaznik,
+            prepravci.meno AS prepravca,
+            prepravca_spz AS spz,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav,
+            sklady.merna_jednotka_enum AS merna_jednotka
+
+            FROM
+            ts_vydaje
+            LEFT JOIN sklady ON ts_vydaje.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_vydaje.podsklad_enum=podsklady.podsklady_id
+            LEFT JOIN zakaznici ON ts_vydaje.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN prepravci ON ts_vydaje.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON ts_vydaje.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON ts_vydaje.material_druh_enum=materialy_druhy.materialy_druhy_id
+            WHERE chyba=1'
         );
 
         $vystup = (array) $stmt->fetchAll();

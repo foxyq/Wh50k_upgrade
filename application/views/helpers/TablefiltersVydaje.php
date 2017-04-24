@@ -20,7 +20,9 @@ class Zend_View_Helper_TablefiltersVydaje extends Zend_View_Helper_Abstract
                     {column_number : 2, filter_type: "multi_select", select_type:'chosen',  filter_container_id: "external_lokalita"},
                     {column_number : 3, filter_type: "multi_select", select_type:'chosen', filter_match_mode: "exact", filter_container_id: "external_sklad"},
                     {column_number : 4, filter_type: "multi_select", select_type:'chosen', filter_container_id: "external_<?php echo $parameter ?>"},
+                    <?php if (strcmp($parameter,"Zákazník")==0) { ?>
                     {column_number : 5, filter_type: "multi_select", select_type:'chosen', filter_container_id: "external_prepravca"},
+                    <?php } ?>
                     {column_number: 1,  filter_type: "range_date", date_format: "yyyy-mm-dd", filter_container_id: "external_datum"}
                 ]);
             });
@@ -59,10 +61,12 @@ class Zend_View_Helper_TablefiltersVydaje extends Zend_View_Helper_Abstract
                                 <div id="external_<?php echo $parameter ?>" style="width: 120%" > </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-2 hidden">
                                 Prepravca:
                                 <div id="external_prepravca" style="width: 120%" > </div>
                             </div>
+
+
 
                         </div>
                         <div class="panel-footer"></div>

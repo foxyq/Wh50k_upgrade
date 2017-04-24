@@ -34,7 +34,9 @@ class Application_Model_DbTable_Podsklady extends Zend_Db_Table_Abstract
     //metoda vracia pole pre vypisy a formulare - id a nazov skladu
     public function getMoznosti()
     {
-        $pole = $this->fetchAll()->toArray();
+        $select = $this->select()->where('viditelnost = 1');
+
+        $pole = $this->fetchAll($select)->toArray();
         $moznosti = array();
 
         foreach ($pole as $hodnota){

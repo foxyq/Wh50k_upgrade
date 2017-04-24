@@ -244,10 +244,17 @@ class SpotrebyController extends Zend_Controller_Action
 
     public function listAction()
     {
-        // TBD
-        $spotrebyModel = new Application_Model_DbTable_Spotreby();
-        echo $spotrebyModel->getSpotrebyAjax();
+        $this->view->title ='Spotreby - list';
+    }
 
+    public function listajaxAction(){
+
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $spotrebyModel = new Application_Model_DbTable_Spotreby();
+
+        echo $spotrebyModel->getSpotrebyAjax();
     }
 
     public function deleteAction()
@@ -344,12 +351,34 @@ class SpotrebyController extends Zend_Controller_Action
 
     public function waitingsAction()
     {
-        // action body
+
+        $this->view->title = 'Spotreby - čakajúce';
+    }
+
+    public function waitingsajaxAction(){
+
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $spotrebyModel = new Application_Model_DbTable_Spotreby();
+
+        echo $spotrebyModel->getSpotrebyWaitingsAjax();
+
     }
 
     public function errorsAction()
     {
-        // action body
+        $this->view->title = 'Spotreby - chybné';
+    }
+
+    public function errorsajaxAction(){
+
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $spotrebyModel = new Application_Model_DbTable_Spotreby();
+
+        echo $spotrebyModel->getSpotrebyErrorsAjax();
     }
 
     //tato metoda je obsolete

@@ -3,7 +3,7 @@ $(document).ready(function() {
     var table =  $('#fancy_table').DataTable( {
             "order": [[ 1, "desc" ]],
             columnDefs: [{ "sType": "string", "aTargets": [ 12 ]  }],
-            "ajax": "getprijmy",
+            "ajax": "getprijmyerrors",
             "type": "POST",
 
             "columns": [
@@ -77,8 +77,6 @@ $(document).ready(function() {
                 }
 
             ],
-
-
         "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
             var sDirectionClass;
             if ( aData['chyba'] == "1" )

@@ -3,8 +3,9 @@
 $this->headTitle($this->title);
 $this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
 $this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
+$this->inlineScript()->appendFile($this->baseUrl().'/js/ajax_prijmy_waitings.js');
 $this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
-$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
+//$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
 
 
 $notifikacie     = new Application_Model_Notifikacie();
@@ -87,68 +88,68 @@ $this->tablefiltersVydaje($this, "Dodávateľ");
         </tr>
         </tfoot>
 
-        <tbody>
-        <?php foreach($this->prijmy as $prijem) : ?>
-
-            <?php if ($prijem->chyba == 1 ) echo "<tr class='danger'> ";
-            else echo   "<tr>";
-            ?>
-
-<!--            <td>--><?php //echo $this->escape($prijem->ts_prijmy_id);?><!--</td>-->
+<!--        <tbody>-->
+<!--        --><?php //foreach($this->prijmy as $prijem) : ?>
+<!---->
+<!--            --><?php //if ($prijem->chyba == 1 ) echo "<tr class='danger'> ";
+//            else echo   "<tr>";
+//            ?>
+<!---->
+<!--<!--            <td>--><?php ////echo $this->escape($prijem->ts_prijmy_id);?><!--<!--</td>-->
+<!--<!--            <td>--><?php ////echo $this->escape($prijem->doklad_cislo);?><!--<!--</td>-->
+<!--            <TD class="center"><a href="--><?php //echo $this->url(array('controller'=>'prijmy',
+//                'action'=>'preview', 'id'=>$prijem->doklad_cislo, 'fromAction' => 'waitings'));?><!--">-->
+<!--                <i class="fa fa-eye"></i>-->
+<!--                </a>-->
+<!--            </TD>-->
+<!--            <td>-->
+<!---->
+<!--                --><?php
+//            $date = date('Y.m.d', strtotime($this->escape($prijem->datum_prijmu_d)));
+//            echo $date;
+//            //echo $this->escape($prijem->datum_prijmu_d);
+//            ?>
+<!--            </td>-->
+<!--            <td>--><?php //echo $this->escape($this->sklady->getSkratka($prijem->sklad_enum));?><!--</td>-->
+<!--            <td>--><?php //echo $this->escape($this->podsklady->getNazov($prijem->podsklad_enum));?><!--</td>-->
+<!--            <td>--><?php //echo $this->escape($this->dodavatelia->getNazov($prijem->dodavatel_enum));?><!--</td>-->
+<!--            <td>--><?php //echo $this->escape($this->prepravci->getNazov($prijem->prepravca_enum));?><!--</td>-->
+<!--<!--            <td>--><?php ////echo $this->escape($prijem->prepravca_spz);?><!--<!--</td>-->
+<!--         <td class="tonaz">--><?php //echo number_format($this->escape($prijem->q_tony_merane), 2, ",", " ");?><!--</td>-->
+<!--            <td class="m3">--><?php //echo number_format($this->escape($prijem->q_m3_merane), 2, ",", " ");?><!--</td>-->
+<!--            <td class="vlhkost">-->
+<!--                --><?php
+//            if ($prijem->q_vlhkost == 0.00){
+//                echo "-";
+//            }else {
+//                echo number_format($this->escape($prijem->q_vlhkost), 2, ",", " "). "%";
+//
+//            }
+//            ?>
+<!--            </td>-->
+<!--            <td>--><?php //echo number_format($this->escape($prijem->q_tony_nadrozmer), 2, ",", " ");?><!--</td>-->
 <!--            <td>--><?php //echo $this->escape($prijem->doklad_cislo);?><!--</td>-->
-            <TD class="center"><a href="<?php echo $this->url(array('controller'=>'prijmy',
-                'action'=>'preview', 'id'=>$prijem->doklad_cislo, 'fromAction' => 'waitings'));?>">
-                <i class="fa fa-eye"></i>
-                </a>
-            </TD>
-            <td>
-
-                <?php
-            $date = date('Y.m.d', strtotime($this->escape($prijem->datum_prijmu_d)));
-            echo $date;
-            //echo $this->escape($prijem->datum_prijmu_d);
-            ?>
-            </td>
-            <td><?php echo $this->escape($this->sklady->getSkratka($prijem->sklad_enum));?></td>
-            <td><?php echo $this->escape($this->podsklady->getNazov($prijem->podsklad_enum));?></td>
-            <td><?php echo $this->escape($this->dodavatelia->getNazov($prijem->dodavatel_enum));?></td>
-            <td><?php echo $this->escape($this->prepravci->getNazov($prijem->prepravca_enum));?></td>
-<!--            <td>--><?php //echo $this->escape($prijem->prepravca_spz);?><!--</td>-->
-         <td class="tonaz"><?php echo number_format($this->escape($prijem->q_tony_merane), 2, ",", " ");?></td>
-            <td class="m3"><?php echo number_format($this->escape($prijem->q_m3_merane), 2, ",", " ");?></td>
-            <td class="vlhkost">
-                <?php
-            if ($prijem->q_vlhkost == 0.00){
-                echo "-";
-            }else {
-                echo number_format($this->escape($prijem->q_vlhkost), 2, ",", " "). "%";
-
-            }
-            ?>
-            </td>
-            <td><?php echo number_format($this->escape($prijem->q_tony_nadrozmer), 2, ",", " ");?></td>
-            <td><?php echo $this->escape($prijem->doklad_cislo);?></td>
-            <td class="center"><?php echo $this->escape($this->materialyDruhy->getNazov($prijem->material_druh_enum));?></td>
-            <td>
-           <?php
-            $this->stavy($prijem);
-            ?>
-            </td>
-
-            <td class="no-print">
-
-                <?php
-            $skladID = $prijem->sklad_enum;
-            $merna_jednotka = $this->sklady->getMernaJednotka($skladID);
-
-            $this->tlacbuttons($this,$merna_jednotka,$prijem->ts_prijmy_id,$controller);
-            ?>
-
-            </td>
-
-        </tr>
-        <?php endforeach; ?>
-        </tbody>
+<!--            <td class="center">--><?php //echo $this->escape($this->materialyDruhy->getNazov($prijem->material_druh_enum));?><!--</td>-->
+<!--            <td>-->
+<!--           --><?php
+//            $this->stavy($prijem);
+//            ?>
+<!--            </td>-->
+<!---->
+<!--            <td class="no-print">-->
+<!---->
+<!--                --><?php
+//            $skladID = $prijem->sklad_enum;
+//            $merna_jednotka = $this->sklady->getMernaJednotka($skladID);
+//
+//            $this->tlacbuttons($this,$merna_jednotka,$prijem->ts_prijmy_id,$controller);
+//            ?>
+<!---->
+<!--            </td>-->
+<!---->
+<!--        </tr>-->
+<!--        --><?php //endforeach; ?>
+<!--        </tbody>-->
     </table>
 
     <div id="tonaz">   </div>

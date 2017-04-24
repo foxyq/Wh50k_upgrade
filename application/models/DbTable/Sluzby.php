@@ -308,6 +308,58 @@ class Application_Model_DbTable_Sluzby extends Zend_Db_Table_Abstract
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function getSluzbyErrorsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            t_sluzby_id AS id,
+            datum_sluzby_od_d AS datum_od,
+            datum_sluzby_do_d AS datum_do,
+            q_tony AS tony,
+            q_prm AS prm,
+            q_motohodiny AS motohodiny,
+            doklad_cislo AS doklad_cislo,
+            chyba AS chyba,
+            stav_transakcie AS stav
+            FROM
+            `t_sluzby`
+            WHERE chyba=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getSluzbyWaitingsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            t_sluzby_id AS id,
+            datum_sluzby_od_d AS datum_od,
+            datum_sluzby_do_d AS datum_do,
+            q_tony AS tony,
+            q_prm AS prm,
+            q_motohodiny AS motohodiny,
+            doklad_cislo AS doklad_cislo,
+            chyba AS chyba,
+            stav_transakcie AS stav
+            FROM
+            `t_sluzby`
+            WHERE stav_transakcie=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
 
 }
 

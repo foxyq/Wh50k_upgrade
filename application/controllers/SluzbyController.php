@@ -263,6 +263,13 @@ class SluzbyController extends Zend_Controller_Action
 
     public function listAction()
     {
+        $this->view->title = "Služby - list";
+    }
+
+    public function listajaxAction(){
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
         $sluzbyModel = new Application_Model_DbTable_Sluzby();
         echo $sluzbyModel->getSluzbyAjax();
     }
@@ -279,14 +286,29 @@ class SluzbyController extends Zend_Controller_Action
 
     public function waitingsAction()
     {
-        // action body
+        $this->view->title = "Služby - čakajúce";
+    }
+
+    public function waitingsajaxAction(){
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $sluzbyModel = new Application_Model_DbTable_Sluzby();
+        echo $sluzbyModel->getSluzbyWaitingsAjax();
     }
 
     public function errorsAction()
     {
-        // action body
+        $this->view->title = "Služby - chybné";
     }
 
+    public function errorsajaxAction(){
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+
+        $sluzbyModel = new Application_Model_DbTable_Sluzby();
+        echo $sluzbyModel->getSluzbyErrorsAjax();
+    }
 
 }
 

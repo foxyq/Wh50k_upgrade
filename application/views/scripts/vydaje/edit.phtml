@@ -1,15 +1,10 @@
-<!--<script type="text/javascript" src="/wh50k/public/js/jquery.chained.js"></script>
-<script type="text/javascript" src="<?php echo $this->baseUrl().'/js/jquery.chained.js';?>"></script>
-<script>
+<!--<script type="text/javascript" src="--><?php //echo $this->baseUrl().'/js/jquery.chained.js';?><!--"></script>-->
+<!--<script>-->
+<!--    $(document).ready(function() {-->
+<!--        $("#podsklad_enum").chained("#sklad_enum");-->
+<!--    });-->
+<!--</script>-->
 
-    $(document).ready(function() {
-
-        $("#podsklad_enum").chained("#sklad_enum");
-
-    });
-
-</script>
--->
 <?php
 $podsklady = new Application_Model_DbTable_Podsklady();
 $arr = $podsklady->getIdsSoSkladIds();

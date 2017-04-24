@@ -3,7 +3,8 @@ $(document).ready(function() {
     var table =  $('#fancy_table').DataTable( {
             "order": [[ 1, "desc" ]],
             columnDefs: [{ "sType": "string", "aTargets": [ 12 ]  }],
-            "ajax": "getprijmy",
+            //"processing": true,
+            "ajax": "getvydajeerrors",
             "type": "POST",
 
             "columns": [
@@ -23,7 +24,7 @@ $(document).ready(function() {
                 },
                 { "data": "sklad" },
                 { "data": "podsklad" },
-                { "data": "dodavatel" },
+                { "data": "zakaznik" },
                 { "data": "prepravca" },
                 { "data": "tony",
                     "className": "tonaz",
@@ -31,36 +32,32 @@ $(document).ready(function() {
                 { "data": "m3",
                     "className": "m3",
                     render: $.fn.dataTable.render.number( '.', ',', 2, '' )},
+                { "data": "prm",
+                    "className": "prm",
+                    render: $.fn.dataTable.render.number( '.', ',', 2, '' )},
                 { "data": "vlhkost",
                     "className": "vlhkost",
                     render: $.fn.dataTable.render.number( '.', ',', 2, '', ' %' )},
-                { "data": "nadrozmer" },
+                //{ "data": "nadrozmer" },
                 { "data": "doklad_cislo" },
                 { "data": "typ" },
                 { "data": "stav",
-
                     render: function ( data, type, row ) {
-
                         if ( data  == '2' ) {
                             return '<i class="fa fa-check-circle-o" alt="schválené"></i>';
                         }
                         else if (data == '1') {
                             return '<i class="fa fa-clock-o" alt="čakajúce"></i>';
                         }
-
                         else return '<i class="fa fa-times-circle-o" alt="zrušené"></i>';
-
                     }
-
-
-
                 },
                 {
                     "data": "merna_jednotka",
-
                     render:
                         function (  data, type, row ) {
-                            buttons = "<a href='edit/id/" +row.id+ "/fromAction/list'><i class='fa fa-pencil-square-o'></i></a>";                   buttons += "<a href='delete/id/" +row.id+ "/fromAction/list'> <i class='fa fa-trash-o'></i> </a>";
+                            buttons = "<a href='edit/id/" +row.id+ "/fromAction/list'><i class='fa fa-pencil-square-o'></i></a>";
+                            buttons += "<a href='delete/id/" +row.id+ "/fromAction/list'> <i class='fa fa-trash-o'></i> </a>";
 
 
                             if (data == 1 ) {
@@ -77,8 +74,6 @@ $(document).ready(function() {
                 }
 
             ],
-
-
         "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
             var sDirectionClass;
             if ( aData['chyba'] == "1" )
