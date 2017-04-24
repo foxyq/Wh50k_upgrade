@@ -27,6 +27,8 @@ class Application_Form_Vydaj extends ZendX_JQuery_Form{
         $validatorPercentaRange->setMessage("Zadané číslo sa nenachádza v intervale od 0 do 99,99.");
         $validatorCislaRange = new Zend_Validate_Between(array('min' => 0, 'max' => 999.99));
         $validatorCislaRange->setMessage("Zadané číslo sa nenachádza v intervale od 0 do 999,99.");
+        $validatorCislaRangeKapacitaPRM = new Zend_Validate_Between(array('min' => 0, 'max' => 9999.99));
+        $validatorCislaRangeKapacitaPRM->setMessage("Zadané číslo sa nenachádza v intervale od 0 do 9999,99.");
         $validatorSelecty= new Zend_Validate_Between(array('min' => 1, 'max' => 9999999));
         $validatorSelecty->setMessage("Hodnota je povinná");
         $validatorSPZ = new Zend_Validate_Regex(array('pattern'=> "/^[a-zA-Z0-9]{5,8}$/"));
@@ -142,6 +144,18 @@ class Application_Form_Vydaj extends ZendX_JQuery_Form{
             ->addFilter($filterCislaDesatinaCiarka)
             ->addValidator($validatorPercentaRange);
             //->addValidator('Float');
+
+        /*
+         * KAPACITA KAMIONU V PRM
+         */
+
+        $kapacita_kamionu_prm = new Zend_Form_Element_Text('kapacita_kamionu_prm');
+        $kapacita_kamionu_prm->setLabel('Kapacita kamiónu v PRM')
+            ->setAttrib('class', 'form-control in')
+            ->setAttrib('tabindex', '-1')
+            ->addFilter($filterCislaDesatinaCiarka)
+            ->addValidator($validatorCislaRangeKapacitaPRM);
+        //->addValidator('float');
 
         /*
          * DOPLNUJUCE INFO

@@ -84,13 +84,13 @@ class Application_Form_Spotreba extends ZendX_JQuery_Form
             ->addValidator($validatorSelecty)
             ->setAttrib('class', 'form-control');
 
-        $stroj_enum = new Zend_Form_Element_Select('$stroj_enum');
-        $stroj_enum->addMultiOptions(array(
-            '0' => '' ));
-        $stroj_enum->addMultiOptions($this->getAttrib('strojeMoznosti'));
-        $stroj_enum->setLabel('Stroj');
-        $stroj_enum->addValidator($validatorSelecty)
-            ->setAttrib('class', 'form-control');
+//        $stroj_enum = new Zend_Form_Element_Select('$stroj_enum');
+//        $stroj_enum->addMultiOptions(array(
+//            '0' => '' ));
+//        $stroj_enum->addMultiOptions($this->getAttrib('strojeMoznosti'));
+//        $stroj_enum->setLabel('Stroj');
+//        $stroj_enum->addValidator($validatorSelecty)
+//            ->setAttrib('class', 'form-control');
 
         /*
          * KVANTITA
@@ -191,7 +191,7 @@ class Application_Form_Spotreba extends ZendX_JQuery_Form
             $q_prm_merane,
             $q_vlhkost,
             $doklad_typ,
-            $stroj_enum,
+//            $stroj_enum,
             $material_druh,
             $material_typ,
             $poznamka,

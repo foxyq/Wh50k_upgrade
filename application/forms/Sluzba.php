@@ -76,18 +76,15 @@ class Application_Form_Sluzba extends ZendX_JQuery_Form
         $zakaznik = new Zend_Form_Element_Select('$zakaznik_enum');
         $zakaznik->addMultiOptions(array(
             '0' => '' ));
-        $zakaznik->addMultiOptions($this->getAttrib('zakazniciMoznosti'));
+        $zakaznik->addMultiOptions($this->getAttrib('zakazniciSluzbyMoznosti'));
         $zakaznik->setLabel("Zákazník")
             ->addValidator($validatorSelecty)
             ->setAttrib('class', 'form-control');
 
-        $miestoStiepenia = new Zend_Form_Element_Select('$miesto_stiepenia_enum');
-        $miestoStiepenia->addMultiOptions(array(
-            '0' => '' ));
-        $miestoStiepenia->addMultiOptions($this->getAttrib('miestaStiepeniaMoznosti'));
-        $miestoStiepenia->setLabel("Miesto štiepenia")
-            ->addValidator($validatorSelecty)
-            ->setAttrib('class', 'form-control');
+        $miestoStiepenia = new Zend_Form_Element_Text('miesto_stiepenia');
+        $miestoStiepenia->setLabel('Miesto štiepenia')
+            ->setAttrib('class', 'form-control')
+            ->addFilter($filterTagy);
 
         $stroj = new Zend_Form_Element_Select('$stroj_enum');
         $stroj->addMultiOptions(array(

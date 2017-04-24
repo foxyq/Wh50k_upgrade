@@ -39,7 +39,10 @@ class Zend_Validate_DefinedQuantity extends Zend_Validate_Abstract
         $tony = $array['q_tony_merane'];
         $m3 = $array['q_m3_merane'];
         $prm = $array['q_prm_merane'];
-        $sucet_kvantit = $tony + $m3 + $prm;
+        $tonySluzby = $array['q_tony'];
+        $prmSluzby = $array['q_prm'];
+        $motohodinySluzby = $array['q_motohodiny'];
+        $sucet_kvantit = $tony + $m3 + $prm + $tonySluzby + $prmSluzby + $motohodinySluzby;
         $stav_transakcie = $array['stav_transakcie'];
 
         //porovnanie ak stav transakcie je na hodnote "SCHVALENE"

@@ -22,31 +22,27 @@ class SluzbyController extends Zend_Controller_Action
 
 
         //instancia modelu z ktoreho budeme tahat zoznam
-        $zakazniciMoznosti = new Application_Model_DbTable_Zakaznici();
+        $zakazniciSluzbyMoznosti = new Application_Model_DbTable_ZakazniciSluzby();
         $dokladyTypyMoznosti = new Application_Model_DbTable_DokladyTypy();
         $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
         $stroje = new Application_Model_DbTable_Stroje();
-        $miestaStiepeniaModel = new Application_Model_DbTable_MiestaStiepenia();
 
         //metoda ktorou vytiahneme do premennej zoznam
-        $zakazniciMoznosti = $zakazniciMoznosti->getMoznosti();
+        $zakazniciSluzbyMoznosti = $zakazniciSluzbyMoznosti->getMoznosti();
         $dokladyTypyMoznosti = $dokladyTypyMoznosti->getMoznosti();
         $transakcieStavyMoznosti = $transakcieStavy->getMoznosti();
         $strojeMoznosti = $stroje->getMoznosti();
-        $miestaStiepeniaMoznosti = $miestaStiepeniaModel->getMoznosti();
 
         //zoradenie
-        asort($zakazniciMoznosti);
-        asort($miestaStiepeniaMoznosti);
+        asort($zakazniciSluzbyMoznosti);
 
         //samostatne premenne ktore posielame na form
         $potvrdzujuceTlacidlo = 'Vložiť';
         $form = new Application_Form_Sluzba(array(
-            'zakazniciMoznosti' => $zakazniciMoznosti,
+            'zakazniciSluzbyMoznosti' => $zakazniciSluzbyMoznosti,
             'dokladyTypyMoznosti' => $dokladyTypyMoznosti,
             'transakcieStavyMoznosti' => $transakcieStavyMoznosti,
             'strojeMoznosti' => $strojeMoznosti,
-            'miestaStiepeniaMoznosti' => $miestaStiepeniaMoznosti,
             'potvrdzujuceTlacidlo' => $potvrdzujuceTlacidlo,
         ));
         $this->view->form = $form;
@@ -59,7 +55,7 @@ class SluzbyController extends Zend_Controller_Action
                 $datum_sluzby_od = $form->getValue('datum_sluzby_od_d');
                 $datum_sluzby_do = $form->getValue('datum_sluzby_do_d');
                 $zakaznik = $form->getValue('zakaznik_enum');
-                $miestoStiepenia = $form->getValue('miesto_stiepenia_enum');
+                $miestoStiepenia = $form->getValue('miesto_stiepenia');
                 $q_tony = $form->getValue('q_tony');
                 $q_prm = $form->getValue('q_prm');
                 $q_motohodiny = $form->getValue('q_motohodiny');
@@ -116,7 +112,6 @@ class SluzbyController extends Zend_Controller_Action
                     $stav_transakcie,
                     $doklad_cislo);
 
-                echo "TRinidad GOLD";
                 //$this->_helper->redirector('list');
                 //var_dump( $doklad_cislo);
                 //pageManager
@@ -141,31 +136,27 @@ class SluzbyController extends Zend_Controller_Action
         $this->view->fromController = $fromController;
 
         //instancia modelu z ktoreho budeme tahat zoznam
-        $zakazniciMoznosti = new Application_Model_DbTable_Zakaznici();
+        $zakazniciSluzbyMoznosti = new Application_Model_DbTable_ZakazniciSluzby();
         $dokladyTypyMoznosti = new Application_Model_DbTable_DokladyTypy();
         $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
         $stroje = new Application_Model_DbTable_Stroje();
-        $miestaStiepeniaModel = new Application_Model_DbTable_MiestaStiepenia();
 
         //metoda ktorou vytiahneme do premennej zoznam
-        $zakazniciMoznosti = $zakazniciMoznosti->getMoznosti();
+        $zakazniciSluzbyMoznosti = $zakazniciSluzbyMoznosti->getMoznosti();
         $dokladyTypyMoznosti = $dokladyTypyMoznosti->getMoznosti();
         $transakcieStavyMoznosti = $transakcieStavy->getMoznosti();
         $strojeMoznosti = $stroje->getMoznosti();
-        $miestaStiepeniaMoznosti = $miestaStiepeniaModel->getMoznosti();
 
         //zoradenie
-        asort($zakazniciMoznosti);
-        asort($miestaStiepeniaMoznosti);
+        asort($zakazniciSluzbyMoznosti);
 
         //samostatne premenne ktore posielame na form
         $potvrdzujuceTlacidlo = 'Upraviť';
         $form = new Application_Form_Sluzba(array(
-            'zakazniciMoznosti' => $zakazniciMoznosti,
+            'zakazniciSluzbyMoznosti' => $zakazniciSluzbyMoznosti,
             'dokladyTypyMoznosti' => $dokladyTypyMoznosti,
             'transakcieStavyMoznosti' => $transakcieStavyMoznosti,
             'strojeMoznosti' => $strojeMoznosti,
-            'miestaStiepeniaMoznosti' => $miestaStiepeniaMoznosti,
             'potvrdzujuceTlacidlo' => $potvrdzujuceTlacidlo
         ));
         $this->view->form = $form;
@@ -182,7 +173,7 @@ class SluzbyController extends Zend_Controller_Action
                 $q_motohodiny = $form->getValue('q_motohodiny');
                 $doklad_typ = $form->getValue('doklad_typ_enum');
                 $stroj = $form->getValue('stroj_enum');
-                $miestoStiepenia = $form->getValue('miesto_stiepenia_enum');
+                $miestoStiepenia = $form->getValue('miesto_stiepenia');
                 $poznamka = $form->getValue('poznamka');
                 $chyba = $form->getValue('chyba');
                 $stav_transakcie = $form->getValue('stav_transakcie');
@@ -194,11 +185,11 @@ class SluzbyController extends Zend_Controller_Action
                     $datum_sluzby_do,
                     $zakaznik,
                     $miestoStiepenia,
+                    $stroj,
                     $q_tony,
                     $q_prm,
                     $q_motohodiny,
                     $doklad_typ,
-                    $stroj,
                     $poznamka,
                     $chyba,
                     $stav_transakcie);
@@ -227,15 +218,13 @@ class SluzbyController extends Zend_Controller_Action
         $fromController = $this->_getParam('fromController', 'sluzby');
         $this->view->fromController = $fromController;
         //inicializacia pre vypis premennych - pre getNazov() metody
-        $zakazniciModel = new Application_Model_DbTable_Zakaznici();
+        $zakazniciSluzbyModel = new Application_Model_DbTable_ZakazniciSluzby();
         $strojeModel = new Application_Model_DbTable_Stroje();
-        $miestaStiepeniaModel = new Application_Model_DbTable_MiestaStiepenia();
         $dokladyTypyModel = new Application_Model_DbTable_DokladyTypy();
         $transakcieStavyModel = new Application_Model_DbTable_TransakcieStavy();
         $ciselniky = array(
-            'zakazniciModel' => $zakazniciModel,
+            'zakazniciModel' => $zakazniciSluzbyModel,
             'strojeModel'=>$strojeModel,
-            'miestaStiepeniaModel'=>$miestaStiepeniaModel,
             'dokladyTypyModel' => $dokladyTypyModel,
             'transakcieStavyModel' => $transakcieStavyModel,
             'strojeMoznosti' => $strojeModel
@@ -281,7 +270,37 @@ class SluzbyController extends Zend_Controller_Action
 
     public function previewAction()
     {
-        // action body
+        $fromAction = $this->_getParam('fromAction', 'list');
+        $fromController = $this->_getParam('fromController', 'Sluzby');
+        $fromId = $this->_getParam('fromId', null);
+        $this->view->fromAction = $fromAction;
+        $this->view->fromController = $fromController;
+        $this->view->fromId = $fromId;
+
+        $fromAction = $this->_getParam('fromAction', 'list');
+        $this->view->fromAction = $fromAction;
+        //inicializacia pre vypis premennych - pre getNazov() metody
+        $skladyModel = new Application_Model_DbTable_Sklady();
+        $podskladyModel = new Application_Model_DbTable_Podsklady();
+        $zakazniciSluzbyModel = new Application_Model_DbTable_ZakazniciSluzby();
+        $prepravciModel = new Application_Model_DbTable_Prepravci();
+        $strojeModel = new Application_Model_DbTable_Stroje();
+        $dokladyTypyModel = new Application_Model_DbTable_DokladyTypy();
+        $transakcieStavyModel = new Application_Model_DbTable_TransakcieStavy();
+        $ciselniky = array(
+            'skladyModel' => $skladyModel,
+            'podskladyModel' => $podskladyModel,
+            'zakazniciSluzbyModel' => $zakazniciSluzbyModel,
+            'prepravciModel' => $prepravciModel,
+            'strojeModel'=>$strojeModel,
+            'dokladyTypyModel' => $dokladyTypyModel,
+            'transakcieStavyModel' => $transakcieStavyModel
+        );
+        $id = $this->_getParam('id');
+        $sluzby = new Application_Model_DbTable_Sluzby();
+        $sluzba = $sluzby->getSluzba($id);
+        $this->view->sluzba = $sluzba;
+        $this->view->ciselniky = $ciselniky;
     }
 
     public function waitingsAction()

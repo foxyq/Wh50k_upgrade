@@ -29,7 +29,6 @@ class SpotrebyController extends Zend_Controller_Action
         $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
         $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
         $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
-        $stroje = new Application_Model_DbTable_Stroje();
 
         //metoda ktorou vytiahneme do premennej zoznam
         $skladyMoznosti = $skladyMoznosti->getMoznosti();
@@ -39,7 +38,6 @@ class SpotrebyController extends Zend_Controller_Action
         $materialyDruhyMoznosti = $materialyDruhy->getMoznosti();
         $materialyTypyMoznosti = $materialyTypy->getMoznosti();
         $transakcieStavyMoznosti = $transakcieStavy->getMoznosti();
-        $strojeMoznosti = $stroje->getMoznosti();
 
         //zoradenie
         asort($zakazniciMoznosti);
@@ -54,7 +52,6 @@ class SpotrebyController extends Zend_Controller_Action
             'materialyDruhyMoznosti' => $materialyDruhyMoznosti,
             'materialyTypyMoznosti' => $materialyTypyMoznosti,
             'transakcieStavyMoznosti' => $transakcieStavyMoznosti,
-            'strojeMoznosti' => $strojeMoznosti,
             'potvrdzujuceTlacidlo' => $potvrdzujuceTlacidlo,
         ));
         $this->view->form = $form;
@@ -75,7 +72,6 @@ class SpotrebyController extends Zend_Controller_Action
                 $doklad_typ = $form->getValue('doklad_typ_enum');
                 $material_typ = $form->getValue('material_typ_enum');
                 $material_druh = $form->getValue('material_druh_enum');
-                $stroj = $form->getValue('stroj_enum');
                 $poznamka = $form->getValue('poznamka');
                 $chyba = $form->getValue('chyba');
                 $stav_transakcie = $form->getValue('stav_transakcie');
@@ -124,7 +120,6 @@ class SpotrebyController extends Zend_Controller_Action
                     $doklad_typ,
                     $material_typ,
                     $material_druh,
-                    $stroj,
                     $poznamka,
                     $chyba,
                     $stav_transakcie,
@@ -157,7 +152,6 @@ class SpotrebyController extends Zend_Controller_Action
         $materialyDruhy = new Application_Model_DbTable_MaterialyDruhy();
         $materialyTypy = new Application_Model_DbTable_MaterialyTypy();
         $transakcieStavy = new Application_Model_DbTable_TransakcieStavy();
-        $stroje = new Application_Model_DbTable_Stroje();
 
         //metoda ktorou vytiahneme do premennej zoznam
         $skladyMoznosti = $skladyMoznosti->getMoznosti();
@@ -167,7 +161,6 @@ class SpotrebyController extends Zend_Controller_Action
         $materialyDruhyMoznosti = $materialyDruhy->getMoznosti();
         $materialyTypyMoznosti = $materialyTypy->getMoznosti();
         $transakcieStavyMoznosti = $transakcieStavy->getMoznosti();
-        $strojeMoznosti = $stroje->getMoznosti();
 
         //zoradenie
         asort($zakazniciMoznosti);
@@ -182,7 +175,6 @@ class SpotrebyController extends Zend_Controller_Action
             'materialyDruhyMoznosti' => $materialyDruhyMoznosti,
             'materialyTypyMoznosti' => $materialyTypyMoznosti,
             'transakcieStavyMoznosti' => $transakcieStavyMoznosti,
-            'strojeMoznosti' => $strojeMoznosti,
             'potvrdzujuceTlacidlo' => $potvrdzujuceTlacidlo
         ));
         $this->view->form = $form;
@@ -202,7 +194,6 @@ class SpotrebyController extends Zend_Controller_Action
                 $doklad_typ = $form->getValue('doklad_typ_enum');
                 $material_typ = $form->getValue('material_typ_enum');
                 $material_druh = $form->getValue('material_druh_enum');
-                $stroj = $form->getValue('stroj_enum');
                 $poznamka = $form->getValue('poznamka');
                 $chyba = $form->getValue('chyba');
                 $stav_transakcie = $form->getValue('stav_transakcie');
@@ -220,7 +211,6 @@ class SpotrebyController extends Zend_Controller_Action
                     $doklad_typ,
                     $material_typ,
                     $material_druh,
-                    $stroj,
                     $poznamka,
                     $chyba,
                     $stav_transakcie);
@@ -312,7 +302,7 @@ class SpotrebyController extends Zend_Controller_Action
     public function previewAction()
     {
         $fromAction = $this->_getParam('fromAction', 'list');
-        $fromController = $this->_getParam('fromController', 'Vydaje');
+        $fromController = $this->_getParam('fromController', 'Spotreby');
         $fromId = $this->_getParam('fromId', null);
         $this->view->fromAction = $fromAction;
         $this->view->fromController = $fromController;
@@ -325,7 +315,6 @@ class SpotrebyController extends Zend_Controller_Action
         $podskladyModel = new Application_Model_DbTable_Podsklady();
         $zakazniciModel = new Application_Model_DbTable_Zakaznici();
         $prepravciModel = new Application_Model_DbTable_Prepravci();
-        $strojeModel = new Application_Model_DbTable_Stroje();
         $dokladyTypyModel = new Application_Model_DbTable_DokladyTypy();
         $materialyTypyModel = new Application_Model_DbTable_MaterialyTypy();
         $materialyDruhyModel = new Application_Model_DbTable_MaterialyDruhy();
@@ -335,17 +324,16 @@ class SpotrebyController extends Zend_Controller_Action
             'podskladyModel' => $podskladyModel,
             'zakazniciModel' => $zakazniciModel,
             'prepravciModel' => $prepravciModel,
-            'strojeModel'=>$strojeModel,
             'dokladyTypyModel' => $dokladyTypyModel,
             'materialyTypyModel' => $materialyTypyModel,
             'materialyDruhyModel' => $materialyDruhyModel,
             'transakcieStavyModel' => $transakcieStavyModel
         );
         $id = $this->_getParam('id');
-        $vydaje = new Application_Model_DbTable_Vydaje();
+        $spotreby = new Application_Model_DbTable_Spotreby();
 //        $vydaj = $vydaje->getVydajByDokladCislo($id);
-        $vydaj = $vydaje->getVydaj($id);
-        $this->view->vydaj = $vydaj;
+        $spotreba = $spotreby->getSpotreba($id);
+        $this->view->spotreba = $spotreba;
         $this->view->ciselniky = $ciselniky;
     }
 
