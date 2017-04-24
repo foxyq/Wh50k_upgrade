@@ -62,7 +62,7 @@ $colors = array('1' => 'red', '2' => 'primary', '3' => 'green', '4' => 'yellow',
                     <?php foreach ($skladyIds AS $skladId) :
                         if ($counter>count($colors)) {$counter = 1;}
 
-                        if ($counter != 1) { //podmienka na odstranenie skladu HB z frontendu
+                        if ($counter <> 2) { //podmienka na odstranenie skladu HB z frontendu
 
                         ?>
                     <div class="col-lg-3 col-md-6">
@@ -173,46 +173,6 @@ $colors = array('1' => 'red', '2' => 'primary', '3' => 'green', '4' => 'yellow',
                     <?php }
                     $counter++;
                     endforeach; ?>
-
-    <!-- GRAFY DATA LOAD ... -->
-    <?php foreach ($skladyIds AS $skladId) : ?>
-
-        <?php
-        $dataSkladu = new Application_Model_DbTable_UbytkyHmotnosti();
-        $dataSkladu = $dataSkladu->getLastXValues( $skladId, 5);
-        ?>
-
-        <script>
-        // Area Chart
-        Morris.Bar({
-            element: 'morris-area-chart-<?php echo $skladId ?>',
-
-            data: <?php echo json_encode($dataSkladu);?>,
-
-            xkey: 'datum',
-            ykeys: ['stav'],
-            labels: ['Stav'],
-            pointSize: 2,
-            hideHover: 'auto',
-            smooth: true,
-            resize: true,
-            <?php if ($skladId == 1) {
-             echo "barColors: ['#d9534f']";
-             }
-             else if ($skladId ==3){
-             echo "barColors: ['#5cb85c']";
-             }
-             ?>
-
-        });
-
-
-        var d = document.getElementById("hidden_field<?php echo $skladId?>");
-        d.className = d.className + " hidden";
-
-    </script>
-
-<?php endforeach ?>
 
 
     </div>

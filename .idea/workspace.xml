@@ -1,64 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca84f209-3d26-4cc0-9712-9143da5af35f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_ext_dodavka_errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_ext_dodavka_waitings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_ext_vyroba_errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_ext_vyroba_waitings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_inventury_errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_inventury_list.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_inventury_waitings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_prijmy_errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_prijmy_waitings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_sluzby_errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_sluzby_list.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_sluzby_waitings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_spotreby_errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_spotreby_list.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_spotreby_waitings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_vydaje_errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/ajax_vydaje_waitings.js" />
+    <list default="true" id="ca84f209-3d26-4cc0-9712-9143da5af35f" name="Default" comment="prijmy/list komplet ajax solution">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/ExternaVyrobaController.php" afterPath="$PROJECT_DIR$/application/controllers/ExternaVyrobaController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/ExternadodavkaController.php" afterPath="$PROJECT_DIR$/application/controllers/ExternadodavkaController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/InventuryController.php" afterPath="$PROJECT_DIR$/application/controllers/InventuryController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/PrijmyController.php" afterPath="$PROJECT_DIR$/application/controllers/PrijmyController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/SluzbyController.php" afterPath="$PROJECT_DIR$/application/controllers/SluzbyController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/SpotrebyController.php" afterPath="$PROJECT_DIR$/application/controllers/SpotrebyController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/VydajeController.php" afterPath="$PROJECT_DIR$/application/controllers/VydajeController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/Inventury.php" afterPath="$PROJECT_DIR$/application/models/DbTable/Inventury.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/Podsklady.php" afterPath="$PROJECT_DIR$/application/models/DbTable/Podsklady.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/Sluzby.php" afterPath="$PROJECT_DIR$/application/models/DbTable/Sluzby.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/Spotreby.php" afterPath="$PROJECT_DIR$/application/models/DbTable/Spotreby.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/helpers/TablefiltersVydaje.php" afterPath="$PROJECT_DIR$/application/views/helpers/TablefiltersVydaje.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/externadodavka/errors.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/externadodavka/errors.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/externadodavka/waitings.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/externadodavka/waitings.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/externavyroba/errors.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/externavyroba/errors.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/externavyroba/waitings.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/externavyroba/waitings.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/inventury/errors.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/inventury/errors.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/inventury/list.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/inventury/list.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/inventury/waitings.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/inventury/waitings.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/layout.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/layout.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/prijmy/errors.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/prijmy/errors.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/ExternaDodavka.php" afterPath="$PROJECT_DIR$/application/models/DbTable/ExternaDodavka.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/ExternaVyroba.php" afterPath="$PROJECT_DIR$/application/models/DbTable/ExternaVyroba.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/Prijmy.php" afterPath="$PROJECT_DIR$/application/models/DbTable/Prijmy.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/DbTable/Vydaje.php" afterPath="$PROJECT_DIR$/application/models/DbTable/Vydaje.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/index/index.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/index/index.phtml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/prijmy/list.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/prijmy/list.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/prijmy/waitings.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/prijmy/waitings.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/profil/index.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/profil/index.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/sluzby/errors.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/sluzby/errors.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/sluzby/list.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/sluzby/list.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/sluzby/waitings.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/sluzby/waitings.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/spotreby/errors.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/spotreby/errors.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/spotreby/list.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/spotreby/list.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/spotreby/waitings.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/spotreby/waitings.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/vydaje/add.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/vydaje/add.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/vydaje/edit.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/vydaje/edit.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/vydaje/errors.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/vydaje/errors.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/vydaje/waitings.phtml" afterPath="$PROJECT_DIR$/application/views/scripts/vydaje/waitings.phtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/print.css" afterPath="$PROJECT_DIR$/public/css/print.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/ajax_ext_dodavka.js" afterPath="$PROJECT_DIR$/public/js/ajax_ext_dodavka.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/ajax_ext_vyroba.js" afterPath="$PROJECT_DIR$/public/js/ajax_ext_vyroba.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/ajax_prijmy.js" afterPath="$PROJECT_DIR$/public/js/ajax_prijmy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/ajax_vydaje.js" afterPath="$PROJECT_DIR$/public/js/ajax_vydaje.js" />
     </list>
     <ignored path="newLoko.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,21 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="add.phtml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/scripts/vydaje/add.phtml">
+      <file leaf-file-name="index.phtml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/views/scripts/index/index.phtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit.phtml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/views/scripts/vydaje/edit.phtml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.023659306">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.2420886">
+              <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -116,21 +61,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/views/scripts/vydaje/waitings.phtml" />
-        <option value="$PROJECT_DIR$/application/views/scripts/externadodavka/waitings.phtml" />
-        <option value="$PROJECT_DIR$/application/views/scripts/externadodavka/errors.phtml" />
-        <option value="$PROJECT_DIR$/application/views/scripts/externavyroba/errors.phtml" />
-        <option value="$PROJECT_DIR$/application/views/scripts/externavyroba/waitings.phtml" />
-        <option value="$PROJECT_DIR$/application/controllers/PrijmyController.php" />
-        <option value="$PROJECT_DIR$/application/controllers/VydajeController.php" />
-        <option value="$PROJECT_DIR$/application/controllers/ExternadodavkaController.php" />
-        <option value="$PROJECT_DIR$/public/css/print.css" />
-        <option value="$PROJECT_DIR$/application/controllers/ExternaVyrobaController.php" />
         <option value="$PROJECT_DIR$/application/views/scripts/spotreby/list.phtml" />
         <option value="$PROJECT_DIR$/application/views/helpers/TablefiltersVydaje.php" />
         <option value="$PROJECT_DIR$/application/models/DbTable/Spotreby.php" />
         <option value="$PROJECT_DIR$/application/views/scripts/spotreby/errors.phtml" />
-        <option value="$PROJECT_DIR$/application/controllers/SpotrebyController.php" />
         <option value="$PROJECT_DIR$/application/views/scripts/spotreby/waitings.phtml" />
         <option value="$PROJECT_DIR$/application/controllers/SluzbyController.php" />
         <option value="$PROJECT_DIR$/application/views/scripts/sluzby/list.phtml" />
@@ -167,6 +101,17 @@
         <option value="$PROJECT_DIR$/application/views/scripts/vydaje/add.phtml" />
         <option value="$PROJECT_DIR$/application/views/scripts/vydaje/edit.phtml" />
         <option value="$PROJECT_DIR$/application/views/scripts/layout.phtml" />
+        <option value="$PROJECT_DIR$/application/views/scripts/prijmy/list.phtml" />
+        <option value="$PROJECT_DIR$/application/controllers/SpotrebyController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/PrijmyController.php" />
+        <option value="$PROJECT_DIR$/application/models/DbTable/Prijmy.php" />
+        <option value="$PROJECT_DIR$/application/models/DbTable/Vydaje.php" />
+        <option value="$PROJECT_DIR$/application/controllers/VydajeController.php" />
+        <option value="$PROJECT_DIR$/application/models/DbTable/ExternaDodavka.php" />
+        <option value="$PROJECT_DIR$/application/controllers/ExternadodavkaController.php" />
+        <option value="$PROJECT_DIR$/application/controllers/ExternaVyrobaController.php" />
+        <option value="$PROJECT_DIR$/application/models/DbTable/ExternaVyroba.php" />
+        <option value="$PROJECT_DIR$/application/views/scripts/index/index.phtml" />
       </list>
     </option>
   </component>
@@ -180,9 +125,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="4" />
     <option name="y" value="22" />
-    <option name="width" value="1276" />
+    <option name="width" value="1280" />
     <option name="height" value="778" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -269,6 +213,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="newLoko" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Wh50k_upgrade" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="application" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -317,7 +279,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="vydaje" />
+              <option name="myItemId" value="spotreby" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -365,7 +327,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="helpers" />
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="index" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="newLoko" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Wh50k_upgrade" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -484,16 +468,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="4" y="22" width="1276" height="778" extended-state="6" />
+    <frame x="0" y="22" width="1280" height="778" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22285251" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21890146" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32944608" sideWeight="0.49401525" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32944608" sideWeight="0.5059848" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3265306" sideWeight="0.4961915" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32554746" sideWeight="0.4961915" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32507288" sideWeight="0.4961915" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -558,136 +542,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/externavyroba/list.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45023698">
-          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/helpers/TablefiltersExterne.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/helpers/TablefiltersMikro.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/helpers/TablefiltersVydaje.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8341232">
-          <caret line="63" column="55" selection-start-line="63" selection-start-column="55" selection-end-line="63" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/spotreby/getspotreby.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/spotreby/waitings.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4731861">
-          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/spotreby/errors.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11829653">
-          <caret line="5" column="76" selection-start-line="5" selection-start-column="76" selection-end-line="5" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Spotreby.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70347005">
-          <caret line="529" column="25" selection-start-line="507" selection-start-column="13" selection-end-line="529" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/spotreby/list.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14195584">
-          <caret line="6" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="72" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/SpotrebyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60883284">
-          <caret line="376" column="61" selection-start-line="375" selection-start-column="8" selection-end-line="376" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/sluzby/index.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/sluzby/list.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16561514">
-          <caret line="7" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/sluzby/waitings.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11829653">
-          <caret line="5" column="73" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/sluzby/errors.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11829653">
-          <caret line="5" column="74" selection-start-line="5" selection-start-column="74" selection-end-line="5" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/vydaje/preview.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/scripts/vydaje/list.phtml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.023659306">
           <caret line="25" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="137" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Sluzby.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45583597">
-          <caret line="341" column="19" selection-start-line="341" selection-start-column="19" selection-end-line="341" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Inventury.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.15930599">
-          <caret line="338" column="10" selection-start-line="338" selection-start-column="10" selection-end-line="338" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/InventuryController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.20347">
-          <caret line="311" column="46" selection-start-line="311" selection-start-column="46" selection-end-line="311" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -712,24 +570,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/SluzbyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5977918">
-          <caret line="301" column="28" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/scripts/inventury/errors.phtml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5205047">
           <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/prijmy/list.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.625">
-          <caret line="74" column="77" selection-start-line="74" selection-start-column="63" selection-end-line="74" selection-end-column="77" />
         </state>
       </provider>
     </entry>
@@ -744,13 +588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/ajax_prijmy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="10" selection-start-line="81" selection-start-column="7" selection-end-line="88" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -785,13 +622,6 @@
     <entry file="file://$PROJECT_DIR$/public/js/ajax_spotreby_errors.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4787234">
-          <caret line="77" column="10" selection-start-line="77" selection-start-column="10" selection-end-line="77" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/ajax_spotreby_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.82218844">
           <caret line="77" column="10" selection-start-line="77" selection-start-column="10" selection-end-line="77" selection-end-column="10" />
         </state>
       </provider>
@@ -838,20 +668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/ajax_ext_vyroba_errors.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31914893">
-          <caret line="76" column="10" selection-start-line="76" selection-start-column="10" selection-end-line="76" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/ajax_ext_vyroba.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9118541">
-          <caret line="83" column="10" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/ajax_sluzby_waitings.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.63829786">
@@ -888,21 +704,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/PrijmyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.11198738">
-          <caret line="48" column="23" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/vydaje/add.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/scripts/layout.phtml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49053627">
@@ -911,10 +712,280 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/scripts/vydaje/add.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.023659306">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/Prijem.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.049423393">
+          <caret line="2" column="3" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/UbytkyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.8927445">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/scripts/spotreby/list.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68611985">
+          <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/scripts/vydaje/edit.phtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.023659306">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.6151419">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/scripts/prijmy/list.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11829653">
+          <caret line="6" column="69" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
+          <folding>
+            <element signature="e#3905#3951#0#PHP" expanded="false" />
+            <element signature="e#4717#4766#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/ajax_prijmy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.8237082">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/ajax_spotreby_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7553191">
+          <caret line="77" column="10" selection-start-line="77" selection-start-column="10" selection-end-line="77" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/SpotrebyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.1940062">
+          <caret line="256" column="47" selection-start-line="251" selection-start-column="8" selection-end-line="256" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Spotreby.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.329653">
+          <caret line="438" column="38" selection-start-line="438" selection-start-column="38" selection-end-line="438" selection-end-column="38" />
+          <folding>
+            <marker date="1488818442000" expanded="true" signature="14944:15906" placeholder="SELECT ts_sp..ts_spotreby..." />
+            <marker date="1488818442000" expanded="true" signature="16218:17216" placeholder="SELECT ts_sp..ts_spotreby..." />
+            <marker date="1488818442000" expanded="true" signature="17526:18514" placeholder="SELECT ts_sp..ts_spotreby..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/VydajeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.85804415">
+          <caret line="650" column="0" selection-start-line="650" selection-start-column="0" selection-end-line="650" selection-end-column="0" />
+          <folding>
+            <element signature="e#19175#19223#0#PHP" expanded="false" />
+            <element signature="e#21667#21715#0#PHP" expanded="false" />
+            <element signature="e#24194#24242#0#PHP" expanded="false" />
+            <marker date="1493033234000" expanded="true" signature="19991:21203" placeholder="SELECT ts_vy..ts_vydaje..." />
+            <marker date="1493033234000" expanded="true" signature="22483:23733" placeholder="SELECT ts_vy..ts_vydaje..." />
+            <marker date="1493033234000" expanded="true" signature="25010:26250" placeholder="SELECT ts_vy..ts_vydaje..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Vydaje.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3548896">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding>
+            <marker date="1493033048000" expanded="true" signature="17316:18478" placeholder="SELECT ts_vy..ts_vydaje..." />
+            <marker date="1493033048000" expanded="true" signature="18787:19985" placeholder="SELECT ts_vy..ts_vydaje..." />
+            <marker date="1493033048000" expanded="true" signature="20292:21480" placeholder="SELECT ts_vy..ts_vydaje..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/DbTable/ExternaDodavka.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5031546">
+          <caret line="473" column="0" selection-start-line="473" selection-start-column="0" selection-end-line="473" selection-end-column="0" />
+          <folding>
+            <marker date="1493033972000" expanded="true" signature="12986:14002" placeholder="SELECT tx_do..tx_dodavka..." />
+            <marker date="1493033972000" expanded="true" signature="14308:15360" placeholder="SELECT tx_do..tx_dodavka..." />
+            <marker date="1493033972000" expanded="true" signature="15664:16706" placeholder="SELECT tx_do..tx_dodavka..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/ExternadodavkaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.81072557">
+          <caret line="524" column="46" selection-start-line="524" selection-start-column="46" selection-end-line="524" selection-end-column="46" />
+          <folding>
+            <element signature="e#17516#17568#0#PHP" expanded="false" />
+            <element signature="e#19595#19647#0#PHP" expanded="false" />
+            <marker date="1493034024000" expanded="true" signature="18060:19122" placeholder="SELECT tx_do..tx_dodavka..." />
+            <marker date="1493034024000" expanded="true" signature="20139:21239" placeholder="SELECT tx_do..tx_dodavka..." />
+            <marker date="1493034024000" expanded="true" signature="22252:23342" placeholder="SELECT tx_do..tx_dodavka..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/ajax_ext_vyroba.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.8920972">
+          <caret line="83" column="10" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/ajax_ext_vyroba_errors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31914893">
+          <caret line="76" column="10" selection-start-line="76" selection-start-column="10" selection-end-line="76" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/DbTable/ExternaVyroba.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50576603">
+          <caret line="561" column="16" selection-start-line="561" selection-start-column="16" selection-end-line="561" selection-end-column="16" />
+          <folding>
+            <marker date="1493034639000" expanded="true" signature="15991:17251" placeholder="SELECT tx_vy..tx_vyroba..." />
+            <marker date="1493034639000" expanded="true" signature="17197:17251" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493034639000" expanded="true" signature="17561:18857" placeholder="SELECT tx_vy..tx_vyroba..." />
+            <marker date="1493034639000" expanded="true" signature="18767:18821" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493034639000" expanded="true" signature="19165:20451" placeholder="SELECT tx_vy..tx_vyroba..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/ExternaVyrobaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5977918">
+          <caret line="509" column="48" selection-start-line="509" selection-start-column="27" selection-end-line="509" selection-end-column="48" />
+          <folding>
+            <marker date="1493034600000" expanded="true" signature="20683:21995" placeholder="SELECT tx_vy..tx_vyroba..." />
+            <marker date="1493034600000" expanded="true" signature="23017:24367" placeholder="SELECT tx_vy..tx_vyroba..." />
+            <marker date="1493034600000" expanded="true" signature="25113:26399" placeholder="SELECT tx_vy..tx_vyroba..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Sluzby.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2602524">
+          <caret line="354" column="10" selection-start-line="354" selection-start-column="10" selection-end-line="354" selection-end-column="10" />
+          <folding>
+            <marker date="1488820124000" expanded="true" signature="8883:9246" placeholder="SELECT t_slu..t_sluzby..." />
+            <marker date="1488820124000" expanded="true" signature="9554:9930" placeholder="SELECT t_slu..t_sluzby..." />
+            <marker date="1488820124000" expanded="true" signature="9554:9943" placeholder="SELECT t_slu..t_sluzby..." />
+            <marker date="1488820124000" expanded="true" signature="10253:10652" placeholder="SELECT t_slu..t_sluzby..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/SluzbyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6451104">
+          <caret line="301" column="28" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/InventuryController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.20662461">
+          <caret line="213" column="37" selection-start-line="213" selection-start-column="33" selection-end-line="213" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/MikroObjednavkyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43217665">
+          <caret line="191" column="54" selection-start-line="191" selection-start-column="54" selection-end-line="191" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/ObjednavkyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.6135647">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Inventury.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.04731861">
+          <caret line="338" column="10" selection-start-line="338" selection-start-column="10" selection-end-line="338" selection-end-column="10" />
+          <folding>
+            <marker date="1488884963000" expanded="true" signature="9394:9983" placeholder="SELECT ts_in..ts_inventury..." />
+            <marker date="1488884963000" expanded="true" signature="10296:10921" placeholder="SELECT ts_in..ts_inventury..." />
+            <marker date="1488884963000" expanded="true" signature="11233:11848" placeholder="SELECT ts_in..ts_inventury..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/DbTable/Prijmy.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83438486">
+          <caret line="362" column="5" selection-start-line="326" selection-start-column="4" selection-end-line="362" selection-end-column="5" />
+          <folding>
+            <marker date="1493032591000" expanded="true" signature="11105:12276" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032591000" expanded="true" signature="12221:12276" placeholder="SELECT ts_sp..ts_spotreby..." />
+            <marker date="1493032591000" expanded="true" signature="12587:13795" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032591000" expanded="true" signature="14103:15301" placeholder="SELECT ts_pr..ts_prijmy..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/PrijmyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45583597">
+          <caret line="528" column="43" selection-start-line="523" selection-start-column="8" selection-end-line="528" selection-end-column="43" />
+          <folding>
+            <element signature="e#24024#24062#0#PHP" expanded="false" />
+            <element signature="e#26514#26516#0#PHP" expanded="false" />
+            <marker date="1493032517000" expanded="true" signature="24830:26049" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032517000" expanded="true" signature="27339:27833" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032517000" expanded="true" signature="27339:28017" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032517000" expanded="true" signature="27339:28561" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032517000" expanded="true" signature="27339:28599" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032517000" expanded="true" signature="29878:31121" placeholder="SELECT ts_pr..ts_prijmy..." />
+            <marker date="1493032517000" expanded="true" signature="29878:31128" placeholder="SELECT ts_pr..ts_prijmy..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/scripts/index/index.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2420886">
+          <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
           <folding />
         </state>
       </provider>

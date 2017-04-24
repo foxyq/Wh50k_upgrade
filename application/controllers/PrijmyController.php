@@ -521,125 +521,141 @@ class PrijmyController extends Zend_Controller_Action
     {
 
 
-        //get post request (standart approach)
-        $request = $this->getRequest()->getPost();
-
-        //referring to the index
-        //gets value from ajax request
-        $message = $request['message'];
-
-        // makes disable renderer
         $this->_helper->viewRenderer->setNoRender();
-
-        //makes disable layout
         $this->_helper->getHelper('layout')->disableLayout();
 
+        $prijmyModel = new Application_Model_DbTable_Prijmy();
 
-        //return callback message to the function javascript
-        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
-            'host'     => 'localhost',
-            'username' => 'root',
-            'password' => 'mysql',
-            'dbname'   => 'database',
-            'charset'  => 'utf8'
-        ));
-        $limit = $message;
-        $stmt = $db->query(
-            'SELECT
-            ts_prijmy_id AS id,
-            datum_prijmu_d AS datum,
-            nazov_skladu AS sklad,
-            nazov_podskladu AS podsklad,
-            nazov_spolocnosti AS dodavatel,
-            prepravci.meno AS prepravca,
-            prepravca_spz AS spz,
-            q_tony_merane AS tony,
-            q_m3_merane AS m3,
-            q_vlhkost AS vlhkost,
-            q_tony_nadrozmer AS nadrozmer,
-            doklad_cislo AS doklad_cislo,
-            materialy_typy.nazov AS typ,
-            chyba,
-            stav_transakcie AS stav,
-            merna_jednotka_enum AS merna_jednotka
-            FROM
-            ts_prijmy
-            LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id
-            LEFT JOIN podsklady ON ts_prijmy.podsklad_enum=podsklady.podsklady_id
-            LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
-            LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
-            LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
-            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id'
-        );
+        echo $prijmyModel->getPrijmyAjax();
 
-        $vystup = (array) $stmt->fetchAll();
-        $data = array('data' => $vystup);
-
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        //get post request (standart approach)
+//        $request = $this->getRequest()->getPost();
+//
+//        //referring to the index
+//        //gets value from ajax request
+//        $message = $request['message'];
+//
+//        // makes disable renderer
+//        $this->_helper->viewRenderer->setNoRender();
+//
+//        //makes disable layout
+//        $this->_helper->getHelper('layout')->disableLayout();
+//
+//
+//        //return callback message to the function javascript
+//        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+//            'host'     => 'localhost',
+//            'username' => 'root',
+//            'password' => 'mysql',
+//            'dbname'   => 'database',
+//            'charset'  => 'utf8'
+//        ));
+//        $limit = $message;
+//        $stmt = $db->query(
+//            'SELECT
+//            ts_prijmy_id AS id,
+//            datum_prijmu_d AS datum,
+//            nazov_skladu AS sklad,
+//            nazov_podskladu AS podsklad,
+//            nazov_spolocnosti AS dodavatel,
+//            prepravci.meno AS prepravca,
+//            prepravca_spz AS spz,
+//            q_tony_merane AS tony,
+//            q_m3_merane AS m3,
+//            q_vlhkost AS vlhkost,
+//            q_tony_nadrozmer AS nadrozmer,
+//            doklad_cislo AS doklad_cislo,
+//            materialy_typy.nazov AS typ,
+//            chyba,
+//            stav_transakcie AS stav,
+//            merna_jednotka_enum AS merna_jednotka
+//            FROM
+//            ts_prijmy
+//            LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id
+//            LEFT JOIN podsklady ON ts_prijmy.podsklad_enum=podsklady.podsklady_id
+//            LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
+//            LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
+//            LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
+//            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id'
+//        );
+//
+//        $vystup = (array) $stmt->fetchAll();
+//        $data = array('data' => $vystup);
+//
+//        echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
     }
 
     public function getprijmywaitingsAction()
     {
 
-
-        //get post request (standart approach)
-        $request = $this->getRequest()->getPost();
-
-        //referring to the index
-        //gets value from ajax request
-        $message = $request['message'];
-
-        // makes disable renderer
         $this->_helper->viewRenderer->setNoRender();
-
-        //makes disable layout
         $this->_helper->getHelper('layout')->disableLayout();
 
+        $prijmyModel = new Application_Model_DbTable_Prijmy();
 
-        //return callback message to the function javascript
-        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
-            'host'     => 'localhost',
-            'username' => 'root',
-            'password' => 'mysql',
-            'dbname'   => 'database',
-            'charset'  => 'utf8'
-        ));
-        $limit = $message;
-        $stmt = $db->query(
-            'SELECT
-            ts_prijmy_id AS id,
-            datum_prijmu_d AS datum,
-            nazov_skladu AS sklad,
-            nazov_podskladu AS podsklad,
-            nazov_spolocnosti AS dodavatel,
-            prepravci.meno AS prepravca,
-            prepravca_spz AS spz,
-            q_tony_merane AS tony,
-            q_m3_merane AS m3,
-            q_vlhkost AS vlhkost,
-            q_tony_nadrozmer AS nadrozmer,
-            doklad_cislo AS doklad_cislo,
-            materialy_typy.nazov AS typ,
-            chyba,
-            stav_transakcie AS stav,
-            merna_jednotka_enum AS merna_jednotka
-            FROM
-            ts_prijmy
+        echo $prijmyModel->getPrijmyWaitingsAjax();
 
-            LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id
-            LEFT JOIN podsklady ON ts_prijmy.podsklad_enum=podsklady.podsklady_id
-            LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
-            LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
-            LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
-            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id
-            WHERE stav_transakcie=1'
-        );
-
-        $vystup = (array) $stmt->fetchAll();
-        $data = array('data' => $vystup);
-
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+//
+//
+//
+//        //get post request (standart approach)
+//        $request = $this->getRequest()->getPost();
+//
+//        //referring to the index
+//        //gets value from ajax request
+//        $message = $request['message'];
+//
+//        // makes disable renderer
+//        $this->_helper->viewRenderer->setNoRender();
+//
+//        //makes disable layout
+//        $this->_helper->getHelper('layout')->disableLayout();
+//
+//
+//        //return callback message to the function javascript
+//        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+//            'host'     => 'localhost',
+//            'username' => 'root',
+//            'password' => 'mysql',
+//            'dbname'   => 'database',
+//            'charset'  => 'utf8'
+//        ));
+//        $limit = $message;
+//        $stmt = $db->query(
+//            'SELECT
+//            ts_prijmy_id AS id,
+//            datum_prijmu_d AS datum,
+//            nazov_skladu AS sklad,
+//            nazov_podskladu AS podsklad,
+//            nazov_spolocnosti AS dodavatel,
+//            prepravci.meno AS prepravca,
+//            prepravca_spz AS spz,
+//            q_tony_merane AS tony,
+//            q_m3_merane AS m3,
+//            q_vlhkost AS vlhkost,
+//            q_tony_nadrozmer AS nadrozmer,
+//            doklad_cislo AS doklad_cislo,
+//            materialy_typy.nazov AS typ,
+//            chyba,
+//            stav_transakcie AS stav,
+//            merna_jednotka_enum AS merna_jednotka
+//            FROM
+//            ts_prijmy
+//
+//            LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id
+//            LEFT JOIN podsklady ON ts_prijmy.podsklad_enum=podsklady.podsklady_id
+//            LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
+//            LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
+//            LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
+//            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id
+//            WHERE stav_transakcie=1'
+//        );
+//
+//        $vystup = (array) $stmt->fetchAll();
+//        $data = array('data' => $vystup);
+//
+//        echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
     }
 
@@ -647,64 +663,73 @@ class PrijmyController extends Zend_Controller_Action
     public function getprijmyerrorsAction()
     {
 
-
-        //get post request (standart approach)
-        $request = $this->getRequest()->getPost();
-
-        //referring to the index
-        //gets value from ajax request
-        $message = $request['message'];
-
-        // makes disable renderer
         $this->_helper->viewRenderer->setNoRender();
-
-        //makes disable layout
         $this->_helper->getHelper('layout')->disableLayout();
 
+        $prijmyModel = new Application_Model_DbTable_Prijmy();
 
-        //return callback message to the function javascript
-        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
-            'host'     => 'localhost',
-            'username' => 'root',
-            'password' => 'mysql',
-            'dbname'   => 'database',
-            'charset'  => 'utf8'
-        ));
-        $limit = $message;
-        $stmt = $db->query(
-            'SELECT
-            ts_prijmy_id AS id,
-            datum_prijmu_d AS datum,
-            nazov_skladu AS sklad,
-            nazov_podskladu AS podsklad,
-            nazov_spolocnosti AS dodavatel,
-            prepravci.meno AS prepravca,
-            prepravca_spz AS spz,
-            q_tony_merane AS tony,
-            q_m3_merane AS m3,
-            q_vlhkost AS vlhkost,
-            q_tony_nadrozmer AS nadrozmer,
-            doklad_cislo AS doklad_cislo,
-            materialy_typy.nazov AS typ,
-            chyba,
-            stav_transakcie AS stav,
-            merna_jednotka_enum AS merna_jednotka
-            FROM
-            ts_prijmy
+        echo $prijmyModel->getPrijmyErrorsAjax();
 
-            LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id
-            LEFT JOIN podsklady ON ts_prijmy.podsklad_enum=podsklady.podsklady_id
-            LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
-            LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
-            LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
-            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id
-            WHERE chyba=1'
-        );
 
-        $vystup = (array) $stmt->fetchAll();
-        $data = array('data' => $vystup);
 
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+
+        //get post request (standart approach)
+//        $request = $this->getRequest()->getPost();
+//
+//        //referring to the index
+//        //gets value from ajax request
+//        $message = $request['message'];
+//
+//        // makes disable renderer
+//        $this->_helper->viewRenderer->setNoRender();
+//
+//        //makes disable layout
+//        $this->_helper->getHelper('layout')->disableLayout();
+//
+//
+//        //return callback message to the function javascript
+//        $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+//            'host'     => 'localhost',
+//            'username' => 'root',
+//            'password' => 'mysql',
+//            'dbname'   => 'database',
+//            'charset'  => 'utf8'
+//        ));
+//        $limit = $message;
+//        $stmt = $db->query(
+//            'SELECT
+//            ts_prijmy_id AS id,
+//            datum_prijmu_d AS datum,
+//            nazov_skladu AS sklad,
+//            nazov_podskladu AS podsklad,
+//            nazov_spolocnosti AS dodavatel,
+//            prepravci.meno AS prepravca,
+//            prepravca_spz AS spz,
+//            q_tony_merane AS tony,
+//            q_m3_merane AS m3,
+//            q_vlhkost AS vlhkost,
+//            q_tony_nadrozmer AS nadrozmer,
+//            doklad_cislo AS doklad_cislo,
+//            materialy_typy.nazov AS typ,
+//            chyba,
+//            stav_transakcie AS stav,
+//            merna_jednotka_enum AS merna_jednotka
+//            FROM
+//            ts_prijmy
+//
+//            LEFT JOIN sklady ON ts_prijmy.sklad_enum=sklady.sklady_id
+//            LEFT JOIN podsklady ON ts_prijmy.podsklad_enum=podsklady.podsklady_id
+//            LEFT JOIN dodavatelia ON ts_prijmy.dodavatel_enum=dodavatelia.dodavatelia_id
+//            LEFT JOIN prepravci ON ts_prijmy.prepravca_enum=prepravci.prepravci_id
+//            LEFT JOIN materialy_typy ON ts_prijmy.material_typ_enum=materialy_typy.materialy_typy_id
+//            LEFT JOIN materialy_druhy ON ts_prijmy.material_druh_enum=materialy_druhy.materialy_druhy_id
+//            WHERE chyba=1'
+//        );
+//
+//        $vystup = (array) $stmt->fetchAll();
+//        $data = array('data' => $vystup);
+//
+//        echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
     }
 

@@ -382,13 +382,13 @@ class SpotrebyController extends Zend_Controller_Action
     }
 
     //tato metoda je obsolete
-    public function getspotrebyAction()
-    {
-        $spotrebyModel = new Application_Model_DbTable_Spotreby();
-        echo $spotrebyModel->getSpotrebyAjax();
+//    public function getspotrebyAction()
 
-    }
-
+//    {
+//        $spotrebyModel = new Application_Model_DbTable_Spotreby();
+//        echo $spotrebyModel->getSpotrebyAjax();
+//
+//    }
 
 }
 

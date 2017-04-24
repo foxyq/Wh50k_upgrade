@@ -456,6 +456,128 @@ class Application_Model_DbTable_ExternaVyroba extends Zend_Db_Table_Abstract
         return $cislaDokladovArray;
     }
 
+    public function getVyrobyAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            tx_vyroba_id AS id,
+            datum_xvyroby_d AS datum,
+            zakaznici.meno  AS zakaznik,
+            dodavatelia.meno AS dodavatel,
+            prepravci.meno AS prepravca,
+            miesta_stiepenia.nazov_miesta AS miesto_stiepenia,
+            stroje.nazov_stroja AS stroj,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav
+
+            FROM
+            tx_vyroba
+
+            LEFT JOIN stroje ON tx_vyroba.stroj_enum=stroje.stroje_id
+            LEFT JOIN miesta_stiepenia ON tx_vyroba.miesto_stiepenia_enum=miesta_stiepenia.miesta_stiepenia_id
+            LEFT JOIN zakaznici ON tx_vyroba.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN dodavatelia ON tx_vyroba.dodavatel_enum=dodavatelia.dodavatelia_id
+            LEFT JOIN prepravci ON tx_vyroba.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON tx_vyroba.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON tx_vyroba.material_druh_enum=materialy_druhy.materialy_druhy_id'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getVyrobyWaitingsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            tx_vyroba_id AS id,
+            datum_xvyroby_d AS datum,
+            zakaznici.meno  AS zakaznik,
+            dodavatelia.meno AS dodavatel,
+            prepravci.meno AS prepravca,
+            miesta_stiepenia.nazov_miesta AS miesto_stiepenia,
+            stroje.nazov_stroja AS stroj,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav
+
+            FROM
+            tx_vyroba
+
+            LEFT JOIN stroje ON tx_vyroba.stroj_enum=stroje.stroje_id
+            LEFT JOIN miesta_stiepenia ON tx_vyroba.miesto_stiepenia_enum=miesta_stiepenia.miesta_stiepenia_id
+            LEFT JOIN zakaznici ON tx_vyroba.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN dodavatelia ON tx_vyroba.dodavatel_enum=dodavatelia.dodavatelia_id
+            LEFT JOIN prepravci ON tx_vyroba.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON tx_vyroba.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON tx_vyroba.material_druh_enum=materialy_druhy.materialy_druhy_id
+            WHERE stav_transakcie=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getVyrobyErrorsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            tx_vyroba_id AS id,
+            datum_xvyroby_d AS datum,
+            zakaznici.meno  AS zakaznik,
+            dodavatelia.meno AS dodavatel,
+            prepravci.meno AS prepravca,
+            miesta_stiepenia.nazov_miesta AS miesto_stiepenia,
+            stroje.nazov_stroja AS stroj,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav
+
+            FROM
+            tx_vyroba
+
+            LEFT JOIN stroje ON tx_vyroba.stroj_enum=stroje.stroje_id
+            LEFT JOIN miesta_stiepenia ON tx_vyroba.miesto_stiepenia_enum=miesta_stiepenia.miesta_stiepenia_id
+            LEFT JOIN zakaznici ON tx_vyroba.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN dodavatelia ON tx_vyroba.dodavatel_enum=dodavatelia.dodavatelia_id
+            LEFT JOIN prepravci ON tx_vyroba.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON tx_vyroba.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON tx_vyroba.material_druh_enum=materialy_druhy.materialy_druhy_id
+            WHERE chyba=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
 
 
 }

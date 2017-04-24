@@ -493,5 +493,122 @@ class Application_Model_DbTable_Vydaje extends Zend_Db_Table_Abstract
         }
         return $sum;
     }
+
+    public function getVydajeAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            ts_vydaje_id AS id,
+            datum_vydaju_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            nazov_spolocnosti AS zakaznik,
+            prepravci.meno AS prepravca,
+            prepravca_spz AS spz,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav,
+            sklady.merna_jednotka_enum AS merna_jednotka
+
+            FROM
+            ts_vydaje
+            LEFT JOIN sklady ON ts_vydaje.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_vydaje.podsklad_enum=podsklady.podsklady_id
+            LEFT JOIN zakaznici ON ts_vydaje.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN prepravci ON ts_vydaje.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON ts_vydaje.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON ts_vydaje.material_druh_enum=materialy_druhy.materialy_druhy_id'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+    public function getVydajeWaitingsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            ts_vydaje_id AS id,
+            datum_vydaju_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            nazov_spolocnosti AS zakaznik,
+            prepravci.meno AS prepravca,
+            prepravca_spz AS spz,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav,
+            sklady.merna_jednotka_enum AS merna_jednotka
+
+            FROM
+            ts_vydaje
+            LEFT JOIN sklady ON ts_vydaje.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_vydaje.podsklad_enum=podsklady.podsklady_id
+            LEFT JOIN zakaznici ON ts_vydaje.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN prepravci ON ts_vydaje.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON ts_vydaje.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON ts_vydaje.material_druh_enum=materialy_druhy.materialy_druhy_id
+            WHERE stav_transakcie=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+    public function getVydajeErrorsAjax()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $stmt = $db->query(
+            'SELECT
+            ts_vydaje_id AS id,
+            datum_vydaju_d AS datum,
+            nazov_skladu AS sklad,
+            nazov_podskladu AS podsklad,
+            nazov_spolocnosti AS zakaznik,
+            prepravci.meno AS prepravca,
+            prepravca_spz AS spz,
+            q_tony_merane AS tony,
+            q_m3_merane AS m3,
+            q_prm_merane AS prm ,
+            q_vlhkost AS vlhkost,
+            doklad_cislo AS doklad_cislo,
+            materialy_typy.nazov AS typ,
+            chyba,
+            stav_transakcie AS stav,
+            sklady.merna_jednotka_enum AS merna_jednotka
+
+            FROM
+            ts_vydaje
+            LEFT JOIN sklady ON ts_vydaje.sklad_enum=sklady.sklady_id
+            LEFT JOIN podsklady ON ts_vydaje.podsklad_enum=podsklady.podsklady_id
+            LEFT JOIN zakaznici ON ts_vydaje.zakaznik_enum=zakaznici.zakaznici_id
+            LEFT JOIN prepravci ON ts_vydaje.prepravca_enum=prepravci.prepravci_id
+            LEFT JOIN materialy_typy ON ts_vydaje.material_typ_enum=materialy_typy.materialy_typy_id
+            LEFT JOIN materialy_druhy ON ts_vydaje.material_druh_enum=materialy_druhy.materialy_druhy_id
+            WHERE chyba=1'
+        );
+
+        $vystup = (array) $stmt->fetchAll();
+        $data = array('data' => $vystup);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
 }
 
