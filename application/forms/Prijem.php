@@ -269,6 +269,7 @@ class Application_Form_Prijem extends Zend_Form{
 //            $doklad_typ,
             $cena_jednotkova_nakupna,
             $cena_jednotkova_predajna,
+            $kapacita_kamionu_prm,
             $material_druh,
             $material_typ,
             $poznamka,

@@ -334,7 +334,7 @@ class PrijmyController extends Zend_Controller_Action
                     $q_vlhkost,
                     $cena_jednotkova_nakupna,
                     $cena_jednotkova_predajna,
-                    $kapacita_kamionu_prm
+                    $kapacita_kamionu_prm,
 //                    $doklad_typ,
                     $material_druh,
                     $material_typ,

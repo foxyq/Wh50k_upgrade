@@ -222,6 +222,7 @@ class Application_Form_Vydaj extends ZendX_JQuery_Form{
             $q_m3_merane,
             $q_prm_merane,
             $q_vlhkost,
+            $kapacita_kamionu_prm,
             $doklad_typ,
             $stroj_enum,
             $material_druh,

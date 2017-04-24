@@ -81,6 +81,7 @@ class VydajeController extends Zend_Controller_Action
                 $q_m3_merane = $form->getValue('q_m3_merane');
                 $q_prm_merane = $form->getValue('q_prm_merane');
                 $q_vlhkost = $form->getValue('q_vlhkost');
+                $kapacita_kamionu_prm = $form->getValue('kapacita_kamionu_prm');
                 $doklad_typ = $form->getValue('doklad_typ_enum');
                 $material_typ = $form->getValue('material_typ_enum');
                 $material_druh = $form->getValue('material_druh_enum');
@@ -132,6 +133,7 @@ class VydajeController extends Zend_Controller_Action
                     $q_m3_merane,
                     $q_prm_merane,
                     $q_vlhkost,
+                    $kapacita_kamionu_prm,
                     $doklad_typ,
                     $material_typ,
                     $material_druh,
@@ -212,6 +214,7 @@ class VydajeController extends Zend_Controller_Action
                 $q_m3_merane = $form->getValue('q_m3_merane');
                 $q_prm_merane = $form->getValue('q_prm_merane');
                 $q_vlhkost = $form->getValue('q_vlhkost');
+                $kapacita_kamionu_prm = $form->getValue('kapacita_kamionu_prm');
                 $doklad_typ = $form->getValue('doklad_typ_enum');
                 $material_typ = $form->getValue('material_typ_enum');
                 $material_druh = $form->getValue('material_druh_enum');
@@ -232,6 +235,7 @@ class VydajeController extends Zend_Controller_Action
                     $q_m3_merane,
                     $q_prm_merane,
                     $q_vlhkost,
+                    $kapacita_kamionu_prm,
                     $doklad_typ,
                     $material_typ,
                     $material_druh,
