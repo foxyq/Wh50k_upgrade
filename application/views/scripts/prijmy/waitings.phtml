@@ -4,7 +4,7 @@ $this->headTitle($this->title);
 $this->inlineScript()->appendFile($this->baseUrl().'/js/bootstrap.min.js');
 $this->inlineScript()->appendFile($this->baseUrl().'/js/jjquery.js');
 $this->inlineScript()->appendFile($this->baseUrl().'/js/ajax_prijmy_waitings.js');
-$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //tuto su prepocty priemer a sum
+$this->inlineScript()->appendFile($this->baseUrl().'/js/table_features_prijmy.js'); //tuto su prepocty priemer a sum
 //$this->inlineScript()->appendFile($this->baseUrl().'/js/fancy_table.js');
 
 
@@ -43,117 +43,47 @@ $this->tablefiltersVydaje($this, "Dodávateľ");
             <th>m<sup>3</sup></th>
             <th>Vlhkosť</th>
             <th class="col-tony-nadrozmer">Nadrozmer</th>
+            <th>Nákupná cena</th>
+            <th>Predajná cena</th>
             <th>Doklad</th>
-            <!--    <th>t v</th>-->
 
-            <!--    <th>m3 v</th>-->
-            <!--    <th>PRM m</th>-->
-            <!--    <th>PRM v</th>-->
-
-            <!--    <th>materiál typ</th>-->
             <th>Materiál</th>
             <th class="col-stav">Stav</th>
-            <!--    <th class="col-chyba">chyba</th>-->
+
             <th class="col-upravy no-print">Úpravy</th>
         </tr>
         </thead>
 
         <tfoot>
         <tr>
-            <!--        <th>ID</th>-->
-            <!--        <th>doklad číslo</th>-->
+
             <th></th>
             <th>datum</th>
             <th>sklad</th>
             <th>podsklad</th>
             <th>dod</th>
             <th>prepravca</th>
-            <!--        <th>SPZ</th>-->
+
             <th>t m</th>
             <th>t nadrozmer</th>
-            <!--        <th>t v</th>-->
+            <th>Nákupná cena</th>
+            <th>Predajná cena</th>
                     <th>m3 m</th>
-            <!--        <th>m3 v</th>-->
-            <!--        <th>PRM m</th>-->
-            <!--        <th>PRM v</th>-->
 
-            <!--        <th>materiál typ</th>-->
             <th>material druh</th>
                     <th></th>
                     <th>chyba</th>
-<!--                    <th  >úpravy</th>-->
-<!--            <th></th>-->
-<!--            <th></th>-->
+
 
         </tr>
         </tfoot>
 
-<!--        <tbody>-->
-<!--        --><?php //foreach($this->prijmy as $prijem) : ?>
-<!---->
-<!--            --><?php //if ($prijem->chyba == 1 ) echo "<tr class='danger'> ";
-//            else echo   "<tr>";
-//            ?>
-<!---->
-<!--<!--            <td>--><?php ////echo $this->escape($prijem->ts_prijmy_id);?><!--<!--</td>-->
-<!--<!--            <td>--><?php ////echo $this->escape($prijem->doklad_cislo);?><!--<!--</td>-->
-<!--            <TD class="center"><a href="--><?php //echo $this->url(array('controller'=>'prijmy',
-//                'action'=>'preview', 'id'=>$prijem->doklad_cislo, 'fromAction' => 'waitings'));?><!--">-->
-<!--                <i class="fa fa-eye"></i>-->
-<!--                </a>-->
-<!--            </TD>-->
-<!--            <td>-->
-<!---->
-<!--                --><?php
-//            $date = date('Y.m.d', strtotime($this->escape($prijem->datum_prijmu_d)));
-//            echo $date;
-//            //echo $this->escape($prijem->datum_prijmu_d);
-//            ?>
-<!--            </td>-->
-<!--            <td>--><?php //echo $this->escape($this->sklady->getSkratka($prijem->sklad_enum));?><!--</td>-->
-<!--            <td>--><?php //echo $this->escape($this->podsklady->getNazov($prijem->podsklad_enum));?><!--</td>-->
-<!--            <td>--><?php //echo $this->escape($this->dodavatelia->getNazov($prijem->dodavatel_enum));?><!--</td>-->
-<!--            <td>--><?php //echo $this->escape($this->prepravci->getNazov($prijem->prepravca_enum));?><!--</td>-->
-<!--<!--            <td>--><?php ////echo $this->escape($prijem->prepravca_spz);?><!--<!--</td>-->
-<!--         <td class="tonaz">--><?php //echo number_format($this->escape($prijem->q_tony_merane), 2, ",", " ");?><!--</td>-->
-<!--            <td class="m3">--><?php //echo number_format($this->escape($prijem->q_m3_merane), 2, ",", " ");?><!--</td>-->
-<!--            <td class="vlhkost">-->
-<!--                --><?php
-//            if ($prijem->q_vlhkost == 0.00){
-//                echo "-";
-//            }else {
-//                echo number_format($this->escape($prijem->q_vlhkost), 2, ",", " "). "%";
-//
-//            }
-//            ?>
-<!--            </td>-->
-<!--            <td>--><?php //echo number_format($this->escape($prijem->q_tony_nadrozmer), 2, ",", " ");?><!--</td>-->
-<!--            <td>--><?php //echo $this->escape($prijem->doklad_cislo);?><!--</td>-->
-<!--            <td class="center">--><?php //echo $this->escape($this->materialyDruhy->getNazov($prijem->material_druh_enum));?><!--</td>-->
-<!--            <td>-->
-<!--           --><?php
-//            $this->stavy($prijem);
-//            ?>
-<!--            </td>-->
-<!---->
-<!--            <td class="no-print">-->
-<!---->
-<!--                --><?php
-//            $skladID = $prijem->sklad_enum;
-//            $merna_jednotka = $this->sklady->getMernaJednotka($skladID);
-//
-//            $this->tlacbuttons($this,$merna_jednotka,$prijem->ts_prijmy_id,$controller);
-//            ?>
-<!---->
-<!--            </td>-->
-<!---->
-<!--        </tr>-->
-<!--        --><?php //endforeach; ?>
-<!--        </tbody>-->
     </table>
 
     <div id="tonaz">   </div>
     <div id="m3">   </div>
     <div id="priemer"> </div>
+    <div id="nakupne"> </div>
+    <div id="predajne"> </div>
 
 </div>
