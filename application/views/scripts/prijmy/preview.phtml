@@ -95,6 +95,23 @@
 
 
             </div>
+
+            <div class="row">
+                <fieldset>
+                    <legend><i class="fa fa-money"></i> Cena</legend>
+                    <div class="col-lg-6">
+                        Jednotková nákupná:
+                        <?php echo number_format($this->prijem['cena_jednotkova_nakupna'], 2, ",", " ").' EUR'; // render the user name field here ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        Jednotková predajná:
+                        <?php echo number_format($this->prijem['cena_jednotkova_predajna'], 2, ",", " ").' EUR'; // render the user name field here ?>
+                    </div>
+                </fieldset>
+            </div>
+
+
             <div class="row">
                 <fieldset>
                     <legend><i class="fa fa-cubes"></i> Priestor</legend>

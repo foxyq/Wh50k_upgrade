@@ -27,6 +27,8 @@ class Application_Form_Prijem extends Zend_Form{
         $validatorPercentaRange->setMessage("Zadané číslo sa nenachádza v intervale od 0 do 99,99.");
         $validatorCislaRange = new Zend_Validate_Between(array('min' => 0, 'max' => 999.99));
         $validatorCislaRange->setMessage("Zadané číslo sa nenachádza v intervale od 0 do 999,99.");
+        $validatorCislaRangePrice = new Zend_Validate_Between(array('min' => 0, 'max' => 9999.99));
+        $validatorCislaRangePrice->setMessage("Zadané číslo sa nenachádza v intervale od 0 do 9999,99.");
         $validatorSelecty= new Zend_Validate_Between(array('min' => 1, 'max' => 9999999));
         $validatorSelecty->setMessage("Hodnota je povinná");
         $validatorSPZ = new Zend_Validate_Regex(array('pattern'=> "/^[a-zA-Z0-9]{5,8}$/"));
@@ -159,6 +161,30 @@ class Application_Form_Prijem extends Zend_Form{
             //->addValidator('Float');
 
         /*
+         * CENA
+         */
+
+        $cena_jednotkova_nakupna = new Zend_Form_Element_Text('cena_jednotkova_nakupna');
+        $cena_jednotkova_nakupna->setLabel('Jednotková cena nákupná')
+            ->setAttrib('class', 'form-control in')
+            ->setAttrib('tabindex', '-1')
+            ->addFilter($filterCislaDesatinaCiarka)
+            ->addValidator($validatorCislaRangePrice);
+        //->addValidator('float');
+
+        $cena_jednotkova_predajna = new Zend_Form_Element_Text('cena_jednotkova_predajna');
+        $cena_jednotkova_predajna->setLabel('Jednotková cena predajná')
+            ->setAttrib('class', 'form-control in')
+            ->setAttrib('tabindex', '-1')
+            ->addFilter($filterCislaDesatinaCiarka)
+            ->addValidator($validatorCislaRangePrice);
+        //->addValidator('float');
+
+
+
+
+
+        /*
          * DOPLNUJUCE INFO
          */
 
@@ -229,6 +255,8 @@ class Application_Form_Prijem extends Zend_Form{
             $q_prm_merane,
             $q_vlhkost,
 //            $doklad_typ,
+            $cena_jednotkova_nakupna,
+            $cena_jednotkova_predajna,
             $material_druh,
             $material_typ,
             $poznamka,
