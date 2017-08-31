@@ -30,6 +30,7 @@ $(document).ready(function() {
                     render: $.fn.dataTable.render.number( '.', ',', 2, '' )},
                 { "data": "motohodiny",
                     render: $.fn.dataTable.render.number( '.', ',', 2, '', ' hod' )},
+                { "data": "miesto" },
                 { "data": "doklad_cislo" },
                 { "data": "stav",
 

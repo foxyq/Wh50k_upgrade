@@ -60,7 +60,7 @@ $this->inlineScript()->appendFile($this->baseUrl().'/js/table_features.js'); //t
     echo '<div>';
     echo 'You are in: '.$this->navigation()->breadcrumbs()->setLinkLast(false)->setMinDepth(0)->render();
     echo '</div>';
-php?>
+?>
 
 
 <!--for display text and submit fields i use viewHelpers it's very comfortable and easy way.-->
@@ -190,20 +190,20 @@ php?>
 
 //https://support.google.com/mail/answer/14257?hl=en
 
-//$mailTransport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', array(
-//    'auth'     => 'login',
-//    'username' => 'foxyzv@gmail.com',
-//    'password' => '64018628',
-//    'port'     => '587',
-//    'ssl'      => 'tls',
-//));
-//Zend_Mail::setDefaultTransport($mailTransport);
-//
-//$mail = new Zend_Mail();
-//$mail->setFrom('foxyzv@gmail.com');
-//$mail->setBodyHtml('some message - it may be html formatted text');
-//$mail->addTo('foxyzv@gmail.com', 'recipient');
-//$mail->setSubject('subject');
-//$mail->send();
+$mailTransport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', array(
+    'auth'     => 'login',
+    'username' => 'foxyzv@gmail.com',
+    'password' => '64018628',
+    'port'     => '587',
+    'ssl'      => 'tls',
+));
+Zend_Mail::setDefaultTransport($mailTransport);
+
+$mail = new Zend_Mail();
+$mail->setFrom('foxyzv@gmail.com');
+$mail->setBodyHtml('some message - it may be html formatted text');
+$mail->addTo('foxyzv@gmail.com', 'recipient');
+$mail->setSubject('subject');
+$mail->send();
 
 ?>
