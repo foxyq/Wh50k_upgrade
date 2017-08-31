@@ -296,6 +296,7 @@ class Application_Model_DbTable_Sluzby extends Zend_Db_Table_Abstract
             q_prm AS prm,
             q_motohodiny AS motohodiny,
             doklad_cislo AS doklad_cislo,
+            miesto_stiepenia AS miesto,
             chyba AS chyba,
             stav_transakcie AS stav
             FROM
@@ -321,6 +322,7 @@ class Application_Model_DbTable_Sluzby extends Zend_Db_Table_Abstract
             q_prm AS prm,
             q_motohodiny AS motohodiny,
             doklad_cislo AS doklad_cislo,
+            miesto_stiepenia AS miesto,
             chyba AS chyba,
             stav_transakcie AS stav
             FROM
@@ -347,6 +349,7 @@ class Application_Model_DbTable_Sluzby extends Zend_Db_Table_Abstract
             q_prm AS prm,
             q_motohodiny AS motohodiny,
             doklad_cislo AS doklad_cislo,
+            miesto_stiepenia AS miesto,
             chyba AS chyba,
             stav_transakcie AS stav
             FROM
